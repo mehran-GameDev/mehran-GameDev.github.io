@@ -4,20 +4,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehran | Indie Game Developer</title>
+<meta name="description" content="Mehran's personal game development portfolio. Exploring Unity, C#, Blender, game design and storytelling.">
+<meta name="theme-color" content="#07090e">
 
-<title>Mehran | Game Developer</title>
-<meta name="description" content="The personal portfolio of Mehran, an aspiring indie game developer. Building games and creating experiences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 :root {
     --bg: #07090e;
-    --surface: #10141e;
+    --surface: #101722;
     --blue: #65a9ff;
+    --blue-bright: #82bcff;
     --text: #f3f5fa;
     --muted: #929bad;
-    --border: rgba(255,255,255,.09);
+    --border: rgba(255,255,255,.085);
+    --border-blue: rgba(101,169,255,.25);
+    --container: 1140px;
 }
 
 * {
@@ -28,6 +33,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
 }
 
 body {
@@ -38,14 +44,66 @@ body {
     overflow-x: hidden;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse at 15% 10%,rgba(34,91,166,.09),transparent 40%),
+        radial-gradient(ellipse at 90% 50%,rgba(29,77,143,.07),transparent 40%);
+}
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
 .container {
-    width: min(1100px, 90%);
+    width: min(var(--container),90%);
     margin: auto;
+}
+
+::selection {
+    background: var(--blue);
+    color: #07101d;
+}
+
+/* BACKGROUND */
+
+.background-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    opacity: .17;
+    background-image:
+        linear-gradient(rgba(101,169,255,.07) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(101,169,255,.07) 1px,transparent 1px);
+    background-size: 65px 65px;
+    mask-image: linear-gradient(to bottom,black,transparent 85%);
+}
+
+.noise {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    opacity: .025;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(48,119,207,.055);
+    filter: blur(65px);
+    pointer-events: none;
+    z-index: -1;
+    transform: translate(-50%,-50%);
 }
 
 /* NAVBAR */
@@ -53,38 +111,42 @@ a {
 nav {
     position: sticky;
     top: 0;
-    z-index: 10;
-    background: rgba(7,9,14,.85);
-    backdrop-filter: blur(18px);
+    z-index: 100;
+    background: rgba(7,9,14,.78);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     border-bottom: 1px solid var(--border);
 }
 
 .nav-inner {
-    height: 76px;
+    height: 78px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 23px;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 25px;
     font-weight: 700;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
 }
 
-.logo span {
+.logo span,
+.footer-brand span {
     color: var(--blue);
 }
 
 .nav-links {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 32px;
 }
 
 .nav-links a {
     color: var(--muted);
     font-size: 13px;
+    font-weight: 600;
     transition: .3s;
 }
 
@@ -92,63 +154,86 @@ nav {
     color: var(--blue);
 }
 
+.nav-cta {
+    padding: 10px 17px;
+    border: 1px solid var(--border-blue);
+    border-radius: 7px;
+    color: var(--blue) !important;
+}
+
+.nav-cta:hover {
+    background: rgba(101,169,255,.1);
+}
+
 /* HERO */
 
 .hero {
-    min-height: 650px;
-    display: flex;
+    min-height: 740px;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
     align-items: center;
+    gap: 35px;
     position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 550px;
-    height: 550px;
-    right: -150px;
-    top: 30px;
-    background: radial-gradient(circle,
-        rgba(42,115,220,.19), transparent 68%);
-    pointer-events: none;
+    padding-top: 65px;
+    padding-bottom: 80px;
 }
 
 .hero-content {
     position: relative;
-    z-index: 1;
-    max-width: 750px;
+    z-index: 2;
 }
 
 .tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     color: var(--blue);
-    border: 1px solid rgba(101,169,255,.25);
     background: rgba(101,169,255,.07);
-    padding: 7px 14px;
+    border: 1px solid var(--border-blue);
+    padding: 8px 15px;
     border-radius: 30px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    margin-bottom: 28px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 30px;
+}
+
+.tag-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #64e8a6;
+    box-shadow: 0 0 12px #64e8a6;
 }
 
 .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(48px, 8vw, 82px);
-    line-height: 1.08;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: clamp(48px,6.5vw,82px);
+    line-height: 1.05;
     letter-spacing: -4px;
-    margin-bottom: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
 }
 
-.hero h1 span {
-    color: var(--blue);
+.hero h1 .gradient {
+    background: linear-gradient(110deg,#65a9ff,#b5d8ff,#65a9ff);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: gradientMove 5s linear infinite;
 }
 
-.hero p {
-    color: var(--muted);
-    font-size: 17px;
+@keyframes gradientMove {
+    to { background-position: 200% center; }
+}
+
+.hero-description {
     max-width: 520px;
-    margin-bottom: 34px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 32px;
 }
 
 .buttons {
@@ -158,8 +243,12 @@ nav {
 }
 
 .btn {
-    padding: 12px 23px;
-    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 23px;
+    border-radius: 8px;
     font-size: 13px;
     font-weight: 700;
     transition: .3s;
@@ -168,238 +257,866 @@ nav {
 .btn-primary {
     background: var(--blue);
     color: #07101d;
+    box-shadow: 0 5px 25px rgba(101,169,255,.13);
 }
 
 .btn-primary:hover {
     background: white;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 35px rgba(101,169,255,.25);
 }
 
 .btn-secondary {
     border: 1px solid var(--border);
     color: white;
+    background: rgba(255,255,255,.025);
 }
 
 .btn-secondary:hover {
     border-color: var(--blue);
     color: var(--blue);
+    transform: translateY(-4px);
 }
 
-/* SECTIONS */
+/* 3D HERO VISUAL */
+
+.hero-visual {
+    position: relative;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1100px;
+}
+
+.visual-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(40,105,190,.20);
+    filter: blur(90px);
+}
+
+.scene {
+    position: relative;
+    width: 370px;
+    height: 370px;
+    transform-style: preserve-3d;
+    transform: rotateX(9deg) rotateY(-12deg);
+    animation: sceneFloat 7s ease-in-out infinite;
+}
+
+@keyframes sceneFloat {
+    0%,100% {
+        transform: translateY(0) rotateX(9deg) rotateY(-12deg);
+    }
+    50% {
+        transform: translateY(-15px) rotateX(12deg) rotateY(-6deg);
+    }
+}
+
+.orbit {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    left: 50%;
+    top: 50%;
+    border: 1px solid rgba(101,169,255,.18);
+    border-radius: 50%;
+    transform: translate(-50%,-50%) rotateX(72deg);
+}
+
+.orbit.two {
+    width: 290px;
+    height: 290px;
+    border-color: rgba(101,169,255,.25);
+    transform: translate(-50%,-50%) rotateY(65deg) rotateX(65deg);
+}
+
+.orbit.three {
+    width: 390px;
+    height: 390px;
+    border-style: dashed;
+    border-color: rgba(101,169,255,.11);
+    animation: orbitSpin 25s linear infinite;
+}
+
+@keyframes orbitSpin {
+    to {
+        transform: translate(-50%,-50%) rotateX(72deg) rotate(360deg);
+    }
+}
+
+.core {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) translateZ(25px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%,#c0e2ff 0%,#6baeff 15%,#2565ad 42%,#102744 75%,#080e18 100%);
+    box-shadow:
+        inset -15px -20px 35px rgba(0,0,0,.6),
+        inset 9px 9px 25px rgba(255,255,255,.3),
+        0 0 45px rgba(65,148,255,.35),
+        0 0 100px rgba(65,148,255,.12);
+}
+
+.core::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    border: 1px solid rgba(139,198,255,.35);
+}
+
+.float-card {
+    position: absolute;
+    padding: 15px 18px;
+    background: rgba(15,25,41,.88);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(101,169,255,.22);
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    animation: cardFloat 5s ease-in-out infinite;
+}
+
+.float-card.one {
+    top: 33px;
+    left: -8px;
+}
+
+.float-card.two {
+    right: -25px;
+    bottom: 56px;
+    animation-delay: -2s;
+}
+
+@keyframes cardFloat {
+    0%,100% { transform: translateY(0) translateZ(30px); }
+    50% { transform: translateY(-10px) translateZ(40px); }
+}
+
+.float-card small {
+    color: var(--muted);
+    display: block;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.float-card strong {
+    font-family: 'Space Grotesk',sans-serif;
+    color: var(--blue);
+    font-size: 14px;
+}
+
+.float-icon {
+    color: var(--blue);
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.scene-label {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(150,190,240,.65);
+}
+
+/* INFO STRIP */
+
+.info-strip {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,.012);
+}
+
+.info-item {
+    padding: 27px 15px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+}
+
+.info-item:last-child {
+    border-right: 0;
+}
+
+.info-item strong {
+    display: block;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 15px;
+}
+
+.info-item span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* GENERAL SECTIONS */
 
 section {
-    padding: 100px 0;
+    padding: 110px 0;
     scroll-margin-top: 75px;
 }
 
 .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: var(--blue);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 3px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+}
+
+.section-label::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--blue);
 }
 
 .section-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(30px, 5vw, 43px);
-    letter-spacing: -1.5px;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: clamp(32px,5vw,48px);
+    line-height: 1.15;
+    letter-spacing: -2px;
     margin-bottom: 18px;
+}
+
+.section-title span {
+    color: var(--blue);
 }
 
 .section-description {
     color: var(--muted);
-    max-width: 590px;
+    max-width: 580px;
+    font-size: 14px;
+    line-height: 1.9;
     margin-bottom: 45px;
 }
 
-/* ABOUT */
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 65px;
-    align-items: center;
-}
-
-.about-text p {
-    color: var(--muted);
-    margin-bottom: 17px;
-}
-
-.about-card {
-    padding: 32px;
-    background: linear-gradient(145deg,#121a29,#0d111a);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-}
-
-.about-card h3 {
-    color: var(--blue);
-    margin-bottom: 15px;
-    font-family: 'Space Grotesk', sans-serif;
-}
-
-.about-card p {
-    color: var(--muted);
-    font-size: 14px;
+.section-header {
+    margin-bottom: 45px;
 }
 
 /* SKILLS */
 
-.skills {
+.skills-section {
+    background: linear-gradient(180deg,transparent,rgba(13,22,36,.45),transparent);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 17px;
+}
+
+.skill-card {
+    padding: 26px;
+    border-radius: 13px;
+    background: linear-gradient(145deg,#111a28,#0c111b);
+    border: 1px solid var(--border);
+    transition: .35s;
+}
+
+.skill-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-blue);
+    box-shadow: 0 15px 40px rgba(0,0,0,.22);
+}
+
+.skill-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--blue);
+    background: rgba(101,169,255,.10);
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+.skill-card h3 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.skill-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 17px;
+}
+
+.skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 7px;
 }
 
-.skill {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 13px 20px;
-    border-radius: 8px;
-    color: #dce5f4;
-    font-size: 13px;
-    transition: .3s;
-}
-
-.skill:hover {
-    border-color: var(--blue);
-    transform: translateY(-3px);
+.skill-tags span {
+    color: #c1d5ef;
+    background: rgba(101,169,255,.07);
+    border: 1px solid rgba(101,169,255,.13);
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 10px;
 }
 
 /* PROJECTS */
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(2,1fr);
+    gap: 24px;
 }
 
 .project {
+    position: relative;
+    overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 13px;
-    overflow: hidden;
-    transition: .3s;
+    border-radius: 15px;
+    transition: border-color .4s,box-shadow .4s;
+    transform-style: preserve-3d;
 }
 
 .project:hover {
-    transform: translateY(-6px);
-    border-color: rgba(101,169,255,.45);
+    border-color: rgba(101,169,255,.4);
+    box-shadow: 0 22px 55px rgba(0,0,0,.3);
 }
 
 .project-art {
-    height: 190px;
+    height: 245px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 35px;
+    background: #101a29;
+}
+
+.project-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,rgba(7,9,14,.65),transparent 75%);
+}
+
+.art-text {
+    position: absolute;
+    z-index: 2;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 29px;
     font-weight: 700;
     letter-spacing: 5px;
     color: rgba(255,255,255,.9);
-    background:
-        radial-gradient(circle at 50% 50%,#234b83,transparent 60%),
-        #101827;
+    text-shadow: 0 5px 25px rgba(0,0,0,.5);
 }
 
-.project-art.flappy {
-    background:
-        radial-gradient(circle at 70% 30%,#4a6c9a,transparent 35%),
-        #182335;
+.art-subtitle {
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    left: 23px;
+    color: rgba(255,255,255,.65);
+    font-size: 9px;
+    letter-spacing: 2.5px;
 }
 
-.project-art.hollow {
-    background:
-        radial-gradient(circle at 50% 70%,#493d65,transparent 50%),
-        #11101c;
+/* PONG */
+
+.art-pong {
+    background: radial-gradient(circle at 50% 50%,rgba(56,120,200,.32),transparent 45%),linear-gradient(135deg,#101d30,#080d16);
 }
+
+.pong-line {
+    position: absolute;
+    height: 70%;
+    width: 1px;
+    border-left: 2px dashed rgba(255,255,255,.22);
+}
+
+.pong-ball {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 25px var(--blue);
+    animation: pongMove 3s ease-in-out infinite alternate;
+}
+
+.pong-paddle {
+    position: absolute;
+    width: 7px;
+    height: 65px;
+    border-radius: 5px;
+    background: var(--blue);
+    box-shadow: 0 0 20px rgba(101,169,255,.5);
+}
+
+.pong-paddle.left { left: 22%; }
+.pong-paddle.right { right: 22%; }
+
+@keyframes pongMove {
+    from { transform: translate(-40px,-40px); }
+    to { transform: translate(40px,40px); }
+}
+
+/* FLAPPY */
+
+.art-flappy {
+    background: radial-gradient(circle at 75% 25%,rgba(110,155,210,.25),transparent 28%),linear-gradient(145deg,#162b43,#0b1321);
+}
+
+.flappy-bird {
+    position: absolute;
+    width: 38px;
+    height: 30px;
+    border-radius: 50% 48% 40% 45%;
+    background: #ffcf69;
+    box-shadow: 0 0 25px rgba(255,207,105,.22);
+    left: 34%;
+    top: 40%;
+    animation: birdFloat 2s ease-in-out infinite;
+}
+
+.flappy-bird::after {
+    content: "";
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 6px;
+    height: 6px;
+    background: #101827;
+    border-radius: 50%;
+}
+
+@keyframes birdFloat {
+    50% { transform: translateY(-12px) rotate(-8deg); }
+}
+
+.pipe {
+    position: absolute;
+    width: 32px;
+    height: 100px;
+    background: linear-gradient(90deg,#376b69,#6ab29d,#28564f);
+    border-radius: 5px;
+}
+
+.pipe.top { right: 21%; top: -14px; }
+.pipe.bottom { right: 21%; bottom: -15px; }
+
+/* TRUST NO ONE */
+
+.art-trust {
+    background: radial-gradient(ellipse at center,rgba(107,98,169,.25),transparent 50%),linear-gradient(145deg,#151326,#090b14);
+}
+
+.trust-door {
+    position: absolute;
+    width: 105px;
+    height: 155px;
+    bottom: 0;
+    border: 2px solid rgba(172,162,220,.5);
+    border-bottom: 0;
+    background: linear-gradient(90deg,#171526,#30304d,#12111e);
+    box-shadow: 0 0 50px rgba(112,101,187,.18);
+}
+
+.trust-light {
+    position: absolute;
+    width: 150px;
+    height: 170px;
+    bottom: -45px;
+    background: rgba(125,107,214,.16);
+    filter: blur(35px);
+}
+
+.trust-eye {
+    position: absolute;
+    top: 42%;
+    font-size: 29px;
+    color: #d8d5ff;
+    text-shadow: 0 0 25px #a79cff;
+}
+
+/* HOLLOW HILL */
+
+.art-hollow {
+    background: radial-gradient(ellipse at 50% 80%,rgba(112,78,160,.26),transparent 45%),linear-gradient(180deg,#141321,#090a11);
+}
+
+.moon {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: #d7d7ec;
+    border-radius: 50%;
+    top: 25px;
+    right: 55px;
+    box-shadow: 0 0 45px rgba(204,204,255,.32);
+}
+
+.hill {
+    position: absolute;
+    bottom: -75px;
+    width: 360px;
+    height: 145px;
+    background: #151926;
+    border-radius: 50% 50% 0 0;
+}
+
+.hill.two {
+    bottom: -100px;
+    left: -100px;
+    background: #0e131e;
+}
+
+.candle {
+    position: absolute;
+    bottom: 32px;
+    width: 12px;
+    height: 35px;
+    background: #c9c1a6;
+    border-radius: 2px;
+}
+
+.candle::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 13px;
+    top: -12px;
+    left: 2px;
+    background: #ffbc69;
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 0 0 25px 9px rgba(255,177,91,.32);
+}
+
+.candle.one { left: 25%; }
+.candle.two { left: 65%; }
 
 .project-info {
-    padding: 24px;
+    padding: 26px;
 }
 
-.project-info h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 21px;
-    margin-bottom: 8px;
-}
-
-.project-info p {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 17px;
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .project-status {
     color: var(--blue);
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.project-category {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.project-info h3 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.project-info p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.project-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+    padding-top: 16px;
+}
+
+.project-tech {
+    color: #b8cce8;
+    font-size: 10px;
+}
+
+.project-number {
+    color: rgba(101,169,255,.5);
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 13px;
 }
 
 /* JOURNEY */
 
-.journey-box {
-    border-left: 2px solid var(--blue);
-    padding: 8px 0 8px 27px;
-    margin-bottom: 28px;
+.journey-layout {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 80px;
 }
 
-.journey-box h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
+.journey-intro {
+    position: sticky;
+    top: 130px;
+    align-self: start;
 }
 
-.journey-box p {
+.journey-intro p {
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.timeline {
+    border-left: 1px solid rgba(101,169,255,.35);
+    padding-left: 30px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 43px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    left: -36px;
+    top: 7px;
+    background: var(--blue);
+    border: 3px solid #111a28;
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(101,169,255,.4);
+}
+
+.timeline-item small {
+    color: var(--blue);
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+}
+
+.timeline-item h3 {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.timeline-item p {
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 480px;
+    line-height: 1.9;
+}
+
+/* FUTURE VISION */
+
+.vision-card {
+    position: relative;
+    overflow: hidden;
+    padding: 55px;
+    border: 1px solid var(--border-blue);
+    border-radius: 18px;
+    background:
+        radial-gradient(ellipse at 100% 0%,rgba(48,112,193,.18),transparent 45%),
+        linear-gradient(135deg,#121e30,#0b101a);
+}
+
+.vision-card::after {
+    content: "GAME";
+    position: absolute;
+    right: -15px;
+    bottom: -75px;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 190px;
+    font-weight: 700;
+    color: rgba(101,169,255,.035);
+    pointer-events: none;
+}
+
+.vision-card h2 {
+    position: relative;
+    z-index: 1;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: clamp(30px,4vw,44px);
+    letter-spacing: -2px;
+    max-width: 650px;
+    margin-bottom: 15px;
+}
+
+.vision-card h2 span {
+    color: var(--blue);
+}
+
+.vision-card p {
+    position: relative;
+    z-index: 1;
+    color: var(--muted);
+    max-width: 600px;
+    font-size: 13px;
 }
 
 /* CONTACT */
 
 .contact-card {
+    position: relative;
+    overflow: hidden;
     text-align: center;
-    padding: 65px 25px;
+    padding: 85px 25px;
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 18px;
     background:
-        radial-gradient(ellipse at top,rgba(46,107,185,.18),transparent 65%),
-        #0d111a;
+        radial-gradient(ellipse at 50% 0%,rgba(49,115,193,.22),transparent 65%),
+        #0d121c;
+}
+
+.contact-card::before,
+.contact-card::after {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border: 1px solid rgba(101,169,255,.12);
+    border-radius: 50%;
+}
+
+.contact-card::before {
+    top: -120px;
+    left: 12%;
+}
+
+.contact-card::after {
+    bottom: -120px;
+    right: 12%;
+}
+
+.contact-card .section-label {
+    justify-content: center;
+}
+
+.contact-card .section-title {
+    max-width: 700px;
+    margin: 0 auto 17px;
 }
 
 .contact-card p {
     color: var(--muted);
-    margin: 10px auto 27px;
-    max-width: 450px;
+    max-width: 480px;
+    font-size: 13px;
+    margin: 0 auto 28px;
+}
+
+.contact-card .btn {
+    position: relative;
+    z-index: 2;
 }
 
 /* FOOTER */
 
 footer {
     border-top: 1px solid var(--border);
-    padding: 28px 0;
-    text-align: center;
+    padding: 35px 0;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-brand {
+    font-family: 'Space Grotesk',sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.footer-copy {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
+    text-align: right;
 }
 
-footer span {
-    color: var(--blue);
+/* REVEAL ANIMATION */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .8s ease,transform .8s ease;
 }
 
-/* MOBILE */
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: .12s; }
+.delay-2 { transition-delay: .22s; }
+.delay-3 { transition-delay: .32s; }
+
+/* RESPONSIVE */
+
+@media(max-width:950px) {
+    .hero {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .hero h1 { font-size: 60px; }
+
+    .scene { transform: scale(.82); }
+
+    .skills-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .journey-layout { gap: 45px; }
+}
 
 @media(max-width:700px) {
+    .container {
+        width: min(92%,550px);
+    }
+
     .nav-inner {
         height: auto;
-        min-height: 70px;
+        min-height: 75px;
         flex-direction: column;
         justify-content: center;
         gap: 12px;
-        padding: 12px 0;
+        padding: 13px 0;
     }
+
+    .logo { font-size: 23px; }
 
     .nav-links {
         gap: 17px;
@@ -407,30 +1124,95 @@ footer span {
         justify-content: center;
     }
 
-    .nav-links a {
-        font-size: 11px;
-    }
+    .nav-links a { font-size: 10px; }
+    .nav-cta { padding: 6px 10px; }
 
     .hero {
-        min-height: 570px;
+        grid-template-columns: 1fr;
+        padding-top: 85px;
+        padding-bottom: 65px;
+        min-height: auto;
     }
 
     .hero h1 {
-        letter-spacing: -2px;
+        font-size: clamp(45px,12vw,67px);
+        letter-spacing: -2.8px;
     }
 
-    section {
-        padding: 75px 0;
+    .hero-description { font-size: 14px; }
+
+    .hero-visual {
+        height: 390px;
+        margin-top: 10px;
     }
 
-    .about-grid,
+    .scene {
+        transform: scale(.85) rotateX(9deg) rotateY(-12deg);
+    }
+
+    .info-strip {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .info-item:nth-child(2) { border-right: 0; }
+
+    .info-item:nth-child(1),
+    .info-item:nth-child(2) {
+        border-bottom: 1px solid var(--border);
+    }
+
+    section { padding: 80px 0; }
+
+    .journey-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .skills-grid,
     .project-grid {
         grid-template-columns: 1fr;
-        gap: 25px;
     }
 
-    .about-grid {
-        gap: 30px;
+    .skill-card { padding: 23px; }
+    .project-art { height: 220px; }
+    .journey-intro { position: static; }
+
+    .vision-card { padding: 35px 25px; }
+
+    .vision-card::after { font-size: 110px; }
+
+    .contact-card { padding: 65px 20px; }
+
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-copy { text-align: center; }
+}
+
+@media(max-width:380px) {
+    .nav-links { gap: 12px; }
+    .hero h1 { font-size: 42px; }
+    .hero-visual { transform: scale(.9); }
+
+    .buttons { flex-direction: column; }
+    .btn { width: 100%; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
     }
 }
 </style>
@@ -438,8 +1220,15 @@ footer span {
 
 <body>
 
+<div class="background-grid"></div>
+<div class="noise"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAVIGATION -->
+
 <nav>
     <div class="container nav-inner">
+
         <a href="#" class="logo">MEHRAN<span>.</span></a>
 
         <div class="nav-links">
@@ -447,265 +1236,691 @@ footer span {
             <a href="about.html">About</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <a href="#journey">Journey</a>
+            <a href="#contact" class="nav-cta">Contact ↗</a>
         </div>
+
     </div>
 </nav>
 
 <!-- HERO -->
 
 <header class="hero container" id="home">
+
     <div class="hero-content">
 
-        <div class="tag">✦ ASPIRING INDIE GAME DEVELOPER</div>
+        <div class="tag">
+            <span class="tag-dot"></span>
+            ASPIRING INDIE GAME DEVELOPER
+        </div>
 
         <h1>
-            I BUILD WORLDS.<br>
-            I CREATE <span>EXPERIENCES.</span>
+            I BUILD<br>
+            WORLDS.<br>
+            I CREATE<br>
+            <span class="gradient">EXPERIENCES.</span>
         </h1>
 
-        <p>
-            Hey, I'm Mehran. A game developer in progress,
-            learning to turn imagination into interactive
-            experiences, one project at a time.
+        <p class="hero-description">
+            Hey, I'm Mehran.
+
+            I'm exploring the world of game development,
+            turning imagination into interactive experiences,
+            and learning something new with every project.
         </p>
 
         <div class="buttons">
+
             <a href="#projects" class="btn btn-primary">
-                Explore My Work ↗
+                Explore My Work <span>↗</span>
             </a>
 
             <a href="about.html" class="btn btn-secondary">
-            Discover My Story
+                Discover My Story ↗
             </a>
+
         </div>
 
     </div>
+
+    <!-- 3D VISUAL -->
+
+    <div class="hero-visual">
+
+        <div class="visual-glow"></div>
+
+        <div class="scene">
+
+            <div class="orbit"></div>
+            <div class="orbit two"></div>
+            <div class="orbit three"></div>
+
+            <div class="core"></div>
+
+            <div class="float-card one">
+                <small>GAME DEVELOPMENT</small>
+                <strong>
+                    <span class="float-icon">✦</span>
+                    CREATE WORLDS
+                </strong>
+            </div>
+
+            <div class="float-card two">
+                <small>CURRENT TOOLKIT</small>
+                <strong>UNITY / C#</strong>
+            </div>
+
+        </div>
+
+        <div class="scene-label">
+            IMAGINATION → INTERACTION
+        </div>
+
+    </div>
+
 </header>
 
-<!-- ABOUT -->
+<!-- INFO STRIP -->
 
-<section id="about">
-    <div class="container">
+<div class="container">
 
-        <div class="section-label">01 / ABOUT ME</div>
-        <h2 class="section-title">More Than Just Code.</h2>
+    <div class="info-strip">
 
-        <div class="about-grid">
-
-            <div class="about-text">
-                <p>
-                    I'm Mehran, an aspiring indie game developer
-                    who believes that games are more than just
-                    mechanics and code.
-                </p>
-
-                <p>
-                    I love creating worlds, designing experiences
-                    and telling stories that players can feel.
-                    Every project teaches me something new.
-                </p>
-
-                <p>
-                    Currently exploring game development,
-                    programming, 3D art and creative design.
-                </p>
-            </div>
-
-            <div class="about-card">
-                <h3>My Philosophy.</h3>
-                <p>
-                    Learn constantly. Create fearlessly.
-                    Pay attention to the little details.
-                    Never stop experimenting.
-                </p>
-                <br>
-                <p>
-                    The journey matters as much as the final game.
-                </p>
-            </div>
-
+        <div class="info-item">
+            <strong>Unity</strong>
+            <span>Game Engine</span>
         </div>
+
+        <div class="info-item">
+            <strong>C#</strong>
+            <span>Programming</span>
+        </div>
+
+        <div class="info-item">
+            <strong>Blender</strong>
+            <span>3D Exploration</span>
+        </div>
+
+        <div class="info-item">
+            <strong>Storytelling</strong>
+            <span>Creative Direction</span>
+        </div>
+
     </div>
-</section>
+
+</div>
 
 <!-- SKILLS -->
 
-<section id="skills">
+<section class="skills-section" id="skills">
+
     <div class="container">
 
-        <div class="section-label">02 / MY TOOLKIT</div>
-        <h2 class="section-title">Things I'm Learning.</h2>
+        <div class="section-label reveal">
+            01 / MY TOOLKIT
+        </div>
 
-        <p class="section-description">
-            The tools and skills I'm exploring to bring
-            my ideas to life.
-        </p>
+        <div class="section-header reveal">
 
-        <div class="skills">
-            <div class="skill">Unity</div>
-            <div class="skill">C#</div>
-            <div class="skill">Blender</div>
-            <div class="skill">Game Design</div>
-            <div class="skill">UI Design</div>
-            <div class="skill">Level Design</div>
-            <div class="skill">Storytelling</div>
-            <div class="skill">Git & GitHub</div>
+            <h2 class="section-title">
+                Learning The <span>Craft.</span>
+            </h2>
+
+            <p class="section-description">
+                The tools, technologies and creative
+                skills I'm exploring to bring my
+                game ideas to life.
+            </p>
+
+        </div>
+
+        <div class="skills-grid">
+
+            <div class="skill-card reveal">
+                <div class="skill-icon">◈</div>
+                <h3>Game Development</h3>
+                <p>Exploring gameplay systems, mechanics and interactive experiences.</p>
+                <div class="skill-tags">
+                    <span>Unity</span>
+                    <span>Game Mechanics</span>
+                    <span>Prototyping</span>
+                </div>
+            </div>
+
+            <div class="skill-card reveal delay-1">
+                <div class="skill-icon">⌘</div>
+                <h3>Programming</h3>
+                <p>Learning how code brings game mechanics and systems to life.</p>
+                <div class="skill-tags">
+                    <span>C#</span>
+                    <span>Logic</span>
+                    <span>OOP</span>
+                </div>
+            </div>
+
+            <div class="skill-card reveal delay-2">
+                <div class="skill-icon">◇</div>
+                <h3>3D Art</h3>
+                <p>Exploring modelling, visual design and game-ready 3D assets.</p>
+                <div class="skill-tags">
+                    <span>Blender</span>
+                    <span>Modelling</span>
+                    <span>3D Design</span>
+                </div>
+            </div>
+
+            <div class="skill-card reveal">
+                <div class="skill-icon">▧</div>
+                <h3>UI Design</h3>
+                <p>Thinking about clean interfaces, visual hierarchy and player experience.</p>
+                <div class="skill-tags">
+                    <span>UI</span>
+                    <span>UX</span>
+                    <span>Visual Design</span>
+                </div>
+            </div>
+
+            <div class="skill-card reveal delay-1">
+                <div class="skill-icon">✧</div>
+                <h3>Game Design</h3>
+                <p>Exploring level design, gameplay loops and interesting challenges.</p>
+                <div class="skill-tags">
+                    <span>Level Design</span>
+                    <span>Game Design</span>
+                    <span>Mechanics</span>
+                </div>
+            </div>
+
+            <div class="skill-card reveal delay-2">
+                <div class="skill-icon">✎</div>
+                <h3>Storytelling</h3>
+                <p>Developing ideas, characters, atmosphere and experiences.</p>
+                <div class="skill-tags">
+                    <span>Writing</span>
+                    <span>Worldbuilding</span>
+                    <span>Creative Ideas</span>
+                </div>
+            </div>
+
         </div>
 
     </div>
+
 </section>
 
 <!-- PROJECTS -->
 
 <section id="projects">
+
     <div class="container">
 
-        <div class="section-label">03 / SELECTED WORK</div>
-        <h2 class="section-title">Things I've Created.</h2>
+        <div class="section-label reveal">
+            02 / SELECTED WORK
+        </div>
 
-        <p class="section-description">
-            Every game starts with an idea.
-            Here are some of my experiments and creations.
-        </p>
+        <div class="section-header reveal">
+
+            <h2 class="section-title">
+                Ideas Into <span>Reality.</span>
+            </h2>
+
+            <p class="section-description">
+                Every project starts with an idea.
+                These are some of my experiments,
+                creations and concepts.
+            </p>
+
+        </div>
 
         <div class="project-grid">
 
-            <article class="project">
-                <div class="project-art">PONG</div>
+            <!-- PONG -->
+
+            <article class="project reveal">
+
+                <div class="project-art art-pong">
+
+                    <div class="pong-line"></div>
+                    <div class="pong-paddle left"></div>
+                    <div class="pong-paddle right"></div>
+                    <div class="pong-ball"></div>
+
+                    <div class="art-text">PONG.</div>
+
+                    <div class="art-subtitle">
+                        CLASSIC ARCADE EXPERIENCE
+                    </div>
+
+                </div>
+
                 <div class="project-info">
-                    <div class="project-status">COMPLETED PROJECT</div>
+
+                    <div class="project-top">
+                        <span class="project-status">● COMPLETED</span>
+                        <span class="project-category">2D / ARCADE</span>
+                    </div>
+
                     <h3>Pong</h3>
+
                     <p>
-                        A classic arcade experience recreated
-                        while exploring game mechanics,
-                        scoring and UI.
+                        A recreation of the classic arcade
+                        experience. Built while learning
+                        movement, collision, scoring,
+                        AI opponent behaviour and UI systems.
                     </p>
+
+                    <div class="project-bottom">
+                        <span class="project-tech">Unity · C#</span>
+                        <span class="project-number">01</span>
+                    </div>
+
                 </div>
             </article>
 
-            <article class="project">
-                <div class="project-art">Trust No One</div>
+            <!-- FLAPPY BIRD -->
+
+            <article class="project reveal delay-1">
+
+                <div class="project-art art-flappy">
+
+                    <div class="pipe top"></div>
+                    <div class="pipe bottom"></div>
+                    <div class="flappy-bird"></div>
+
+                    <div class="art-text">FLAPPY.</div>
+
+                    <div class="art-subtitle">
+                        SIMPLE GAMEPLAY / BIG CHALLENGE
+                    </div>
+
+                </div>
+
                 <div class="project-info">
-                    <div class="project-status">Pending PROJECT</div>
+
+                    <div class="project-top">
+                        <span class="project-status">● COMPLETED</span>
+                        <span class="project-category">2D / ARCADE</span>
+                    </div>
+
+                    <h3>Flappy Bird</h3>
+
+                    <p>
+                        A small arcade project focused on
+                        timing, movement, obstacles,
+                        collision detection and the
+                        core gameplay loop.
+                    </p>
+
+                    <div class="project-bottom">
+                        <span class="project-tech">Unity · C#</span>
+                        <span class="project-number">02</span>
+                    </div>
+
+                </div>
+            </article>
+
+            <!-- TRUST NO ONE -->
+
+            <article class="project reveal">
+
+                <div class="project-art art-trust">
+
+                    <div class="trust-light"></div>
+                    <div class="trust-door"></div>
+                    <div class="trust-eye">?</div>
+
+                    <div class="art-text">TRUST NO ONE</div>
+
+                    <div class="art-subtitle">
+                        A VOICE. A HOUSE. A MYSTERY.
+                    </div>
+
+                </div>
+
+                <div class="project-info">
+
+                    <div class="project-top">
+                        <span class="project-status">◉ IN PROGRESS</span>
+                        <span class="project-category">3D / PUZZLE</span>
+                    </div>
+
                     <h3>Trust No One</h3>
+
                     <p>
-                        A simple but challenging arcade project
-                        built to understand movement,
-                        obstacles and gameplay loops.
+                        A first-person puzzle-house game concept
+                        created for Brackeys Game Jam 2026.2.
+                        A mysterious voice guides the player,
+                        but can it really be trusted?
                     </p>
+
+                    <div class="project-bottom">
+                        <span class="project-tech">Unity · 3D</span>
+                        <span class="project-number">03</span>
+                    </div>
+
                 </div>
             </article>
 
-            <article class="project">
-                <div class="project-art hollow">HOLLOW HILL</div>
+            <!-- HOLLOW HILL -->
+
+            <article class="project reveal delay-1">
+
+                <div class="project-art art-hollow">
+
+                    <div class="moon"></div>
+                    <div class="hill two"></div>
+                    <div class="hill"></div>
+                    <div class="candle one"></div>
+                    <div class="candle two"></div>
+
+                    <div class="art-text">HOLLOW HILL</div>
+
+                    <div class="art-subtitle">
+                        KEEP THE LIGHTS ALIVE
+                    </div>
+
+                </div>
+
                 <div class="project-info">
-                    <div class="project-status">IN DEVELOPMENT</div>
+
+                    <div class="project-top">
+                        <span class="project-status">◌ GAME CONCEPT</span>
+                        <span class="project-category">HORROR / ATMOSPHERIC</span>
+                    </div>
+
                     <h3>Hollow Hill</h3>
-                    <p>
-                        A dark atmospheric horror game concept
-                        involving mysterious creatures,
-                        candles and survival.
-                    </p>
-                </div>
-            </article>
 
-            <article class="project">
-                <div class="project-art">NEXT?</div>
-                <div class="project-info">
-                    <div class="project-status">COMING SOON</div>
-                    <h3>Something New</h3>
                     <p>
-                        New ideas, new experiments and
-                        more worlds waiting to be created.
+                        An atmospheric horror concept about
+                        keeping six lights burning while
+                        mysterious creatures move through
+                        a dark farm. Featuring a mysterious
+                        scarecrow named Stitch.
                     </p>
+
+                    <div class="project-bottom">
+                        <span class="project-tech">Game Design · Storytelling</span>
+                        <span class="project-number">04</span>
+                    </div>
+
                 </div>
             </article>
 
         </div>
+
     </div>
+
 </section>
 
 <!-- JOURNEY -->
 
 <section id="journey">
+
     <div class="container">
 
-        <div class="section-label">04 / THE PROCESS</div>
-        <h2 class="section-title">My Journey.</h2>
+        <div class="journey-layout">
 
-        <p class="section-description">
-            Not an overnight success story.
-            Just a developer learning, building and improving.
-        </p>
+            <div class="journey-intro reveal">
 
-        <div class="journey-box">
-            <h3>The Beginning</h3>
-            <p>
-                Started exploring game development and
-                learning how games are made.
-            </p>
-        </div>
+                <div class="section-label">
+                    03 / THE PROCESS
+                </div>
 
-        <div class="journey-box">
-            <h3>Learning & Building</h3>
-            <p>
-                Exploring Unity, C#, Blender and
-                creating small playable projects.
-            </p>
-        </div>
+                <h2 class="section-title">
+                    My <span>Journey.</span>
+                </h2>
 
-        <div class="journey-box">
-            <h3>The Road Ahead</h3>
-            <p>
-                Building original games and eventually
-                creating an indie game studio.
-            </p>
+                <p>
+                    Not an overnight success story.
+                    Just a developer improving skills,
+                    building projects and moving forward
+                    one step at a time.
+                </p>
+
+            </div>
+
+            <div class="timeline">
+
+                <div class="timeline-item reveal">
+                    <small>THE BEGINNING</small>
+                    <h3>Discovering Game Development</h3>
+                    <p>
+                        Started exploring how games are made,
+                        understanding the basics and discovering
+                        the creative possibilities of game development.
+                    </p>
+                </div>
+
+                <div class="timeline-item reveal delay-1">
+                    <small>LEARNING PHASE</small>
+                    <h3>Building My First Projects</h3>
+                    <p>
+                        Exploring Unity, C#, Blender and UI design.
+                        Creating smaller games and experiments
+                        to understand the development process.
+                    </p>
+                </div>
+
+                <div class="timeline-item reveal delay-2">
+                    <small>THE PRESENT</small>
+                    <h3>Becoming Better Every Day</h3>
+                    <p>
+                        Improving programming skills, developing
+                        original ideas and understanding how
+                        to create better gaming experiences.
+                    </p>
+                </div>
+
+                <div class="timeline-item reveal delay-3">
+                    <small>THE ROAD AHEAD</small>
+                    <h3>Building Original Worlds</h3>
+                    <p>
+                        The long-term goal is to create original
+                        indie games, collaborate with creative people
+                        and eventually build an indie game studio.
+                    </p>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
+
+</section>
+
+<!-- FUTURE VISION -->
+
+<section>
+
+    <div class="container">
+
+        <div class="vision-card reveal">
+
+            <div class="section-label">
+                04 / THE BIGGER PICTURE
+            </div>
+
+            <h2>
+                One Day, <span>My Own Worlds.</span>
+            </h2>
+
+            <p>
+                The goal isn't simply to make games.
+                It's to build experiences, create meaningful
+                stories, work with talented people and
+                bring original ideas to life.
+            </p>
+
+        </div>
+
+    </div>
+
 </section>
 
 <!-- CONTACT -->
 
 <section id="contact">
+
     <div class="container">
 
-        <div class="contact-card">
-            <div class="section-label">05 / LET'S CONNECT</div>
+        <div class="contact-card reveal">
+
+            <div class="section-label">
+                05 / LET'S CONNECT
+            </div>
 
             <h2 class="section-title">
-                Have an Idea? Let's Create.
+                Have an Idea?<br>
+                Let's <span>Create.</span>
             </h2>
 
             <p>
                 Interested in games, creative projects
-                or collaboration? Let's connect and
-                build something meaningful.
+                or following my development journey?
+                Let's connect.
             </p>
 
-            <a href="https://github.com/"
-               class="btn btn-primary"
-               target="_blank"
-               rel="noopener">
+            <!-- ORIGINAL GITHUB LINK PRESERVED -->
+
+            <a
+                href="https://github.com/"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener"
+            >
                 Find Me on GitHub ↗
             </a>
+
         </div>
 
     </div>
+
 </section>
 
+<!-- FOOTER -->
+
 <footer>
-    <div class="container">
-        Designed & Built with <span>♥</span> by Mehran.
-        <br>
-        © <span id="year"></span> Mehran. All rights reserved.
+
+    <div class="container footer-inner">
+
+        <div class="footer-brand">
+            MEHRAN<span>.</span>
+        </div>
+
+        <div class="footer-copy">
+            Designed & Built with ♥ by Mehran.
+            <br>
+            © <span id="year"></span>
+            Mehran. All rights reserved.
+        </div>
+
     </div>
+
 </footer>
 
+<!-- JAVASCRIPT -->
+
 <script>
+
+/* Dynamic copyright year */
+
 document.getElementById("year").textContent =
     new Date().getFullYear();
+
+
+/* Reveal elements on scroll */
+
+const revealObserver = new IntersectionObserver(
+
+    (entries, observer) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+
+    { threshold: 0.12 }
+
+);
+
+document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+});
+
+
+/* Cursor ambient lighting */
+
+const glow = document.getElementById("cursorGlow");
+
+if (
+    window.matchMedia("(pointer: fine)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+
+    document.addEventListener("mousemove", event => {
+
+        glow.style.left = event.clientX + "px";
+        glow.style.top = event.clientY + "px";
+
+    });
+
+}
+
+
+/* 3D project card tilt */
+
+const projects = document.querySelectorAll(".project");
+
+const canHover = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+).matches;
+
+const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (canHover && !reduceMotion) {
+
+    projects.forEach(project => {
+
+        project.addEventListener("mousemove", event => {
+
+            const rect = project.getBoundingClientRect();
+
+            const x =
+                (event.clientX - rect.left) / rect.width;
+
+            const y =
+                (event.clientY - rect.top) / rect.height;
+
+            const rotateY = (x - 0.5) * 5;
+            const rotateX = (0.5 - y) * 5;
+
+            project.style.transform =
+                `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+
+        });
+
+        project.addEventListener("mouseleave", () => {
+
+            project.style.transform =
+                "perspective(900px) rotateX(0) rotateY(0) translateY(0)";
+
+        });
+
+    });
+
+}
+
 </script>
 
 </body>
