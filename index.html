@@ -31,6 +31,7 @@
     --ease: cubic-bezier(.2,.8,.2,1);
 }
 
+/* RESET */
 * { 
     margin: 0; 
     padding: 0; 
@@ -280,6 +281,47 @@ section { padding: 90px 0; }
 .project-link-label { margin-left: auto; color: var(--blue); transition: color .2s; }
 .project-link:hover .project-link-label { color: var(--yellow); }
 .project-number { color: rgba(101,169,255,.5); font-size: 9px; }
+
+/* ALL WORKS BUTTON WRAPPER */
+.all-works-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.btn-all-works {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, rgba(101,169,255,.18), rgba(21,31,46,.95));
+    border: 2px solid var(--blue);
+    color: var(--text);
+    font-family: var(--pixel-head);
+    font-size: 11px;
+    letter-spacing: 1px;
+    box-shadow: 5px 5px 0 #000, 0 0 25px rgba(101,169,255,.15);
+    backdrop-filter: blur(8px);
+    transition: all .25s var(--ease);
+}
+
+.btn-all-works:hover {
+    background: var(--blue);
+    color: #07101d;
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--yellow), 0 0 35px rgba(101,169,255,.45);
+}
+
+.btn-all-works span {
+    color: var(--yellow);
+    font-size: 14px;
+    transition: transform .25s var(--ease);
+}
+
+.btn-all-works:hover span {
+    color: #07101d;
+    transform: translateX(5px);
+}
 
 /* Skills Section */
 .skills-section { background: linear-gradient(180deg, transparent, rgba(13,22,36,.5), transparent); }
@@ -563,6 +605,13 @@ footer { border-top: 2px solid var(--border); padding: 25px 0; }
                 </article>
             </a>
         </div>
+
+        <!-- ALL WORKS BUTTON -->
+        <div class="all-works-wrap reveal">
+            <a href="project.html" class="btn-all-works">
+                VIEW ALL PROJECTS <span>➔</span>
+            </a>
+        </div>
     </div>
 </section>
 
@@ -681,17 +730,23 @@ footer { border-top: 2px solid var(--border); padding: 25px 0; }
 </footer>
 
 <script>
+// Year
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.classList.add("visible");
-            observer.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.1 });
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+// Intersection Observer for scroll reveal
+if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+} else {
+    document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+}
 
 // Custom Pixel Cursor
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -727,7 +782,7 @@ if (canHover && !reduceMotion) {
         if (!frame) frame = requestAnimationFrame(renderCursor);
     }, { passive: true });
 
-    document.querySelectorAll("a, button, .project, .skill-card").forEach(el => {
+    document.querySelectorAll("a, button, .project, .skill-card, .btn-all-works").forEach(el => {
         el.addEventListener("pointerenter", () => { ring.classList.add("hover"); dot.classList.add("hover"); });
         el.addEventListener("pointerleave", () => { ring.classList.remove("hover"); dot.classList.remove("hover"); });
     });
