@@ -1,66 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Mehran | Indie Game Developer</title>
 <meta name="description" content="Mehran's personal game development portfolio. Exploring Unity, C#, Blender, game design and storytelling.">
 <meta name="theme-color" content="#07090e">
 
-<!-- FONTS -->
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
 
-<script>
-document.documentElement.classList.add("js");
-</script>
+<script>document.documentElement.classList.add("js");</script>
 
 <style>
-
-/* =========================================
-   01. ROOT & RESET
-========================================= */
-
 :root {
     --bg: #07090e;
     --surface: #101722;
-    --surface-light: #151f2e;
-
     --blue: #65a9ff;
-    --blue-bright: #82bcff;
-    --blue-dark: #2473d3;
-
-    --cyan: #54e5ff;
-    --purple: #a78bfa;
-    --pink: #ff83bb;
     --yellow: #ffd166;
     --red: #ff7777;
-
     --text: #f3f5fa;
     --muted: #929bad;
-
     --border: rgba(255,255,255,.085);
     --border-blue: rgba(101,169,255,.25);
-
-    --container: 1140px;
     --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 95px;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 95px; }
 body {
     background: var(--bg);
     color: var(--text);
@@ -68,3469 +38,680 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
 }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1140px, 90%); margin: auto; }
+::selection { background: var(--blue); color: #07101d; }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.container {
-    width: min(var(--container), 90%);
-    margin: auto;
-}
-
-::selection {
-    background: var(--blue);
-    color: #07101d;
-}
-
-
-/* =========================================
-   02. BACKGROUND
-========================================= */
-
+/* Backgrounds & Noise */
 body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-
-    background:
-        radial-gradient(
-            ellipse at 15% 10%,
-            rgba(34,91,166,.09),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 90% 50%,
-            rgba(29,77,143,.07),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 50% 100%,
-            rgba(29,77,143,.06),
-            transparent 45%
-        );
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background: 
+        radial-gradient(ellipse at 15% 10%, rgba(34,91,166,.09), transparent 40%),
+        radial-gradient(ellipse at 90% 50%, rgba(29,77,143,.07), transparent 40%),
+        radial-gradient(ellipse at 50% 100%, rgba(29,77,143,.06), transparent 45%);
 }
-
 .background-grid {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -2;
-    opacity: .15;
-
-    background-image:
-        linear-gradient(rgba(101,169,255,.07) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(101,169,255,.07) 1px,transparent 1px);
-
+    position: fixed; inset: 0; pointer-events: none; z-index: -2; opacity: .15;
+    background-image: linear-gradient(rgba(101,169,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(101,169,255,.07) 1px, transparent 1px);
     background-size: 65px 65px;
-
-    mask-image: linear-gradient(
-        to bottom,
-        black,
-        transparent 85%
-    );
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
-
 .noise {
-    position: fixed;
-    inset: 0;
-    z-index: 20;
-    opacity: .02;
-    pointer-events: none;
-
+    position: fixed; inset: 0; z-index: 20; opacity: .02; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 }
 
-
-/* =========================================
-   03. MULTICOLOUR CUSTOM CURSOR
-========================================= */
-
+/* Custom Cursor */
+.cursor-glow, .cursor-ring, .cursor-dot {
+    position: fixed; left: 0; top: 0; pointer-events: none; opacity: 0; transform: translate3d(-50%,-50%,0);
+}
 .cursor-glow {
-    position: fixed;
-    width: 340px;
-    height: 340px;
-    left: 0;
-    top: 0;
-
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle,
-        rgba(101,169,255,.16) 0%,
-        rgba(84,229,255,.09) 25%,
-        rgba(167,139,250,.08) 45%,
-        rgba(255,131,187,.045) 65%,
-        transparent 75%
-    );
-
-    filter: blur(45px);
-    pointer-events: none;
-    z-index: 9996;
-
-    opacity: 0;
-    transform: translate3d(-50%,-50%,0);
-
-    transition: opacity .3s ease;
-    mix-blend-mode: screen;
+    width: 340px; height: 340px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(101,169,255,.16) 0%, rgba(84,229,255,.09) 25%, rgba(167,139,250,.08) 45%, transparent 75%);
+    filter: blur(45px); z-index: 9996; mix-blend-mode: screen; transition: opacity .3s;
 }
-
 .cursor-ring {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-
-    left: 0;
-    top: 0;
-
-    padding: 1.5px;
-    border-radius: 50%;
-
-    background: conic-gradient(
-        from 0deg,
-        #65a9ff,
-        #54e5ff,
-        #a78bfa,
-        #ff83bb,
-        #ffd166,
-        #65a9ff
-    );
-
-    box-shadow:
-        0 0 10px rgba(101,169,255,.20),
-        0 0 25px rgba(167,139,250,.12);
-
-    pointer-events: none;
-    z-index: 9998;
-
-    opacity: 0;
-    transform: translate3d(-50%,-50%,0);
-
-    transition:
-        width .25s var(--ease),
-        height .25s var(--ease),
-        box-shadow .25s ease,
-        opacity .25s ease;
+    width: 40px; height: 40px; padding: 1.5px; border-radius: 50%;
+    background: conic-gradient(#65a9ff, #54e5ff, #a78bfa, #ff83bb, #ffd166, #65a9ff);
+    box-shadow: 0 0 10px rgba(101,169,255,.2); z-index: 9998;
+    transition: width .25s var(--ease), height .25s var(--ease), opacity .25s;
 }
-
 .cursor-ring-inner {
-    position: absolute;
-    inset: 2px;
-
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle,
-        rgba(101,169,255,.15),
-        rgba(7,9,14,.76) 72%
-    );
-
-    border: 1px solid rgba(255,255,255,.11);
-    backdrop-filter: blur(4px);
+    width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle, rgba(101,169,255,.15), rgba(7,9,14,.76) 72%);
+    border: 1px solid rgba(255,255,255,.11); backdrop-filter: blur(4px);
 }
-
 .cursor-dot {
-    position: fixed;
-    width: 9px;
-    height: 9px;
-
-    left: 0;
-    top: 0;
-
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle at 30% 30%,
-        #fff,
-        #54e5ff 35%,
-        #65a9ff 70%,
-        #a78bfa
-    );
-
-    box-shadow:
-        0 0 7px #54e5ff,
-        0 0 17px rgba(101,169,255,.8),
-        0 0 28px rgba(167,139,250,.45);
-
-    pointer-events: none;
-    z-index: 9999;
-
-    opacity: 0;
-    transform: translate3d(-50%,-50%,0);
-
-    transition:
-        transform .2s ease,
-        opacity .25s ease;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #54e5ff 35%, #65a9ff 70%, #a78bfa);
+    box-shadow: 0 0 12px rgba(101,169,255,.8); z-index: 9999;
 }
-
-.cursor-ring.hover {
-    width: 60px;
-    height: 60px;
-
-    background: conic-gradient(
-        #ffd166,
-        #ff83bb,
-        #a78bfa,
-        #54e5ff,
-        #65a9ff,
-        #ffd166
-    );
-
-    box-shadow:
-        0 0 16px rgba(101,169,255,.35),
-        0 0 35px rgba(255,131,187,.20),
-        0 0 55px rgba(255,209,102,.10);
-}
-
-.cursor-dot.hover {
-    transform: translate3d(-50%,-50%,0) scale(1.35);
-
-    background: radial-gradient(
-        circle,
-        #fff,
-        #ffd166,
-        #ff83bb
-    );
-
-    box-shadow:
-        0 0 9px #ffd166,
-        0 0 20px rgba(255,131,187,.8);
-}
-
-.cursor-ring.pressed {
-    width: 29px;
-    height: 29px;
-}
+.cursor-ring.hover { width: 60px; height: 60px; }
+.cursor-dot.hover { transform: translate3d(-50%,-50%,0) scale(1.35); background: #ffd166; box-shadow: 0 0 15px #ff83bb; }
+.cursor-ring.pressed { width: 28px; height: 28px; }
 
 @media (hover:hover) and (pointer:fine) {
-    body, a, button {
-        cursor: none;
-    }
-
-    .cursor-dot,
-    .cursor-ring {
-        opacity: 1;
-    }
+    body, a, button { cursor: none; }
+    .cursor-dot, .cursor-ring { opacity: 1; }
 }
 
-@media (hover:none), (pointer:coarse) {
-    .cursor-dot,
-    .cursor-ring,
-    .cursor-glow {
-        display: none;
-    }
-
-    body, a, button {
-        cursor: auto;
-    }
-}
-
-
-/* =========================================
-   04. NAVBAR
-========================================= */
-
+/* Nav */
 nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    background: rgba(7,9,14,.82);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,9,14,.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
 }
+.nav-inner { height: 75px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -1.5px; }
+.logo span, .footer-brand span { color: var(--blue); }
+.nav-links { display: flex; align-items: center; gap: 30px; }
+.nav-links a { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; transition: color .3s; }
+.nav-links a:hover { color: var(--blue); }
+.nav-cta { padding: 9px 16px; border: 1px solid var(--border-blue); border-radius: 7px; color: var(--blue) !important; }
+.nav-cta:hover { background: rgba(101,169,255,.1); }
 
-.nav-inner {
-    height: 78px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-}
-
-.logo span,
-.footer-brand span {
-    color: var(--blue);
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-}
-
-.nav-links a {
-    color: var(--muted);
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-    transition: color .3s;
-}
-
-.nav-links a:hover {
-    color: var(--blue);
-}
-
-.nav-cta {
-    padding: 10px 17px;
-    border: 1px solid var(--border-blue);
-    border-radius: 7px;
-    color: var(--blue) !important;
-}
-
-.nav-cta:hover {
-    background: rgba(101,169,255,.1);
-}
-
-
-/* =========================================
-   05. BUTTONS
-========================================= */
-
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-}
-
+/* Buttons */
+.buttons { display: flex; flex-wrap: wrap; gap: 14px; }
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 13px 23px;
-    border-radius: 8px;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    transition:
-        background .3s var(--ease),
-        color .3s var(--ease),
-        border-color .3s var(--ease),
-        transform .3s var(--ease),
-        box-shadow .3s var(--ease);
+    display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px;
+    border-radius: 8px; font-size: 13px; font-weight: 700; transition: all .3s var(--ease);
 }
+.btn-primary { background: var(--blue); color: #07101d; box-shadow: 0 5px 25px rgba(101,169,255,.13); }
+.btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 35px rgba(101,169,255,.25); }
+.btn-secondary { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,.025); }
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-3px); }
 
-.btn-primary {
-    background: var(--blue);
-    color: #07101d;
-
-    box-shadow: 0 5px 25px rgba(101,169,255,.13);
-}
-
-.btn-primary:hover {
-    background: white;
-    transform: translateY(-3px);
-
-    box-shadow: 0 10px 35px rgba(101,169,255,.23);
-}
-
-.btn-secondary {
-    border: 1px solid var(--border);
-    color: white;
-    background: rgba(255,255,255,.025);
-}
-
-.btn-secondary:hover {
-    border-color: var(--blue);
-    color: var(--blue);
-    transform: translateY(-3px);
-}
-
-.btn span {
-    display: inline-block;
-    transition: transform .3s var(--ease);
-}
-
-.btn:hover span {
-    transform: translate(3px,-2px);
-}
-
-
-/* =========================================
-   06. HERO
-========================================= */
-
-.hero {
-    min-height: 740px;
-
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
-    align-items: center;
-
-    gap: 35px;
-    position: relative;
-
-    padding-top: 65px;
-    padding-bottom: 80px;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
+/* Hero */
+.hero { min-height: 720px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 35px; padding: 60px 0 80px; }
 .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-
-    color: var(--blue);
-    background: rgba(101,169,255,.07);
-    border: 1px solid var(--border-blue);
-
-    padding: 8px 15px;
-    border-radius: 30px;
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-    letter-spacing: .3px;
-
-    margin-bottom: 30px;
+    display: inline-flex; align-items: center; gap: 10px; color: var(--blue);
+    background: rgba(101,169,255,.07); border: 1px solid var(--border-blue);
+    padding: 7px 14px; border-radius: 30px; font-family: 'Minecraftia', monospace; font-size: 9px; margin-bottom: 25px;
 }
-
-.tag-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--yellow);
-    box-shadow: 0 0 12px rgba(255,209,102,.65);
-}
-
+.tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 10px var(--yellow); }
 .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-
-    font-size: clamp(48px,6.5vw,82px);
-    line-height: 1.05;
-    letter-spacing: -4px;
-    font-weight: 700;
-
-    margin-bottom: 25px;
+    font-family: 'Space Grotesk', sans-serif; font-size: clamp(46px,6vw,80px);
+    line-height: 1.05; letter-spacing: -3.5px; font-weight: 700; margin-bottom: 22px;
 }
-
-.hero h1 .gradient {
-    background: linear-gradient(
-        110deg,
-        #65a9ff 0%,
-        #a9d1ff 48%,
-        #ffd166 100%
-    );
-
-    background-size: 200% auto;
-    color: transparent;
-
-    background-clip: text;
-    -webkit-background-clip: text;
-
+.gradient {
+    background: linear-gradient(110deg, #65a9ff 0%, #a9d1ff 48%, #ffd166 100%);
+    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: gradientMove 7s linear infinite;
 }
+@keyframes gradientMove { to { background-position: 200% center; } }
+.hero-description { max-width: 500px; color: var(--muted); font-size: 15px; margin-bottom: 30px; }
 
-@keyframes gradientMove {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.hero-description {
-    max-width: 520px;
-
-    color: var(--muted);
-    font-size: 16px;
-    line-height: 1.9;
-
-    margin-bottom: 32px;
-}
-
-
-/* =========================================
-   07. 3D HERO VISUAL
-========================================= */
-
-.hero-visual {
-    position: relative;
-    height: 480px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    perspective: 1100px;
-}
-
-.visual-glow {
-    position: absolute;
-
-    width: 350px;
-    height: 350px;
-
-    border-radius: 50%;
-
-    background: rgba(40,105,190,.20);
-    filter: blur(90px);
-}
-
-.scene {
-    position: relative;
-
-    width: 370px;
-    height: 370px;
-
-    transform-style: preserve-3d;
-
-    animation: sceneFloat 8s ease-in-out infinite;
-}
-
-@keyframes sceneFloat {
-    0%,100% {
-        transform: translateY(0) rotateX(9deg) rotateY(-12deg);
-    }
-
-    50% {
-        transform: translateY(-12px) rotateX(11deg) rotateY(-7deg);
-    }
-}
+/* 3D Visual */
+.hero-visual { position: relative; height: 460px; display: flex; align-items: center; justify-content: center; perspective: 1100px; }
+.visual-glow { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: rgba(40,105,190,.2); filter: blur(90px); }
+.scene { position: relative; width: 360px; height: 360px; transform-style: preserve-3d; animation: sceneFloat 8s ease-in-out infinite; }
+@keyframes sceneFloat { 0%,100% { transform: translateY(0) rotateX(9deg) rotateY(-12deg); } 50% { transform: translateY(-12px) rotateX(11deg) rotateY(-7deg); } }
 
 .orbit {
-    position: absolute;
-
-    width: 340px;
-    height: 340px;
-
-    left: 50%;
-    top: 50%;
-
-    border: 1px solid rgba(101,169,255,.18);
-    border-radius: 50%;
-
-    transform: translate(-50%,-50%) rotateX(72deg);
+    position: absolute; width: 330px; height: 330px; left: 50%; top: 50%;
+    border: 1px solid rgba(101,169,255,.18); border-radius: 50%; transform: translate(-50%,-50%) rotateX(72deg);
 }
-
-.orbit.two {
-    width: 290px;
-    height: 290px;
-
-    border-color: rgba(101,169,255,.25);
-
-    transform: translate(-50%,-50%) rotateY(65deg) rotateX(65deg);
-}
-
-.orbit.three {
-    width: 390px;
-    height: 390px;
-
-    border-style: dashed;
-    border-color: rgba(101,169,255,.11);
-
-    animation: orbitSpin 35s linear infinite;
-}
-
-@keyframes orbitSpin {
-    to {
-        transform: translate(-50%,-50%) rotateX(72deg) rotate(360deg);
-    }
-}
+.orbit.two { width: 280px; height: 280px; transform: translate(-50%,-50%) rotateY(65deg) rotateX(65deg); border-color: rgba(101,169,255,.25); }
+.orbit.three { width: 380px; height: 380px; border-style: dashed; animation: orbitSpin 35s linear infinite; }
+@keyframes orbitSpin { to { transform: translate(-50%,-50%) rotateX(72deg) rotate(360deg); } }
 
 .core {
-    position: absolute;
-
-    width: 150px;
-    height: 150px;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%,-50%) translateZ(25px);
-
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle at 30% 25%,
-        #c0e2ff 0%,
-        #6baeff 15%,
-        #2565ad 42%,
-        #102744 75%,
-        #080e18 100%
-    );
-
-    box-shadow:
-        inset -15px -20px 35px rgba(0,0,0,.6),
-        inset 9px 9px 25px rgba(255,255,255,.3),
-        0 0 45px rgba(65,148,255,.35),
-        0 0 100px rgba(65,148,255,.12);
+    position: absolute; width: 140px; height: 140px; left: 50%; top: 50%;
+    transform: translate(-50%,-50%) translateZ(25px); border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #c0e2ff, #2565ad 50%, #080e18 100%);
+    box-shadow: 0 0 50px rgba(65,148,255,.35);
 }
-
-.core::after {
-    content: "";
-
-    position: absolute;
-    inset: -7px;
-
-    border-radius: 50%;
-    border: 1px solid rgba(139,198,255,.35);
-}
-
 .float-card {
-    position: absolute;
-    padding: 15px 18px;
-
-    background: rgba(15,25,41,.88);
-    backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(101,169,255,.22);
-    border-radius: 12px;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
-
+    position: absolute; padding: 14px 16px; background: rgba(15,25,41,.88); backdrop-filter: blur(15px);
+    border: 1px solid rgba(101,169,255,.22); border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,.35);
     animation: cardFloat 6s ease-in-out infinite;
 }
-
-.float-card.one {
-    top: 33px;
-    left: -8px;
-
-    border-color: rgba(255,209,102,.20);
-}
-
-.float-card.two {
-    right: -25px;
-    bottom: 56px;
-
-    animation-delay: -3s;
-}
-
-@keyframes cardFloat {
-    0%,100% {
-        transform: translateY(0) translateZ(30px);
-    }
-
-    50% {
-        transform: translateY(-8px) translateZ(40px);
-    }
-}
-
-.float-card small {
-    color: var(--muted);
-    display: block;
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
-
-    margin-bottom: 5px;
-}
-
-.float-card strong {
-    font-family: 'Space Grotesk', sans-serif;
-    color: var(--blue);
-    font-size: 14px;
-}
-
-.float-card.one strong,
-.float-icon {
-    color: var(--yellow);
-}
-
-.float-icon {
-    font-size: 18px;
-    margin-right: 5px;
-}
-
-.scene-label {
-    position: absolute;
-
-    bottom: 5px;
-    left: 50%;
-
-    transform: translateX(-50%);
-    white-space: nowrap;
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-
-    color: rgba(150,190,240,.65);
-}
-
-
-/* =========================================
-   08. SOFTWARE LOGOS
-========================================= */
-
-.software-name,
-.software-stack,
-.tech-item,
-.inline-tech {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.software-name {
-    justify-content: center;
-
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.software-logo {
-    display: inline-block;
-
-    width: 25px;
-    height: 25px;
-
-    object-fit: contain;
-    vertical-align: middle;
-
-    flex: 0 0 auto;
-}
-
-.unity-logo,
-.github-logo {
-    filter: brightness(0) invert(1);
-}
-
-.small-logo {
-    width: 17px;
-    height: 17px;
-}
-
-.mini-logo {
-    width: 14px;
-    height: 14px;
-}
-
-.skill-icon .software-logo {
-    width: 29px;
-    height: 29px;
-}
-
-.skill-icon .unity-logo,
-.skill-icon .github-logo {
-    filter: brightness(0) invert(1);
-}
-
-.software-stack {
-    color: var(--blue);
-
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    gap: 6px;
-}
-
-.software-stack .software-logo {
-    width: 18px;
-    height: 18px;
-}
-
-.tech-list {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 7px;
-}
-
-.tech-item {
-    gap: 5px;
-}
-
-.inline-tech {
-    gap: 4px;
-    white-space: nowrap;
-}
-
-.info-item .software-logo {
-    transition: transform .3s ease;
-}
-
-.info-item:hover .software-logo {
-    transform: translateY(-3px) scale(1.1);
-}
-
-.software-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.software-tag .mini-logo {
-    width: 12px;
-    height: 12px;
-}
-
-
-/* =========================================
-   09. SOFTWARE STRIP
-========================================= */
-
-.info-strip {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-
-    background: rgba(255,255,255,.012);
-}
-
-.info-item {
-    padding: 27px 15px;
-
-    text-align: center;
-
-    border-right: 1px solid var(--border);
-
-    transition: background .3s ease;
-}
-
-.info-item:last-child {
-    border-right: 0;
-}
-
-.info-item:hover {
-    background: rgba(101,169,255,.035);
-}
-
-.info-item strong {
-    display: block;
-    color: var(--text);
-}
-
-.info-item span {
-    display: block;
-
-    color: var(--muted);
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-
-    margin-top: 5px;
-}
-
-
-/* =========================================
-   10. GENERAL SECTIONS
-========================================= */
-
-section {
-    padding: 110px 0;
-    scroll-margin-top: 75px;
-}
-
-.section-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    color: var(--blue);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-
-    margin-bottom: 15px;
-}
-
-.section-label::before {
-    content: "";
-
-    width: 22px;
-    height: 1px;
-
-    background: var(--blue);
-}
-
-.section-title {
-    font-family: 'Space Grotesk', sans-serif;
-
-    font-size: clamp(32px,5vw,48px);
-    line-height: 1.15;
-    letter-spacing: -2px;
-
-    margin-bottom: 18px;
-}
-
-.section-title span {
-    color: var(--blue);
-}
-
-.section-description {
-    color: var(--muted);
-
-    max-width: 580px;
-
-    font-size: 14px;
-    line-height: 1.9;
-
-    margin-bottom: 45px;
-}
-
-.section-header {
-    margin-bottom: 45px;
-}
-
-
-/* =========================================
-   11. PROJECTS
-========================================= */
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 24px;
-}
-
-.project-link {
-    display: block;
-    min-width: 0;
-
-    color: inherit;
-    text-decoration: none;
-
-    border-radius: 15px;
-}
-
-.project-link:focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 5px;
-}
-
-.project-link .project {
-    height: 100%;
-}
-
+.float-card.one { top: 30px; left: -10px; border-color: rgba(255,209,102,.2); }
+.float-card.two { right: -20px; bottom: 50px; animation-delay: -3s; }
+@keyframes cardFloat { 0%,100% { transform: translateY(0) translateZ(30px); } 50% { transform: translateY(-8px) translateZ(40px); } }
+.float-card small { color: var(--muted); display: block; font-family: 'Minecraftia', monospace; font-size: 8px; margin-bottom: 4px; }
+.float-card strong { font-family: 'Space Grotesk', sans-serif; color: var(--blue); font-size: 13px; }
+.float-card.one strong { color: var(--yellow); }
+.scene-label { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-family: 'Minecraftia', monospace; font-size: 9px; color: rgba(150,190,240,.65); }
+
+/* Logos & Strip */
+.software-logo { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; }
+.unity-logo, .github-logo { filter: brightness(0) invert(1); }
+.mini-logo { width: 14px; height: 14px; }
+.info-strip { display: grid; grid-template-columns: repeat(4,1fr); border-block: 1px solid var(--border); background: rgba(255,255,255,.012); }
+.info-item { padding: 25px 15px; text-align: center; border-right: 1px solid var(--border); transition: background .3s; }
+.info-item:last-child { border-right: 0; }
+.info-item:hover { background: rgba(101,169,255,.035); }
+.info-item strong { display: flex; align-items: center; justify-content: center; gap: 7px; font-family: 'Space Grotesk', sans-serif; font-size: 15px; }
+.info-item span { display: block; color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; margin-top: 5px; }
+
+/* Sections */
+section { padding: 100px 0; }
+.section-label { display: flex; align-items: center; gap: 12px; color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 9px; margin-bottom: 12px; }
+.section-label::before { content: ""; width: 20px; height: 1px; background: var(--blue); }
+.section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px,4.5vw,46px); letter-spacing: -2px; margin-bottom: 14px; }
+.section-title span { color: var(--blue); }
+.section-description { color: var(--muted); max-width: 560px; font-size: 14px; margin-bottom: 40px; }
+
+/* Projects Grid */
+.project-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+.project-link { display: block; height: 100%; border-radius: 15px; }
 .project {
-    position: relative;
-    overflow: hidden;
-
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-
-    transition:
-        transform .22s ease-out,
-        border-color .35s ease,
-        box-shadow .35s ease;
+    height: 100%; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 15px; overflow: hidden; transition: transform .22s ease-out, border-color .3s, box-shadow .3s;
 }
-
-.project:hover,
-.project-link:hover .project {
-    border-color: rgba(101,169,255,.45);
-    box-shadow: 0 22px 55px rgba(0,0,0,.3);
-}
-
-.project-art {
-    height: 245px;
-
-    position: relative;
-    overflow: hidden;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #101a29;
-}
-
-.project-art::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background: linear-gradient(
-        to top,
-        rgba(7,9,14,.65),
-        transparent 75%
-    );
-}
-
-.art-text {
-    position: absolute;
-    z-index: 2;
-
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 29px;
-    font-weight: 700;
-    letter-spacing: 5px;
-
-    color: rgba(255,255,255,.9);
-
-    text-shadow: 0 5px 25px rgba(0,0,0,.5);
-}
-
-.art-subtitle {
-    position: absolute;
-    z-index: 2;
-
-    bottom: 20px;
-    left: 23px;
-
-    color: rgba(255,255,255,.65);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
-}
-
-
-/* PONG */
-
-.art-pong {
-    background:
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(56,120,200,.32),
-            transparent 45%
-        ),
-        linear-gradient(135deg,#101d30,#080d16);
-}
-
-.pong-line {
-    position: absolute;
-
-    height: 70%;
-    width: 1px;
-
-    border-left: 2px dashed rgba(255,255,255,.22);
-}
-
-.pong-ball {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 15px;
-    height: 15px;
-
-    border-radius: 50%;
-    background: white;
-
-    box-shadow: 0 0 25px var(--blue);
-
-    animation: pongMove 3s ease-in-out infinite alternate;
-}
-
-.pong-paddle {
-    position: absolute;
-
-    width: 7px;
-    height: 65px;
-
-    border-radius: 5px;
-
-    background: var(--blue);
-
-    box-shadow: 0 0 20px rgba(101,169,255,.5);
-}
-
-.pong-paddle.left {
-    left: 22%;
-}
-
-.pong-paddle.right {
-    right: 22%;
-}
-
-@keyframes pongMove {
-    from {
-        transform: translate(-40px,-40px);
-    }
-
-    to {
-        transform: translate(40px,40px);
-    }
-}
-
-
-/* FLAPPY BIRD */
-
-.art-flappy {
-    background:
-        radial-gradient(
-            circle at 75% 25%,
-            rgba(110,155,210,.25),
-            transparent 28%
-        ),
-        linear-gradient(145deg,#162b43,#0b1321);
-}
-
-.flappy-bird {
-    position: absolute;
-
-    width: 38px;
-    height: 30px;
-
-    border-radius: 50% 48% 40% 45%;
-    background: #ffcf69;
-
-    box-shadow: 0 0 25px rgba(255,207,105,.22);
-
-    left: 34%;
-    top: 40%;
-
-    animation: birdFloat 2s ease-in-out infinite;
-}
-
-.flappy-bird::after {
-    content: "";
-
-    position: absolute;
-
-    right: 5px;
-    top: 5px;
-
-    width: 6px;
-    height: 6px;
-
-    background: #101827;
-    border-radius: 50%;
-}
-
-@keyframes birdFloat {
-    50% {
-        transform: translateY(-12px) rotate(-8deg);
-    }
-}
-
-.pipe {
-    position: absolute;
-
-    width: 32px;
-    height: 100px;
-
-    background: linear-gradient(
-        90deg,
-        #376b69,
-        #6ab29d,
-        #28564f
-    );
-
-    border-radius: 5px;
-}
-
-.pipe.top {
-    right: 21%;
-    top: -14px;
-}
-
-.pipe.bottom {
-    right: 21%;
-    bottom: -15px;
-}
-
-
-/* TRUST NO ONE */
-
-.art-trust {
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(170,48,65,.22),
-            transparent 55%
-        ),
-        radial-gradient(
-            ellipse at bottom,
-            rgba(107,98,169,.13),
-            transparent 60%
-        ),
-        linear-gradient(145deg,#191019,#090b14);
-}
-
-.trust-door {
-    position: absolute;
-
-    width: 105px;
-    height: 155px;
-
-    bottom: 0;
-
-    border: 2px solid rgba(255,119,119,.35);
-    border-bottom: 0;
-
-    background: linear-gradient(
-        90deg,
-        #171526,
-        #30304d,
-        #12111e
-    );
-
-    box-shadow: 0 0 40px rgba(255,70,90,.10);
-}
-
-.trust-light {
-    position: absolute;
-
-    width: 150px;
-    height: 170px;
-
-    bottom: -45px;
-
-    background: rgba(200,55,75,.13);
-    filter: blur(35px);
-}
-
-.trust-eye {
-    position: absolute;
-
-    top: 42%;
-
-    font-size: 29px;
-    color: #ff9999;
-
-    text-shadow:
-        0 0 15px rgba(255,90,110,.5),
-        0 0 35px rgba(255,70,90,.25);
-}
-
-
-/* HOLLOW HILL */
-
-.art-hollow {
-    background:
-        radial-gradient(
-            ellipse at 50% 80%,
-            rgba(112,78,160,.26),
-            transparent 45%
-        ),
-        linear-gradient(180deg,#141321,#090a11);
-}
-
-.moon {
-    position: absolute;
-
-    width: 55px;
-    height: 55px;
-
-    background: #d7d7ec;
-    border-radius: 50%;
-
-    top: 25px;
-    right: 55px;
-
-    box-shadow: 0 0 45px rgba(204,204,255,.32);
-}
-
-.hill {
-    position: absolute;
-
-    bottom: -75px;
-
-    width: 360px;
-    height: 145px;
-
-    background: #151926;
-
-    border-radius: 50% 50% 0 0;
-}
-
-.hill.two {
-    bottom: -100px;
-    left: -100px;
-
-    background: #0e131e;
-}
-
-.candle {
-    position: absolute;
-
-    bottom: 32px;
-
-    width: 12px;
-    height: 35px;
-
-    background: #c9c1a6;
-    border-radius: 2px;
-}
-
-.candle::before {
-    content: "";
-
-    position: absolute;
-
-    width: 8px;
-    height: 13px;
-
-    top: -12px;
-    left: 2px;
-
-    background: var(--yellow);
-    border-radius: 50% 50% 45% 45%;
-
-    box-shadow: 0 0 20px 8px rgba(255,190,80,.32);
-}
-
-.candle.one {
-    left: 25%;
-}
-
-.candle.two {
-    left: 65%;
-}
-
-
-/* PROJECT INFORMATION */
-
-.project-info {
-    padding: 26px;
-}
-
-.project-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    flex-wrap: wrap;
-    gap: 10px;
-
-    margin-bottom: 14px;
-}
-
-.project-status,
-.project-category {
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
-}
-
-.project-status {
-    color: var(--blue);
-}
-
-.project-category {
-    color: var(--muted);
-}
-
-.project-info h3 {
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 23px;
-
-    margin-bottom: 9px;
-}
-
-.project-info p {
-    color: var(--muted);
-
-    font-size: 12px;
-    line-height: 1.9;
-}
-
-.project-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    flex-wrap: wrap;
-    gap: 10px;
-
-    border-top: 1px solid var(--border);
-
-    margin-top: 20px;
-    padding-top: 16px;
-}
-
-.project-tech {
-    color: #b8cce8;
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-}
-
-.project-link-label {
-    margin-left: auto;
-
-    color: var(--blue);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
-
-    transition:
-        color .25s ease,
-        transform .25s ease;
-}
-
-.project-link:hover .project-link-label {
-    color: var(--yellow);
-    transform: translateX(3px);
-}
-
-.project-number {
-    color: rgba(101,169,255,.5);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 10px;
-}
-
-.project:nth-child(1) .project-number {
-    color: var(--yellow);
-}
-
-.project:nth-child(3) .project-number {
-    color: var(--red);
-}
-
-
-/* =========================================
-   12. MY TOOLKIT
-========================================= */
-
-.skills-section {
-    background: linear-gradient(
-        180deg,
-        transparent,
-        rgba(13,22,36,.45),
-        transparent
-    );
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 17px;
-}
-
+.project-link:hover .project { border-color: rgba(101,169,255,.45); box-shadow: 0 20px 45px rgba(0,0,0,.35); }
+.project-art { height: 230px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #101a29; }
+.project-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,9,14,.7), transparent 75%); }
+.art-text { position: absolute; z-index: 2; font-family: 'Space Grotesk',sans-serif; font-size: 28px; font-weight: 700; letter-spacing: 5px; color: #fff; }
+.art-subtitle { position: absolute; z-index: 2; bottom: 18px; left: 20px; color: rgba(255,255,255,.65); font-family: 'Minecraftia', monospace; font-size: 8px; }
+
+/* Project Arts */
+.art-pong { background: radial-gradient(circle, rgba(56,120,200,.32), transparent 45%), linear-gradient(135deg,#101d30,#080d16); }
+.pong-line { position: absolute; height: 70%; width: 1px; border-left: 2px dashed rgba(255,255,255,.2); }
+.pong-ball { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 20px var(--blue); animation: pongMove 3s ease-in-out infinite alternate; }
+.pong-paddle { position: absolute; width: 6px; height: 60px; border-radius: 4px; background: var(--blue); box-shadow: 0 0 15px var(--blue); }
+.pong-paddle.left { left: 20%; } .pong-paddle.right { right: 20%; }
+@keyframes pongMove { from { transform: translate(-35px,-35px); } to { transform: translate(35px,35px); } }
+
+.art-flappy { background: radial-gradient(circle at 75% 25%, rgba(110,155,210,.25), transparent 28%), linear-gradient(145deg,#162b43,#0b1321); }
+.flappy-bird { position: absolute; width: 36px; height: 28px; border-radius: 50% 48% 40% 45%; background: #ffcf69; left: 34%; top: 40%; animation: birdFloat 2s ease-in-out infinite; }
+.pipe { position: absolute; width: 30px; height: 100px; background: linear-gradient(90deg, #376b69, #6ab29d, #28564f); border-radius: 4px; right: 22%; }
+.pipe.top { top: -15px; } .pipe.bottom { bottom: -15px; }
+@keyframes birdFloat { 50% { transform: translateY(-10px) rotate(-6deg); } }
+
+.art-trust { background: radial-gradient(circle, rgba(170,48,65,.22), transparent 55%), linear-gradient(145deg,#191019,#090b14); }
+.trust-door { position: absolute; width: 95px; height: 145px; bottom: 0; border: 2px solid rgba(255,119,119,.35); border-bottom: 0; background: #171526; }
+.trust-eye { position: absolute; top: 42%; font-size: 28px; color: #ff9999; text-shadow: 0 0 15px rgba(255,90,110,.5); }
+
+.art-hollow { background: radial-gradient(ellipse at 50% 80%, rgba(112,78,160,.26), transparent 45%), linear-gradient(180deg,#141321,#090a11); }
+.moon { position: absolute; width: 50px; height: 50px; background: #d7d7ec; border-radius: 50%; top: 25px; right: 50px; box-shadow: 0 0 40px rgba(204,204,255,.32); }
+.hill { position: absolute; bottom: -70px; width: 360px; height: 140px; background: #151926; border-radius: 50% 50% 0 0; }
+.candle { position: absolute; bottom: 30px; width: 10px; height: 32px; background: #c9c1a6; left: 35%; }
+.candle::before { content: ""; position: absolute; width: 8px; height: 12px; top: -10px; left: 1px; background: var(--yellow); border-radius: 50%; box-shadow: 0 0 15px var(--yellow); }
+
+/* Project Meta */
+.project-info { padding: 24px; }
+.project-top, .project-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.project-top { margin-bottom: 12px; }
+.project-status { color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 8px; }
+.project-category { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 8px; }
+.project-info h3 { font-family: 'Space Grotesk',sans-serif; font-size: 22px; margin-bottom: 8px; }
+.project-info p { color: var(--muted); font-size: 13px; line-height: 1.8; }
+.project-bottom { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 14px; font-family: 'Minecraftia', monospace; font-size: 8px; }
+.project-tech { color: #b8cce8; display: inline-flex; align-items: center; gap: 5px; }
+.project-link-label { margin-left: auto; color: var(--blue); transition: color .25s, transform .25s; }
+.project-link:hover .project-link-label { color: var(--yellow); transform: translateX(3px); }
+.project-number { color: rgba(101,169,255,.5); font-size: 10px; }
+
+/* Skills Section */
+.skills-section { background: linear-gradient(180deg, transparent, rgba(13,22,36,.45), transparent); }
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 .skill-card {
-    padding: 26px;
-
-    border-radius: 13px;
-
-    background: linear-gradient(
-        145deg,
-        #111a28,
-        #0c111b
-    );
-
-    border: 1px solid var(--border);
-
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-
-    transition:
-        transform .22s ease-out,
-        border-color .35s ease,
-        box-shadow .35s ease;
+    padding: 24px; border-radius: 13px; background: linear-gradient(145deg, #111a28, #0c111b);
+    border: 1px solid var(--border); transition: transform .22s ease-out, border-color .3s;
 }
-
-.skill-card:hover {
-    border-color: var(--border-blue);
-
-    box-shadow: 0 15px 40px rgba(0,0,0,.22);
-}
-
+.skill-card:hover { border-color: var(--border-blue); }
 .skill-icon {
-    width: 43px;
-    height: 43px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    color: var(--blue);
-    background: rgba(101,169,255,.10);
-
-    font-size: 18px;
-
-    margin-bottom: 18px;
-
-    transition: transform .3s var(--ease);
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; color: var(--blue); background: rgba(101,169,255,.1); font-size: 18px; margin-bottom: 16px;
 }
-
-.skill-card:hover .skill-icon {
-    background: rgba(101,169,255,.17);
-    transform: translateZ(12px) scale(1.06);
-}
-
-.skill-card h3 {
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 17px;
-
-    margin-bottom: 8px;
-}
-
-.skill-card p {
-    color: var(--muted);
-
-    font-size: 12px;
-    line-height: 1.8;
-
-    margin-bottom: 17px;
-}
-
-.skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-}
-
+.skill-card h3 { font-family: 'Space Grotesk',sans-serif; font-size: 17px; margin-bottom: 8px; }
+.skill-card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-bottom: 15px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .skill-tags span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-
-    color: #c1d5ef;
-
-    background: rgba(101,169,255,.07);
-    border: 1px solid rgba(101,169,255,.13);
-
-    padding: 5px 9px;
-    border-radius: 5px;
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
+    display: inline-flex; align-items: center; gap: 5px; color: #c1d5ef;
+    background: rgba(101,169,255,.07); border: 1px solid rgba(101,169,255,.13);
+    padding: 4px 8px; border-radius: 5px; font-family: 'Minecraftia', monospace; font-size: 8px;
 }
 
-.skill-tags img {
-    width: 12px;
-    height: 12px;
-}
-
-
-/* =========================================
-   13. JOURNEY
-========================================= */
-
-.journey-layout {
-    display: grid;
-    grid-template-columns: .8fr 1.2fr;
-    gap: 80px;
-}
-
-.journey-intro {
-    position: sticky;
-    top: 130px;
-    align-self: start;
-}
-
-.journey-intro p {
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 15px;
-}
-
-.timeline {
-    border-left: 1px solid rgba(101,169,255,.35);
-    padding-left: 30px;
-}
-
-.timeline-item {
-    position: relative;
-    padding-bottom: 43px;
-}
-
-.timeline-item:last-child {
-    padding-bottom: 0;
-}
-
+/* Journey Layout */
+.journey-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; }
+.journey-intro { position: sticky; top: 120px; }
+.timeline { border-left: 1px solid rgba(101,169,255,.35); padding-left: 25px; }
+.timeline-item { position: relative; padding-bottom: 38px; }
+.timeline-item:last-child { padding-bottom: 0; }
 .timeline-item::before {
-    content: "";
-
-    position: absolute;
-
-    width: 11px;
-    height: 11px;
-
-    left: -36px;
-    top: 7px;
-
-    background: var(--blue);
-
-    border: 3px solid #111a28;
-    border-radius: 50%;
-
-    box-shadow: 0 0 16px rgba(101,169,255,.4);
+    content: ""; position: absolute; width: 10px; height: 10px; left: -31px; top: 7px;
+    background: var(--blue); border: 3px solid #111a28; border-radius: 50%; box-shadow: 0 0 14px var(--blue);
 }
+.timeline-item small { color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 8px; }
+.timeline-item h3 { font-family: 'Space Grotesk',sans-serif; font-size: 19px; margin: 6px 0; }
+.timeline-item p { color: var(--muted); font-size: 13px; max-width: 460px; }
 
-.timeline-item small {
-    color: var(--blue);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 8px;
-}
-
-.timeline-item h3 {
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 20px;
-
-    margin: 8px 0;
-}
-
-.timeline-item p {
-    color: var(--muted);
-
-    font-size: 13px;
-    max-width: 480px;
-    line-height: 1.9;
-}
-
-
-/* =========================================
-   14. FUTURE VISION
-========================================= */
-
+/* Vision & Contact */
 .vision-card {
-    position: relative;
-    overflow: hidden;
-
-    padding: 55px;
-
-    border: 1px solid var(--border-blue);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(
-            ellipse at 100% 0%,
-            rgba(48,112,193,.18),
-            transparent 45%
-        ),
-        linear-gradient(135deg,#121e30,#0b101a);
+    padding: 50px; border: 1px solid var(--border-blue); border-radius: 18px;
+    background: radial-gradient(ellipse at 100% 0%, rgba(48,112,193,.18), transparent 45%), linear-gradient(135deg,#121e30,#0b101a);
 }
-
-.vision-card::after {
-    content: "GAME";
-
-    position: absolute;
-
-    right: -15px;
-    bottom: -75px;
-
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: 190px;
-    font-weight: 700;
-
-    color: rgba(101,169,255,.035);
-    pointer-events: none;
-}
-
-.vision-card h2 {
-    position: relative;
-    z-index: 1;
-
-    font-family: 'Space Grotesk',sans-serif;
-    font-size: clamp(30px,4vw,44px);
-    letter-spacing: -2px;
-
-    max-width: 650px;
-
-    margin-bottom: 15px;
-}
-
-.vision-card h2 span {
-    color: var(--blue);
-}
-
-.vision-card p {
-    position: relative;
-    z-index: 1;
-
-    color: var(--muted);
-    max-width: 600px;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   15. CONTACT
-========================================= */
+.vision-card h2 { font-family: 'Space Grotesk',sans-serif; font-size: clamp(28px,4vw,42px); letter-spacing: -2px; margin-bottom: 12px; }
+.vision-card h2 span, .contact-card .section-title span { color: var(--blue); }
+.vision-card p { color: var(--muted); max-width: 580px; font-size: 13px; }
 
 .contact-card {
-    position: relative;
-    overflow: hidden;
-
-    text-align: center;
-    padding: 85px 25px;
-
-    border: 1px solid var(--border);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(
-            ellipse at 50% 0%,
-            rgba(49,115,193,.22),
-            transparent 65%
-        ),
-        #0d121c;
+    text-align: center; padding: 75px 20px; border: 1px solid var(--border); border-radius: 18px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(49,115,193,.22), transparent 65%), #0d121c;
 }
+.contact-card .section-label { justify-content: center; }
+.contact-card p { color: var(--muted); max-width: 460px; font-size: 13px; margin: 0 auto 25px; }
 
-.contact-card::before,
-.contact-card::after {
-    content: "";
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 30px 0; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.footer-brand { font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 16px; }
+.footer-copy { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; line-height: 2; text-align: right; }
+.footer-heart { color: var(--red); }
 
-    position: absolute;
+/* Reveal & Responsive */
+.reveal { opacity: 1; transform: none; }
+.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.js .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    width: 170px;
-    height: 170px;
-
-    border: 1px solid rgba(101,169,255,.12);
-    border-radius: 50%;
+@media(max-width:900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 60px; }
+    .hero-visual { height: 380px; }
+    .skills-grid, .journey-layout, .project-grid { grid-template-columns: 1fr; gap: 30px; }
+    .journey-intro { position: static; }
+    .info-strip { grid-template-columns: repeat(2,1fr); }
+    .cursor-dot, .cursor-ring, .cursor-glow { display: none; }
+    body, a, button { cursor: auto; }
 }
-
-.contact-card::before {
-    top: -120px;
-    left: 12%;
+@media(max-width:550px) {
+    .nav-inner { flex-direction: column; gap: 12px; height: auto; padding: 12px 0; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-copy { text-align: center; }
 }
-
-.contact-card::after {
-    bottom: -120px;
-    right: 12%;
-}
-
-.contact-card .section-label {
-    justify-content: center;
-}
-
-.contact-card .section-title {
-    max-width: 700px;
-    margin: 0 auto 17px;
-}
-
-.contact-card p {
-    color: var(--muted);
-
-    max-width: 480px;
-    font-size: 13px;
-
-    margin: 0 auto 28px;
-}
-
-.contact-card .btn {
-    position: relative;
-    z-index: 2;
-}
-
-.contact-card .btn-primary:hover {
-    background: #fff0cc;
-    color: #10141e;
-}
-
-
-/* =========================================
-   16. FOOTER
-========================================= */
-
-footer {
-    border-top: 1px solid var(--border);
-    padding: 35px 0;
-}
-
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.footer-brand {
-    font-family: 'Space Grotesk',sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.footer-copy {
-    color: var(--muted);
-
-    font-family: 'Minecraftia', monospace;
-    font-size: 9px;
-    line-height: 2;
-
-    text-align: right;
-}
-
-.footer-heart {
-    color: var(--red);
-    text-shadow: 0 0 12px rgba(255,119,119,.3);
-}
-
-
-/* =========================================
-   17. SCROLL REVEAL
-========================================= */
-
-.reveal {
-    opacity: 1;
-    transform: none;
-}
-
-.js .reveal {
-    opacity: 0;
-    transform: translate3d(0,22px,0);
-
-    transition:
-        opacity .75s var(--ease),
-        transform .75s var(--ease);
-
-    transition-delay: var(--reveal-delay,0ms);
-}
-
-.js .reveal.visible {
-    opacity: 1;
-    transform: translate3d(0,0,0);
-}
-
-.delay-1 { --reveal-delay: 100ms; }
-.delay-2 { --reveal-delay: 170ms; }
-.delay-3 { --reveal-delay: 240ms; }
-
-
-/* =========================================
-   18. RESPONSIVE DESIGN
-========================================= */
-
-@media(max-width:950px) {
-
-    .hero {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-
-    .hero h1 {
-        font-size: 60px;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .journey-layout {
-        gap: 45px;
-    }
-}
-
-@media(max-width:700px) {
-
-    .container {
-        width: min(92%,550px);
-    }
-
-    .nav-inner {
-        height: auto;
-        min-height: 75px;
-
-        flex-direction: column;
-        justify-content: center;
-        gap: 12px;
-
-        padding: 13px 0;
-    }
-
-    .logo {
-        font-size: 23px;
-    }
-
-    .nav-links {
-        gap: 17px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav-links a {
-        font-size: 9px;
-    }
-
-    .nav-cta {
-        padding: 6px 10px;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-
-        padding-top: 85px;
-        padding-bottom: 65px;
-
-        min-height: auto;
-    }
-
-    .hero h1 {
-        font-size: clamp(45px,12vw,67px);
-        letter-spacing: -2.8px;
-    }
-
-    .hero-description {
-        font-size: 14px;
-    }
-
-    .hero-visual {
-        height: 390px;
-        margin-top: 10px;
-    }
-
-    .scene {
-        transform: scale(.85);
-    }
-
-    .info-strip {
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .info-item:nth-child(2) {
-        border-right: 0;
-    }
-
-    .info-item:nth-child(1),
-    .info-item:nth-child(2) {
-        border-bottom: 1px solid var(--border);
-    }
-
-    section {
-        padding: 80px 0;
-    }
-
-    .journey-layout {
-        grid-template-columns: 1fr;
-        gap: 35px;
-    }
-
-    .skills-grid,
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .skill-card {
-        padding: 23px;
-    }
-
-    .project-art {
-        height: 220px;
-    }
-
-    .journey-intro {
-        position: static;
-    }
-
-    .vision-card {
-        padding: 35px 25px;
-    }
-
-    .vision-card::after {
-        font-size: 110px;
-    }
-
-    .contact-card {
-        padding: 65px 20px;
-    }
-
-    .footer-inner {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-copy {
-        text-align: center;
-    }
-
-    .cursor-dot,
-    .cursor-ring,
-    .cursor-glow {
-        display: none;
-    }
-}
-
-@media(max-width:430px) {
-
-    .project-bottom {
-        gap: 8px;
-    }
-
-    .project-link-label {
-        order: 3;
-        width: 100%;
-        margin-left: 0;
-    }
-}
-
-@media(max-width:380px) {
-
-    .nav-links {
-        gap: 12px;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-    }
-
-    .hero-visual {
-        transform: scale(.9);
-    }
-
-    .buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-}
-
-
-/* =========================================
-   19. REDUCED MOTION
-========================================= */
-
 @media(prefers-reduced-motion:reduce) {
-
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation: none !important;
-        transition: none !important;
-    }
-
-    .js .reveal {
-        opacity: 1;
-        transform: none;
-    }
-
-    .cursor-dot,
-    .cursor-ring,
-    .cursor-glow {
-        display: none !important;
-    }
-
-    body,
-    a,
-    button {
-        cursor: auto !important;
-    }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
 }
-
 </style>
 </head>
 
-
 <body>
-
 <div class="background-grid"></div>
 <div class="noise"></div>
 
-<!-- CUSTOM MULTICOLOUR CURSOR -->
-
+<!-- Cursor Elements -->
 <div class="cursor-glow" id="cursorGlow"></div>
-
-<div class="cursor-ring" id="cursorRing">
-    <div class="cursor-ring-inner"></div>
-</div>
-
+<div class="cursor-ring" id="cursorRing"><div class="cursor-ring-inner"></div></div>
 <div class="cursor-dot" id="cursorDot"></div>
-
-
-<!-- =========================================
-     NAVIGATION
-========================================= -->
 
 <nav>
     <div class="container nav-inner">
-
-        <a href="#" class="logo">
-            MEHRAN<span>.</span>
-        </a>
-
+        <a href="#" class="logo">MEHRAN<span>.</span></a>
         <div class="nav-links">
-
             <a href="#home">Home</a>
-
-            <!-- SEPARATE ABOUT PAGE -->
             <a href="about.html">About</a>
-
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
             <a href="#journey">Journey</a>
-
-            <a href="#contact" class="nav-cta">
-                Contact ↗
-            </a>
-
+            <a href="#contact" class="nav-cta">Contact ↗</a>
         </div>
-
     </div>
 </nav>
 
-
-<!-- =========================================
-     HERO
-========================================= -->
-
 <header class="hero container" id="home">
-
     <div class="hero-content">
-
-        <div class="tag">
-            <span class="tag-dot"></span>
-            ASPIRING INDIE GAME DEVELOPER
-        </div>
-
-        <h1>
-            I BUILD<br>
-            WORLDS.<br>
-            I CREATE<br>
-            <span class="gradient">EXPERIENCES.</span>
-        </h1>
-
-        <p class="hero-description">
-            Hey, I'm Mehran.
-
-            I'm exploring the world of game development,
-            turning imagination into interactive experiences,
-            and learning something new with every project.
-        </p>
-
+        <div class="tag"><span class="tag-dot"></span> ASPIRING INDIE GAME DEVELOPER</div>
+        <h1>I BUILD<br>WORLDS.<br>I CREATE<br><span class="gradient">EXPERIENCES.</span></h1>
+        <p class="hero-description">Hey, I'm Mehran. Exploring game development, turning imagination into interactive experiences, and building something unique with every project.</p>
         <div class="buttons">
-
-            <a href="#projects" class="btn btn-primary">
-                Explore My Work <span>↗</span>
-            </a>
-
-            <!-- ORIGINAL ABOUT PAGE URL -->
-            <a href="about.html" class="btn btn-secondary">
-                Discover My Story ↗
-            </a>
-
+            <a href="#projects" class="btn btn-primary">Explore My Work ↗</a>
+            <a href="about.html" class="btn btn-secondary">Discover My Story ↗</a>
         </div>
-
     </div>
 
-
-    <!-- 3D VISUAL -->
-
     <div class="hero-visual">
-
         <div class="visual-glow"></div>
-
         <div class="scene">
-
             <div class="orbit"></div>
             <div class="orbit two"></div>
             <div class="orbit three"></div>
-
             <div class="core"></div>
-
             <div class="float-card one">
                 <small>GAME DEVELOPMENT</small>
-
-                <strong>
-                    <span class="float-icon">✦</span>
-                    CREATE WORLDS
-                </strong>
+                <strong>✦ CREATE WORLDS</strong>
             </div>
-
             <div class="float-card two">
                 <small>CURRENT TOOLKIT</small>
-
-                <strong class="software-stack">
-
-                    <img
-                        class="software-logo unity-logo"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                        alt="Unity logo"
-                    >
-
-                    UNITY /
-
-                    <img
-                        class="software-logo"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                        alt="C sharp logo"
-                    >
-
-                    C#
-
+                <strong>
+                    <img class="software-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity"> UNITY /
+                    <img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"> C#
                 </strong>
             </div>
-
         </div>
-
-        <div class="scene-label">
-            IMAGINATION → INTERACTION
-        </div>
-
+        <div class="scene-label">IMAGINATION → INTERACTION</div>
     </div>
-
 </header>
 
-
-<!-- =========================================
-     SOFTWARE STRIP
-========================================= -->
-
 <div class="container">
-
     <div class="info-strip">
-
         <div class="info-item">
-
-            <strong class="software-name">
-
-                <img
-                    class="software-logo unity-logo"
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                    alt="Unity logo"
-                >
-
-                Unity
-
-            </strong>
-
+            <strong><img class="software-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity"> Unity</strong>
             <span>GAME ENGINE</span>
-
         </div>
-
-
         <div class="info-item">
-
-            <strong class="software-name">
-
-                <img
-                    class="software-logo"
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                    alt="C sharp logo"
-                >
-
-                C#
-
-            </strong>
-
+            <strong><img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"> C#</strong>
             <span>PROGRAMMING</span>
-
         </div>
-
-
         <div class="info-item">
-
-            <strong class="software-name">
-
-                <img
-                    class="software-logo"
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg"
-                    alt="Blender logo"
-                >
-
-                Blender
-
-            </strong>
-
+            <strong><img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt="Blender"> Blender</strong>
             <span>3D EXPLORATION</span>
-
         </div>
-
-
         <div class="info-item">
-
-            <strong class="software-name">
-                ✎ Storytelling
-            </strong>
-
+            <strong>✎ Storytelling</strong>
             <span>CREATIVE DIRECTION</span>
-
         </div>
-
     </div>
-
 </div>
 
-
-<!-- =========================================
-     PROJECTS
-========================================= -->
-
 <section id="projects">
-
     <div class="container">
-
-        <div class="section-label reveal">
-            01 / SELECTED WORK
-        </div>
-
-        <div class="section-header reveal">
-
-            <h2 class="section-title">
-                Ideas Into <span>Reality.</span>
-            </h2>
-
-            <p class="section-description">
-                Every project starts with an idea.
-                These are some of my experiments,
-                creations and concepts.
-            </p>
-
-        </div>
-
+        <div class="section-label reveal">01 / SELECTED WORK</div>
+        <h2 class="section-title reveal">Ideas Into <span>Reality.</span></h2>
+        <p class="section-description reveal">Every project starts with an idea. These are some of my experiments and creations.</p>
 
         <div class="project-grid">
-
-
-            <!-- PROJECT 01: PONG -->
-
-            <a href="pong.html"
-               class="project-link"
-               aria-label="Open Pong project page">
-
+            <!-- Project 1 -->
+            <a href="pong.html" class="project-link">
                 <article class="project reveal">
-
                     <div class="project-art art-pong">
-
                         <div class="pong-line"></div>
-
                         <div class="pong-paddle left"></div>
                         <div class="pong-paddle right"></div>
-
                         <div class="pong-ball"></div>
-
                         <div class="art-text">PONG.</div>
-
-                        <div class="art-subtitle">
-                            CLASSIC ARCADE EXPERIENCE
-                        </div>
-
+                        <div class="art-subtitle">CLASSIC ARCADE EXPERIENCE</div>
                     </div>
-
-
                     <div class="project-info">
-
                         <div class="project-top">
-
-                            <span class="project-status">
-                                ● COMPLETED
-                            </span>
-
-                            <span class="project-category">
-                                2D / ARCADE
-                            </span>
-
+                            <span class="project-status">● COMPLETED</span>
+                            <span class="project-category">2D / ARCADE</span>
                         </div>
-
                         <h3>Pong</h3>
-
-                        <p>
-                            A recreation of the classic arcade
-                            experience. Built while learning
-                            movement, collision, scoring,
-                            AI opponent behaviour and UI systems.
-                        </p>
-
+                        <p>Recreation of classic arcade mechanics, collisions, score keeping and AI opponent logic.</p>
                         <div class="project-bottom">
-
-                            <span class="project-tech tech-list">
-
-                                <span class="tech-item">
-
-                                    <img
-                                        class="software-logo mini-logo unity-logo"
-                                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                                        alt="Unity logo"
-                                        loading="lazy"
-                                    >
-
-                                    Unity
-
-                                </span>
-
-                                <span>·</span>
-
-                                <span class="tech-item">
-
-                                    <img
-                                        class="software-logo mini-logo"
-                                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                                        alt="C sharp logo"
-                                        loading="lazy"
-                                    >
-
-                                    C#
-
-                                </span>
-
+                            <span class="project-tech">
+                                <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 
+                                <img class="software-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt=""> C#
                             </span>
-
-                            <span class="project-link-label">
-                                VIEW PROJECT ↗
-                            </span>
-
+                            <span class="project-link-label">VIEW PROJECT ↗</span>
                             <span class="project-number">01</span>
-
                         </div>
-
                     </div>
-
                 </article>
-
             </a>
 
-
-            <!-- PROJECT 02: FLAPPY BIRD -->
-
-            <a href="flappybird.html"
-               class="project-link"
-               aria-label="Open Flappy Bird project page">
-
-                <article class="project reveal delay-1">
-
+            <!-- Project 2 -->
+            <a href="flappybird.html" class="project-link">
+                <article class="project reveal">
                     <div class="project-art art-flappy">
-
                         <div class="pipe top"></div>
                         <div class="pipe bottom"></div>
-
                         <div class="flappy-bird"></div>
-
                         <div class="art-text">FLAPPY.</div>
-
-                        <div class="art-subtitle">
-                            SIMPLE GAMEPLAY / BIG CHALLENGE
-                        </div>
-
+                        <div class="art-subtitle">SIMPLE GAMEPLAY / BIG CHALLENGE</div>
                     </div>
-
-
                     <div class="project-info">
-
                         <div class="project-top">
-
-                            <span class="project-status">
-                                ● COMPLETED
-                            </span>
-
-                            <span class="project-category">
-                                2D / ARCADE
-                            </span>
-
+                            <span class="project-status">● COMPLETED</span>
+                            <span class="project-category">2D / ARCADE</span>
                         </div>
-
                         <h3>Flappy Bird</h3>
-
-                        <p>
-                            A small arcade project focused on
-                            timing, movement, obstacles,
-                            collision detection and the
-                            core gameplay loop.
-                        </p>
-
+                        <p>Arcade project built to refine timing, obstacle generation, and core player physics.</p>
                         <div class="project-bottom">
-
-                            <span class="project-tech tech-list">
-
-                                <span class="tech-item">
-
-                                    <img
-                                        class="software-logo mini-logo unity-logo"
-                                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                                        alt="Unity logo"
-                                        loading="lazy"
-                                    >
-
-                                    Unity
-
-                                </span>
-
-                                <span>·</span>
-
-                                <span class="tech-item">
-
-                                    <img
-                                        class="software-logo mini-logo"
-                                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                                        alt="C sharp logo"
-                                        loading="lazy"
-                                    >
-
-                                    C#
-
-                                </span>
-
+                            <span class="project-tech">
+                                <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 
+                                <img class="software-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt=""> C#
                             </span>
-
-                            <span class="project-link-label">
-                                VIEW PROJECT ↗
-                            </span>
-
+                            <span class="project-link-label">VIEW PROJECT ↗</span>
                             <span class="project-number">02</span>
-
                         </div>
-
                     </div>
-
                 </article>
-
             </a>
 
-
-            <!-- PROJECT 03: TRUST NO ONE -->
-
-            <a href="trustnoone.html"
-               class="project-link"
-               aria-label="Open Trust No One project page">
-
+            <!-- Project 3 -->
+            <a href="trustnoone.html" class="project-link">
                 <article class="project reveal">
-
                     <div class="project-art art-trust">
-
-                        <div class="trust-light"></div>
                         <div class="trust-door"></div>
                         <div class="trust-eye">?</div>
-
-                        <div class="art-text">
-                            TRUST NO ONE
-                        </div>
-
-                        <div class="art-subtitle">
-                            A VOICE. A HOUSE. A MYSTERY.
-                        </div>
-
+                        <div class="art-text">TRUST NO ONE</div>
+                        <div class="art-subtitle">A VOICE. A HOUSE. A MYSTERY.</div>
                     </div>
-
-
                     <div class="project-info">
-
                         <div class="project-top">
-
-                            <span class="project-status">
-                                ◉ IN PROGRESS
-                            </span>
-
-                            <span class="project-category">
-                                3D / PUZZLE
-                            </span>
-
+                            <span class="project-status">◉ IN PROGRESS</span>
+                            <span class="project-category">3D / PUZZLE</span>
                         </div>
-
                         <h3>Trust No One</h3>
-
-                        <p>
-                            A first-person puzzle-house game concept
-                            created for Brackeys Game Jam 2026.2.
-                            A mysterious voice guides the player,
-                            but can it really be trusted?
-                        </p>
-
+                        <p>First-person puzzle-house prototype for Brackeys Game Jam 2026.2 featuring a mysterious narrator.</p>
                         <div class="project-bottom">
-
-                            <span class="project-tech tech-list">
-
-                                <span class="tech-item">
-
-                                    <img
-                                        class="software-logo mini-logo unity-logo"
-                                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                                        alt="Unity logo"
-                                        loading="lazy"
-                                    >
-
-                                    Unity
-
-                                </span>
-
-                                <span>· 3D</span>
-
-                            </span>
-
-                            <span class="project-link-label">
-                                VIEW PROJECT ↗
-                            </span>
-
-                            <span class="project-number">03</span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </a>
-
-
-            <!-- PROJECT 04: HOLLOW HILL -->
-
-            <a href="hollowhill.html"
-               class="project-link"
-               aria-label="Open Hollow Hill project page">
-
-                <article class="project reveal delay-1">
-
-                    <div class="project-art art-hollow">
-
-                        <div class="moon"></div>
-
-                        <div class="hill two"></div>
-                        <div class="hill"></div>
-
-                        <div class="candle one"></div>
-                        <div class="candle two"></div>
-
-                        <div class="art-text">
-                            HOLLOW HILL
-                        </div>
-
-                        <div class="art-subtitle">
-                            KEEP THE LIGHTS ALIVE
-                        </div>
-
-                    </div>
-
-
-                    <div class="project-info">
-
-                        <div class="project-top">
-
-                            <span class="project-status">
-                                ◌ GAME CONCEPT
-                            </span>
-
-                            <span class="project-category">
-                                HORROR / ATMOSPHERIC
-                            </span>
-
-                        </div>
-
-                        <h3>Hollow Hill</h3>
-
-                        <p>
-                            An atmospheric horror concept about
-                            keeping six lights burning while
-                            mysterious creatures move through
-                            a dark farm. Featuring a mysterious
-                            scarecrow named Stitch.
-                        </p>
-
-                        <div class="project-bottom">
-
                             <span class="project-tech">
-                                GAME DESIGN · STORYTELLING
+                                <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 3D
                             </span>
-
-                            <span class="project-link-label">
-                                VIEW PROJECT ↗
-                            </span>
-
-                            <span class="project-number">04</span>
-
+                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-number">03</span>
                         </div>
-
                     </div>
-
                 </article>
-
             </a>
 
-
+            <!-- Project 4 -->
+            <a href="hollowhill.html" class="project-link">
+                <article class="project reveal">
+                    <div class="project-art art-hollow">
+                        <div class="moon"></div>
+                        <div class="hill"></div>
+                        <div class="candle"></div>
+                        <div class="art-text">HOLLOW HILL</div>
+                        <div class="art-subtitle">KEEP THE LIGHTS ALIVE</div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-top">
+                            <span class="project-status">◌ GAME CONCEPT</span>
+                            <span class="project-category">HORROR / ATMOSPHERIC</span>
+                        </div>
+                        <h3>Hollow Hill</h3>
+                        <p>Atmospheric horror concept about keeping six lights burning on an eerie farm stalked by Stitch.</p>
+                        <div class="project-bottom">
+                            <span class="project-tech">DESIGN · STORYTELLING</span>
+                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-number">04</span>
+                        </div>
+                    </div>
+                </article>
+            </a>
         </div>
-
     </div>
-
 </section>
-
-
-<!-- =========================================
-     MY TOOLKIT
-========================================= -->
 
 <section class="skills-section" id="skills">
-
     <div class="container">
-
-        <div class="section-label reveal">
-            02 / MY TOOLKIT
-        </div>
-
-        <div class="section-header reveal">
-
-            <h2 class="section-title">
-                Learning The <span>Craft.</span>
-            </h2>
-
-            <p class="section-description">
-                The tools, technologies and creative
-                skills I'm exploring to bring my
-                game ideas to life.
-            </p>
-
-        </div>
-
+        <div class="section-label reveal">02 / MY TOOLKIT</div>
+        <h2 class="section-title reveal">Learning The <span>Craft.</span></h2>
+        <p class="section-description reveal">Tools and technologies I use to bring game mechanics and stories together.</p>
 
         <div class="skills-grid">
-
-
-            <!-- UNITY -->
-
             <div class="skill-card reveal">
-
-                <div class="skill-icon">
-
-                    <img
-                        class="software-logo unity-logo"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                        alt="Unity logo"
-                        loading="lazy"
-                    >
-
-                </div>
-
+                <div class="skill-icon"><img class="software-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity"></div>
                 <h3>Game Development</h3>
-
-                <p>
-                    Exploring gameplay systems, mechanics
-                    and interactive experiences.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span class="software-tag">
-
-                        <img
-                            class="mini-logo unity-logo"
-                            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                            alt=""
-                            loading="lazy"
-                        >
-
-                        Unity
-
-                    </span>
-
-                    <span>Game Mechanics</span>
-                    <span>Prototyping</span>
-
-                </div>
-
+                <p>Exploring mechanics, character controllers and game balance.</p>
+                <div class="skill-tags"><span>Unity</span><span>Mechanics</span><span>Prototyping</span></div>
             </div>
-
-
-            <!-- C# -->
-
-            <div class="skill-card reveal delay-1">
-
-                <div class="skill-icon">
-
-                    <img
-                        class="software-logo"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                        alt="C sharp logo"
-                        loading="lazy"
-                    >
-
-                </div>
-
-                <h3>Programming</h3>
-
-                <p>
-                    Learning how code brings game
-                    mechanics and systems to life.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span class="software-tag">
-
-                        <img
-                            class="mini-logo"
-                            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                            alt=""
-                            loading="lazy"
-                        >
-
-                        C#
-
-                    </span>
-
-                    <span>Logic</span>
-                    <span>OOP</span>
-
-                </div>
-
-            </div>
-
-
-            <!-- BLENDER -->
-
-            <div class="skill-card reveal delay-2">
-
-                <div class="skill-icon">
-
-                    <img
-                        class="software-logo"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg"
-                        alt="Blender logo"
-                        loading="lazy"
-                    >
-
-                </div>
-
-                <h3>3D Art</h3>
-
-                <p>
-                    Exploring modelling, visual design
-                    and game-ready 3D assets.
-                </p>
-
-                <div class="skill-tags">
-
-                    <span class="software-tag">
-
-                        <img
-                            class="mini-logo"
-                            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg"
-                            alt=""
-                            loading="lazy"
-                        >
-
-                        Blender
-
-                    </span>
-
-                    <span>Modelling</span>
-                    <span>3D Design</span>
-
-                </div>
-
-            </div>
-
-
-            <!-- UI DESIGN -->
-
             <div class="skill-card reveal">
-
+                <div class="skill-icon"><img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"></div>
+                <h3>Programming</h3>
+                <p>Writing clean, maintainable logic and applying OOP concepts.</p>
+                <div class="skill-tags"><span>C#</span><span>OOP</span><span>Logic</span></div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt="Blender"></div>
+                <h3>3D Art</h3>
+                <p>Asset creation, modeling, and level environment design in Blender.</p>
+                <div class="skill-tags"><span>Blender</span><span>Modeling</span><span>Props</span></div>
+            </div>
+            <div class="skill-card reveal">
                 <div class="skill-icon">▧</div>
-
                 <h3>UI Design</h3>
-
-                <p>
-                    Thinking about clean interfaces,
-                    visual hierarchy and player experience.
-                </p>
-
-                <div class="skill-tags">
-                    <span>UI</span>
-                    <span>UX</span>
-                    <span>Visual Design</span>
-                </div>
-
+                <p>Crafting readable menus, HUD components and responsive layouts.</p>
+                <div class="skill-tags"><span>UI</span><span>UX</span><span>Flow</span></div>
             </div>
-
-
-            <!-- GAME DESIGN -->
-
-            <div class="skill-card reveal delay-1">
-
+            <div class="skill-card reveal">
                 <div class="skill-icon">✧</div>
-
                 <h3>Game Design</h3>
-
-                <p>
-                    Exploring level design, gameplay
-                    loops and interesting challenges.
-                </p>
-
-                <div class="skill-tags">
-                    <span>Level Design</span>
-                    <span>Game Design</span>
-                    <span>Mechanics</span>
-                </div>
-
+                <p>Designing core loops, level progression and satisfying reward systems.</p>
+                <div class="skill-tags"><span>Levels</span><span>Puzzles</span><span>Pacing</span></div>
             </div>
-
-
-            <!-- STORYTELLING -->
-
-            <div class="skill-card reveal delay-2">
-
+            <div class="skill-card reveal">
                 <div class="skill-icon">✎</div>
-
                 <h3>Storytelling</h3>
-
-                <p>
-                    Developing ideas, characters,
-                    atmosphere and experiences.
-                </p>
-
-                <div class="skill-tags">
-                    <span>Writing</span>
-                    <span>Worldbuilding</span>
-                    <span>Creative Ideas</span>
-                </div>
-
+                <p>Worldbuilding, character arcs, and rich environmental lore.</p>
+                <div class="skill-tags"><span>Narrative</span><span>Worldbuilding</span></div>
             </div>
-
-
         </div>
-
     </div>
-
 </section>
-
-
-<!-- =========================================
-     JOURNEY
-========================================= -->
 
 <section id="journey">
-
     <div class="container">
-
         <div class="journey-layout">
-
-
             <div class="journey-intro reveal">
-
-                <div class="section-label">
-                    03 / THE PROCESS
-                </div>
-
-                <h2 class="section-title">
-                    My <span>Journey.</span>
-                </h2>
-
-                <p>
-                    Not an overnight success story.
-                    Just a developer improving skills,
-                    building projects and moving forward
-                    one step at a time.
-                </p>
-
+                <div class="section-label">03 / THE PROCESS</div>
+                <h2 class="section-title">My <span>Journey.</span></h2>
+                <p>Building skills and taking small, consistent steps towards creating memorable indie games.</p>
             </div>
-
-
             <div class="timeline">
-
-
                 <div class="timeline-item reveal">
-
                     <small>THE BEGINNING</small>
-
                     <h3>Discovering Game Development</h3>
-
-                    <p>
-                        Started exploring how games are made,
-                        understanding the basics and discovering
-                        the creative possibilities of game development.
-                    </p>
-
+                    <p>Started by exploring how game engines work and learning the fundamentals of interactive design.</p>
                 </div>
-
-
-                <div class="timeline-item reveal delay-1">
-
+                <div class="timeline-item reveal">
                     <small>LEARNING PHASE</small>
-
                     <h3>Building My First Projects</h3>
-
-                    <p>
-                        Exploring
-                        <span class="inline-tech">
-
-                            <img
-                                class="software-logo mini-logo unity-logo"
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg"
-                                alt="Unity logo"
-                                loading="lazy"
-                            >
-
-                            Unity
-
-                        </span>,
-
-                        <span class="inline-tech">
-
-                            <img
-                                class="software-logo mini-logo"
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg"
-                                alt="C sharp logo"
-                                loading="lazy"
-                            >
-
-                            C#
-
-                        </span>,
-
-                        <span class="inline-tech">
-
-                            <img
-                                class="software-logo mini-logo"
-                                src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg"
-                                alt="Blender logo"
-                                loading="lazy"
-                            >
-
-                            Blender
-
-                        </span>
-
-                        and UI design. Creating smaller games
-                        and experiments to understand the
-                        development process.
-                    </p>
-
+                    <p>Diving into Unity, C#, and 3D modeling while building small prototypes like arcade recreations.</p>
                 </div>
-
-
-                <div class="timeline-item reveal delay-2">
-
+                <div class="timeline-item reveal">
                     <small>THE PRESENT</small>
-
-                    <h3>Becoming Better Every Day</h3>
-
-                    <p>
-                        Improving programming skills, developing
-                        original ideas and understanding how
-                        to create better gaming experiences.
-                    </p>
-
+                    <h3>Iterating & Expanding</h3>
+                    <p>Focusing on original jam games, cleaner code structures, and atmospheric narrative concepts.</p>
                 </div>
-
-
-                <div class="timeline-item reveal delay-3">
-
+                <div class="timeline-item reveal">
                     <small>THE ROAD AHEAD</small>
-
                     <h3>Building Original Worlds</h3>
-
-                    <p>
-                        The long-term goal is to create original
-                        indie games, collaborate with creative people
-                        and eventually build an indie game studio.
-                    </p>
-
+                    <p>The goal is to produce full-scale indie titles and build an independent games studio.</p>
                 </div>
-
-
             </div>
-
         </div>
-
     </div>
-
 </section>
-
-
-<!-- =========================================
-     FUTURE VISION
-========================================= -->
 
 <section>
-
     <div class="container">
-
         <div class="vision-card reveal">
-
-            <div class="section-label">
-                04 / THE BIGGER PICTURE
-            </div>
-
-            <h2>
-                One Day, <span>My Own Worlds.</span>
-            </h2>
-
-            <p>
-                The goal isn't simply to make games.
-                It's to build experiences, create meaningful
-                stories, work with talented people and
-                bring original ideas to life.
-            </p>
-
+            <div class="section-label">04 / THE BIGGER PICTURE</div>
+            <h2>One Day, <span>My Own Worlds.</span></h2>
+            <p>Creating experiences, sharing original stories, and building immersive games from the ground up.</p>
         </div>
-
     </div>
-
 </section>
-
-
-<!-- =========================================
-     CONTACT
-========================================= -->
 
 <section id="contact">
-
     <div class="container">
-
         <div class="contact-card reveal">
-
-            <div class="section-label">
-                05 / LET'S CONNECT
-            </div>
-
-            <h2 class="section-title">
-                Have an Idea?<br>
-                Let's <span>Create.</span>
-            </h2>
-
-            <p>
-                Interested in games, creative projects
-                or following my development journey?
-                Let's connect.
-            </p>
-
-            <!-- ORIGINAL GITHUB DESTINATION -->
-
-            <a
-                href="https://github.com/"
-                class="btn btn-primary"
-                target="_blank"
-                rel="noopener"
-            >
-
-                <img
-                    class="software-logo github-logo small-logo"
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
-                    alt="GitHub logo"
-                    loading="lazy"
-                >
-
-                Find Me on GitHub ↗
-
+            <div class="section-label">05 / LET'S CONNECT</div>
+            <h2 class="section-title">Have an Idea? Let's <span>Create.</span></h2>
+            <p>Want to talk game dev, collaborate, or check out my code?</p>
+            <a href="https://github.com/" class="btn btn-primary" target="_blank" rel="noopener">
+                <img class="software-logo github-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt=""> Find Me on GitHub ↗
             </a>
-
         </div>
-
     </div>
-
 </section>
 
-
-<!-- =========================================
-     FOOTER
-========================================= -->
-
 <footer>
-
     <div class="container footer-inner">
-
-        <div class="footer-brand">
-            MEHRAN<span>.</span>
-        </div>
-
+        <div class="footer-brand">MEHRAN<span>.</span></div>
         <div class="footer-copy">
-
-            Designed & Built with
-            <span class="footer-heart">♥</span>
-            by Mehran.
-
-            <br>
-
-            © <span id="year"></span>
-            Mehran. All rights reserved.
-
+            Designed & Built with <span class="footer-heart">♥</span> by Mehran.<br>
+            © <span id="year"></span> Mehran. All rights reserved.
         </div>
-
     </div>
-
 </footer>
 
-
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
-
 <script>
+// Copyright year
+document.getElementById("year").textContent = new Date().getFullYear();
 
-/* =====================================
-   01. COPYRIGHT YEAR
-===================================== */
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
-
-/* =====================================
-   02. SCROLL REVEAL
-===================================== */
-
-const revealElements =
-    document.querySelectorAll(".reveal");
-
-if ("IntersectionObserver" in window) {
-
-    const revealObserver = new IntersectionObserver(
-
-        (entries, observer) => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add("visible");
-
-                    observer.unobserve(entry.target);
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.08,
-            rootMargin: "0px 0px -30px 0px"
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add("visible");
+            observer.unobserve(e.target);
         }
-
-    );
-
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
     });
+}, { threshold: 0.1 });
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-} else {
-
-    revealElements.forEach(element => {
-        element.classList.add("visible");
-    });
-
-}
-
-
-/* =====================================
-   03. MULTICOLOUR CUSTOM CURSOR
-===================================== */
-
-const cursorDot = document.getElementById("cursorDot");
-const cursorRing = document.getElementById("cursorRing");
-const cursorGlow = document.getElementById("cursorGlow");
-
-const canHover = window.matchMedia(
-    "(hover: hover) and (pointer: fine)"
-).matches;
-
-const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-).matches;
-
+// Custom Cursor & 3D Tilt
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (canHover && !reduceMotion) {
+    const dot = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    const glow = document.getElementById("cursorGlow");
+    let tx = innerWidth / 2, ty = innerHeight / 2;
+    let dx = tx, dy = ty, rx = tx, ry = ty, gx = tx, gy = ty;
+    let frame = null;
 
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
+    function renderCursor() {
+        dx += (tx - dx) * 0.45; dy += (ty - dy) * 0.45;
+        rx += (tx - rx) * 0.2;  ry += (ty - ry) * 0.2;
+        gx += (tx - gx) * 0.08; gy += (ty - gy) * 0.08;
 
-    let dotX = targetX;
-    let dotY = targetY;
+        dot.style.left = `${dx}px`; dot.style.top = `${dy}px`;
+        ring.style.left = `${rx}px`; ring.style.top = `${ry}px`;
+        glow.style.left = `${gx}px`; glow.style.top = `${gy}px`;
 
-    let ringX = targetX;
-    let ringY = targetY;
-
-    let glowX = targetX;
-    let glowY = targetY;
-
-    let cursorFrame = null;
-
-
-    function setCursorVisibility(visible) {
-
-        const opacity = visible ? "1" : "0";
-
-        cursorDot.style.opacity = opacity;
-        cursorRing.style.opacity = opacity;
-        cursorGlow.style.opacity = opacity;
-
-    }
-
-
-    function animateCursor() {
-
-        dotX += (targetX - dotX) * 0.42;
-        dotY += (targetY - dotY) * 0.42;
-
-        ringX += (targetX - ringX) * 0.19;
-        ringY += (targetY - ringY) * 0.19;
-
-        glowX += (targetX - glowX) * 0.075;
-        glowY += (targetY - glowY) * 0.075;
-
-
-        cursorDot.style.left = dotX + "px";
-        cursorDot.style.top = dotY + "px";
-
-        cursorRing.style.left = ringX + "px";
-        cursorRing.style.top = ringY + "px";
-
-        cursorGlow.style.left = glowX + "px";
-        cursorGlow.style.top = glowY + "px";
-
-
-        const distance =
-            Math.abs(targetX - ringX) +
-            Math.abs(targetY - ringY) +
-            Math.abs(targetX - glowX) +
-            Math.abs(targetY - glowY);
-
-
-        if (distance > 0.35) {
-
-            cursorFrame = requestAnimationFrame(animateCursor);
-
+        if (Math.abs(tx - rx) + Math.abs(ty - ry) > 0.2) {
+            frame = requestAnimationFrame(renderCursor);
         } else {
-
-            cursorFrame = null;
-
+            frame = null;
         }
-
     }
 
-
-    document.addEventListener("pointermove", event => {
-
-        targetX = event.clientX;
-        targetY = event.clientY;
-
-        setCursorVisibility(true);
-
-        if (cursorFrame === null) {
-            cursorFrame = requestAnimationFrame(animateCursor);
-        }
-
+    window.addEventListener("pointermove", e => {
+        tx = e.clientX; ty = e.clientY;
+        dot.style.opacity = "1"; ring.style.opacity = "1"; glow.style.opacity = "1";
+        if (!frame) frame = requestAnimationFrame(renderCursor);
     }, { passive: true });
 
-
-    document.addEventListener("pointerleave", event => {
-
-        if (!event.relatedTarget) {
-            setCursorVisibility(false);
-        }
-
+    document.querySelectorAll("a, button, .project, .skill-card").forEach(el => {
+        el.addEventListener("pointerenter", () => { ring.classList.add("hover"); dot.classList.add("hover"); });
+        el.addEventListener("pointerleave", () => { ring.classList.remove("hover"); dot.classList.remove("hover"); });
     });
 
-    document.addEventListener("pointerenter", () => {
-        setCursorVisibility(true);
-    });
+    window.addEventListener("pointerdown", () => ring.classList.add("pressed"));
+    window.addEventListener("pointerup", () => ring.classList.remove("pressed"));
 
-
-    /* Hover interaction */
-
-    document.querySelectorAll(
-        "a, button, .project, .skill-card"
-    ).forEach(element => {
-
-        element.addEventListener("pointerenter", () => {
-
-            cursorRing.classList.add("hover");
-            cursorDot.classList.add("hover");
-
-        });
-
-        element.addEventListener("pointerleave", () => {
-
-            cursorRing.classList.remove("hover");
-            cursorDot.classList.remove("hover");
-
-        });
-
-    });
-
-
-    /* Click interaction */
-
-    document.addEventListener("pointerdown", () => {
-
-        cursorRing.classList.add("pressed");
-
-    });
-
-    document.addEventListener("pointerup", () => {
-
-        cursorRing.classList.remove("pressed");
-
-    });
-
-
-    /* =====================================
-       04. SMOOTH 3D CARD TILT
-    ===================================== */
-
-    document.querySelectorAll(
-        ".project, .skill-card"
-    ).forEach(card => {
-
-        let frame = null;
-
-        let pointerX = 0;
-        let pointerY = 0;
-
-
-        card.addEventListener("pointermove", event => {
-
-            const rect = card.getBoundingClientRect();
-
-            pointerX =
-                (event.clientX - rect.left) / rect.width;
-
-            pointerY =
-                (event.clientY - rect.top) / rect.height;
-
-
-            if (frame !== null) return;
-
-
-            frame = requestAnimationFrame(() => {
-
-                const rotateY = (pointerX - 0.5) * 5;
-                const rotateX = (0.5 - pointerY) * 5;
-
-                card.style.setProperty(
-                    "--tilt-x",
-                    rotateX.toFixed(2) + "deg"
-                );
-
-                card.style.setProperty(
-                    "--tilt-y",
-                    rotateY.toFixed(2) + "deg"
-                );
-
-                frame = null;
-
-            });
-
+    // Card Tilt
+    document.querySelectorAll(".project, .skill-card").forEach(card => {
+        card.addEventListener("pointermove", e => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
+            card.style.transform = `perspective(600px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
         }, { passive: true });
-
-
         card.addEventListener("pointerleave", () => {
-
-            if (frame !== null) {
-
-                cancelAnimationFrame(frame);
-                frame = null;
-
-            }
-
-            card.style.setProperty("--tilt-x", "0deg");
-            card.style.setProperty("--tilt-y", "0deg");
-
+            card.style.transform = "none";
         });
-
     });
-
 }
-
-
-/* =====================================
-   05. BUTTON INTERACTION
-===================================== */
-
-if (!reduceMotion) {
-
-    document.querySelectorAll(".btn").forEach(button => {
-
-        button.addEventListener("pointerenter", () => {
-            button.classList.add("button-hovered");
-        });
-
-        button.addEventListener("pointerleave", () => {
-            button.classList.remove("button-hovered");
-        });
-
-    });
-
-}
-
 </script>
-
 </body>
 </html>
