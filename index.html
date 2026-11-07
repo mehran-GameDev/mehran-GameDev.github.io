@@ -7,10 +7,10 @@
 <meta name="description" content="Mehran's personal game development portfolio. Exploring Unity, C#, Blender, game design and storytelling.">
 <meta name="theme-color" content="#07090e">
 
-<!-- Fonts -->
+<!-- PIXEL FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
 
 <script>document.documentElement.classList.add("js");</script>
@@ -24,20 +24,37 @@
     --red: #ff7777;
     --text: #f3f5fa;
     --muted: #929bad;
-    --border: rgba(255,255,255,.085);
-    --border-blue: rgba(101,169,255,.25);
+    --border: rgba(255,255,255,.1);
+    --border-blue: rgba(101,169,255,.3);
+    --pixel-head: 'Press Start 2P', monospace;
+    --pixel-body: 'Minecraftia', 'VT323', monospace;
     --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    image-rendering: pixelated;
+}
+
+html { 
+    scroll-behavior: smooth; 
+    scroll-padding-top: 95px; 
+}
+
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1.7;
+    font-family: var(--pixel-body);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    line-height: 1.8;
     overflow-x: hidden;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
 }
+
 a { color: inherit; text-decoration: none; }
 .container { width: min(1140px, 90%); margin: auto; }
 ::selection { background: var(--blue); color: #07101d; }
@@ -46,49 +63,55 @@ a { color: inherit; text-decoration: none; }
 body::before {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
     background: 
-        radial-gradient(ellipse at 15% 10%, rgba(34,91,166,.09), transparent 40%),
-        radial-gradient(ellipse at 90% 50%, rgba(29,77,143,.07), transparent 40%),
-        radial-gradient(ellipse at 50% 100%, rgba(29,77,143,.06), transparent 45%);
+        radial-gradient(ellipse at 15% 10%, rgba(34,91,166,.12), transparent 45%),
+        radial-gradient(ellipse at 90% 50%, rgba(29,77,143,.09), transparent 40%),
+        radial-gradient(ellipse at 50% 100%, rgba(29,77,143,.08), transparent 45%);
 }
+
 .background-grid {
-    position: fixed; inset: 0; pointer-events: none; z-index: -2; opacity: .15;
-    background-image: linear-gradient(rgba(101,169,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(101,169,255,.07) 1px, transparent 1px);
-    background-size: 65px 65px;
-    mask-image: linear-gradient(to bottom, black, transparent 85%);
+    position: fixed; inset: 0; pointer-events: none; z-index: -2; opacity: .2;
+    background-image: linear-gradient(rgba(101,169,255,.1) 2px, transparent 2px), linear-gradient(90deg, rgba(101,169,255,.1) 2px, transparent 2px);
+    background-size: 32px 32px;
 }
+
 .noise {
-    position: fixed; inset: 0; z-index: 20; opacity: .02; pointer-events: none;
+    position: fixed; inset: 0; z-index: 20; opacity: .025; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 }
 
-/* Custom Cursor */
+/* Custom Pixelated Cursor */
 .cursor-glow, .cursor-ring, .cursor-dot {
     position: fixed; left: 0; top: 0; pointer-events: none; opacity: 0; transform: translate3d(-50%,-50%,0);
 }
+
 .cursor-glow {
-    width: 340px; height: 340px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(101,169,255,.16) 0%, rgba(84,229,255,.09) 25%, rgba(167,139,250,.08) 45%, transparent 75%);
-    filter: blur(45px); z-index: 9996; mix-blend-mode: screen; transition: opacity .3s;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(101,169,255,.18) 0%, rgba(84,229,255,.1) 30%, transparent 70%);
+    filter: blur(40px); z-index: 9996; mix-blend-mode: screen;
 }
+
 .cursor-ring {
-    width: 40px; height: 40px; padding: 1.5px; border-radius: 50%;
-    background: conic-gradient(#65a9ff, #54e5ff, #a78bfa, #ff83bb, #ffd166, #65a9ff);
-    box-shadow: 0 0 10px rgba(101,169,255,.2); z-index: 9998;
-    transition: width .25s var(--ease), height .25s var(--ease), opacity .25s;
+    width: 32px; height: 32px; border-radius: 0;
+    border: 2px dashed var(--blue);
+    z-index: 9998; transition: width .2s, height .2s, opacity .25s, transform .2s;
 }
-.cursor-ring-inner {
-    width: 100%; height: 100%; border-radius: 50%;
-    background: radial-gradient(circle, rgba(101,169,255,.15), rgba(7,9,14,.76) 72%);
-    border: 1px solid rgba(255,255,255,.11); backdrop-filter: blur(4px);
-}
+
 .cursor-dot {
-    width: 9px; height: 9px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fff, #54e5ff 35%, #65a9ff 70%, #a78bfa);
-    box-shadow: 0 0 12px rgba(101,169,255,.8); z-index: 9999;
+    width: 8px; height: 8px; border-radius: 0;
+    background: var(--yellow);
+    box-shadow: 0 0 8px var(--yellow); z-index: 9999;
 }
-.cursor-ring.hover { width: 60px; height: 60px; }
-.cursor-dot.hover { transform: translate3d(-50%,-50%,0) scale(1.35); background: #ffd166; box-shadow: 0 0 15px #ff83bb; }
-.cursor-ring.pressed { width: 28px; height: 28px; }
+
+.cursor-ring.hover { 
+    width: 48px; height: 48px; 
+    border: 2px solid var(--yellow); 
+    transform: translate3d(-50%,-50%,0) rotate(45deg); 
+}
+
+.cursor-dot.hover { 
+    background: var(--blue); 
+    box-shadow: 0 0 12px var(--blue); 
+}
 
 @media (hover:hover) and (pointer:fine) {
     body, a, button { cursor: none; }
@@ -98,219 +121,234 @@ body::before {
 /* Nav */
 nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(7,9,14,.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
+    background: rgba(7,9,14,.92); backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--border);
 }
+
 .nav-inner { height: 75px; display: flex; align-items: center; justify-content: space-between; }
-.logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -1.5px; }
+.logo { font-family: var(--pixel-head); font-size: 15px; letter-spacing: -0.5px; }
 .logo span, .footer-brand span { color: var(--blue); }
-.nav-links { display: flex; align-items: center; gap: 30px; }
-.nav-links a { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; transition: color .3s; }
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-links a { color: var(--muted); font-size: 10px; transition: color .2s; }
 .nav-links a:hover { color: var(--blue); }
-.nav-cta { padding: 9px 16px; border: 1px solid var(--border-blue); border-radius: 7px; color: var(--blue) !important; }
-.nav-cta:hover { background: rgba(101,169,255,.1); }
+.nav-cta { padding: 8px 14px; border: 2px solid var(--border-blue); color: var(--blue) !important; }
+.nav-cta:hover { background: rgba(101,169,255,.15); }
 
 /* Buttons */
 .buttons { display: flex; flex-wrap: wrap; gap: 14px; }
 .btn {
-    display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px;
-    border-radius: 8px; font-size: 13px; font-weight: 700; transition: all .3s var(--ease);
+    display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px;
+    font-family: var(--pixel-head); font-size: 10px; transition: all .2s;
+    border: 2px solid transparent;
 }
-.btn-primary { background: var(--blue); color: #07101d; box-shadow: 0 5px 25px rgba(101,169,255,.13); }
-.btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 35px rgba(101,169,255,.25); }
-.btn-secondary { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,.025); }
-.btn-secondary:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-3px); }
+.btn-primary { 
+    background: var(--blue); color: #07101d; 
+    box-shadow: 4px 4px 0 #000;
+}
+.btn-primary:hover { 
+    background: #fff; transform: translate(-2px, -2px); 
+    box-shadow: 6px 6px 0 var(--blue); 
+}
+.btn-secondary { 
+    border: 2px solid var(--border); color: #fff; background: rgba(255,255,255,.03); 
+    box-shadow: 4px 4px 0 #000;
+}
+.btn-secondary:hover { 
+    border-color: var(--blue); color: var(--blue); transform: translate(-2px, -2px); 
+    box-shadow: 6px 6px 0 var(--border-blue);
+}
 
 /* Hero */
-.hero { min-height: 720px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 35px; padding: 60px 0 80px; }
+.hero { min-height: 720px; display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 30px; padding: 60px 0 80px; }
 .tag {
     display: inline-flex; align-items: center; gap: 10px; color: var(--blue);
-    background: rgba(101,169,255,.07); border: 1px solid var(--border-blue);
-    padding: 7px 14px; border-radius: 30px; font-family: 'Minecraftia', monospace; font-size: 9px; margin-bottom: 25px;
+    background: rgba(101,169,255,.08); border: 2px solid var(--border-blue);
+    padding: 6px 12px; font-family: var(--pixel-head); font-size: 8px; margin-bottom: 25px;
 }
-.tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 10px var(--yellow); }
+.tag-dot { width: 6px; height: 6px; background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
 .hero h1 {
-    font-family: 'Space Grotesk', sans-serif; font-size: clamp(46px,6vw,80px);
-    line-height: 1.05; letter-spacing: -3.5px; font-weight: 700; margin-bottom: 22px;
+    font-family: var(--pixel-head); font-size: clamp(26px, 4vw, 42px);
+    line-height: 1.4; letter-spacing: -1px; margin-bottom: 24px;
 }
 .gradient {
-    background: linear-gradient(110deg, #65a9ff 0%, #a9d1ff 48%, #ffd166 100%);
-    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: gradientMove 7s linear infinite;
+    color: var(--yellow);
+    text-shadow: 2px 2px 0 var(--blue);
 }
-@keyframes gradientMove { to { background-position: 200% center; } }
-.hero-description { max-width: 500px; color: var(--muted); font-size: 15px; margin-bottom: 30px; }
+.hero-description { max-width: 500px; color: var(--muted); font-size: 13px; margin-bottom: 30px; }
 
 /* 3D Visual */
 .hero-visual { position: relative; height: 460px; display: flex; align-items: center; justify-content: center; perspective: 1100px; }
-.visual-glow { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: rgba(40,105,190,.2); filter: blur(90px); }
-.scene { position: relative; width: 360px; height: 360px; transform-style: preserve-3d; animation: sceneFloat 8s ease-in-out infinite; }
+.visual-glow { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: rgba(40,105,190,.25); filter: blur(70px); }
+.scene { position: relative; width: 340px; height: 340px; transform-style: preserve-3d; animation: sceneFloat 8s ease-in-out infinite; }
 @keyframes sceneFloat { 0%,100% { transform: translateY(0) rotateX(9deg) rotateY(-12deg); } 50% { transform: translateY(-12px) rotateX(11deg) rotateY(-7deg); } }
 
 .orbit {
-    position: absolute; width: 330px; height: 330px; left: 50%; top: 50%;
-    border: 1px solid rgba(101,169,255,.18); border-radius: 50%; transform: translate(-50%,-50%) rotateX(72deg);
+    position: absolute; width: 300px; height: 300px; left: 50%; top: 50%;
+    border: 2px dashed rgba(101,169,255,.3); transform: translate(-50%,-50%) rotateX(72deg);
 }
-.orbit.two { width: 280px; height: 280px; transform: translate(-50%,-50%) rotateY(65deg) rotateX(65deg); border-color: rgba(101,169,255,.25); }
-.orbit.three { width: 380px; height: 380px; border-style: dashed; animation: orbitSpin 35s linear infinite; }
+.orbit.two { width: 250px; height: 250px; transform: translate(-50%,-50%) rotateY(65deg) rotateX(65deg); border: 2px solid rgba(101,169,255,.2); }
+.orbit.three { width: 340px; height: 340px; border: 2px dotted rgba(255,209,102,.25); animation: orbitSpin 35s linear infinite; }
 @keyframes orbitSpin { to { transform: translate(-50%,-50%) rotateX(72deg) rotate(360deg); } }
 
 .core {
-    position: absolute; width: 140px; height: 140px; left: 50%; top: 50%;
-    transform: translate(-50%,-50%) translateZ(25px); border-radius: 50%;
-    background: radial-gradient(circle at 30% 25%, #c0e2ff, #2565ad 50%, #080e18 100%);
-    box-shadow: 0 0 50px rgba(65,148,255,.35);
+    position: absolute; width: 120px; height: 120px; left: 50%; top: 50%;
+    transform: translate(-50%,-50%) translateZ(25px);
+    background: #2565ad;
+    border: 3px solid #65a9ff;
+    box-shadow: inset -6px -6px 0 #102744, inset 6px 6px 0 #c0e2ff, 0 0 30px rgba(65,148,255,.4);
 }
+
 .float-card {
-    position: absolute; padding: 14px 16px; background: rgba(15,25,41,.88); backdrop-filter: blur(15px);
-    border: 1px solid rgba(101,169,255,.22); border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    position: absolute; padding: 12px 14px; background: rgba(15,25,41,.92);
+    border: 2px solid rgba(101,169,255,.3); box-shadow: 4px 4px 0 #000;
     animation: cardFloat 6s ease-in-out infinite;
 }
-.float-card.one { top: 30px; left: -10px; border-color: rgba(255,209,102,.2); }
+.float-card.one { top: 30px; left: -10px; border-color: rgba(255,209,102,.4); }
 .float-card.two { right: -20px; bottom: 50px; animation-delay: -3s; }
 @keyframes cardFloat { 0%,100% { transform: translateY(0) translateZ(30px); } 50% { transform: translateY(-8px) translateZ(40px); } }
-.float-card small { color: var(--muted); display: block; font-family: 'Minecraftia', monospace; font-size: 8px; margin-bottom: 4px; }
-.float-card strong { font-family: 'Space Grotesk', sans-serif; color: var(--blue); font-size: 13px; }
+.float-card small { color: var(--muted); display: block; font-size: 8px; margin-bottom: 4px; font-family: var(--pixel-head); }
+.float-card strong { font-family: var(--pixel-head); color: var(--blue); font-size: 9px; line-height: 1.5; }
 .float-card.one strong { color: var(--yellow); }
-.scene-label { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-family: 'Minecraftia', monospace; font-size: 9px; color: rgba(150,190,240,.65); }
+.scene-label { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-family: var(--pixel-head); font-size: 8px; color: rgba(150,190,240,.7); }
 
 /* Logos & Strip */
-.software-logo { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; }
+.software-logo { width: 22px; height: 22px; object-fit: contain; vertical-align: middle; }
 .unity-logo, .github-logo { filter: brightness(0) invert(1); }
-.mini-logo { width: 14px; height: 14px; }
-.info-strip { display: grid; grid-template-columns: repeat(4,1fr); border-block: 1px solid var(--border); background: rgba(255,255,255,.012); }
-.info-item { padding: 25px 15px; text-align: center; border-right: 1px solid var(--border); transition: background .3s; }
+.mini-logo { width: 12px; height: 12px; }
+.info-strip { display: grid; grid-template-columns: repeat(4,1fr); border-block: 2px solid var(--border); background: rgba(255,255,255,.015); }
+.info-item { padding: 22px 12px; text-align: center; border-right: 2px solid var(--border); transition: background .2s; }
 .info-item:last-child { border-right: 0; }
-.info-item:hover { background: rgba(101,169,255,.035); }
-.info-item strong { display: flex; align-items: center; justify-content: center; gap: 7px; font-family: 'Space Grotesk', sans-serif; font-size: 15px; }
-.info-item span { display: block; color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; margin-top: 5px; }
+.info-item:hover { background: rgba(101,169,255,.05); }
+.info-item strong { display: flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--pixel-head); font-size: 11px; }
+.info-item span { display: block; color: var(--muted); font-size: 9px; margin-top: 6px; }
 
 /* Sections */
-section { padding: 100px 0; }
-.section-label { display: flex; align-items: center; gap: 12px; color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 9px; margin-bottom: 12px; }
-.section-label::before { content: ""; width: 20px; height: 1px; background: var(--blue); }
-.section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px,4.5vw,46px); letter-spacing: -2px; margin-bottom: 14px; }
+section { padding: 90px 0; }
+.section-label { display: flex; align-items: center; gap: 10px; color: var(--blue); font-family: var(--pixel-head); font-size: 9px; margin-bottom: 12px; }
+.section-label::before { content: "►"; color: var(--blue); font-size: 9px; }
+.section-title { font-family: var(--pixel-head); font-size: clamp(20px, 3.5vw, 30px); letter-spacing: -0.5px; margin-bottom: 16px; line-height: 1.4; }
 .section-title span { color: var(--blue); }
-.section-description { color: var(--muted); max-width: 560px; font-size: 14px; margin-bottom: 40px; }
+.section-description { color: var(--muted); max-width: 560px; font-size: 13px; margin-bottom: 40px; }
 
 /* Projects Grid */
 .project-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
-.project-link { display: block; height: 100%; border-radius: 15px; }
+.project-link { display: block; height: 100%; }
 .project {
-    height: 100%; background: var(--surface); border: 1px solid var(--border);
-    border-radius: 15px; overflow: hidden; transition: transform .22s ease-out, border-color .3s, box-shadow .3s;
+    height: 100%; background: var(--surface); border: 2px solid var(--border);
+    overflow: hidden; box-shadow: 4px 4px 0 #000;
+    transition: transform .2s ease-out, border-color .2s, box-shadow .2s;
 }
-.project-link:hover .project { border-color: rgba(101,169,255,.45); box-shadow: 0 20px 45px rgba(0,0,0,.35); }
-.project-art { height: 230px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #101a29; }
-.project-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,9,14,.7), transparent 75%); }
-.art-text { position: absolute; z-index: 2; font-family: 'Space Grotesk',sans-serif; font-size: 28px; font-weight: 700; letter-spacing: 5px; color: #fff; }
-.art-subtitle { position: absolute; z-index: 2; bottom: 18px; left: 20px; color: rgba(255,255,255,.65); font-family: 'Minecraftia', monospace; font-size: 8px; }
+.project-link:hover .project { border-color: var(--blue); transform: translate(-3px, -3px); box-shadow: 7px 7px 0 var(--border-blue); }
+.project-art { height: 210px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #101a29; border-bottom: 2px solid var(--border); }
+.art-text { position: absolute; z-index: 2; font-family: var(--pixel-head); font-size: 18px; letter-spacing: 2px; color: #fff; text-shadow: 2px 2px 0 #000; }
+.art-subtitle { position: absolute; z-index: 2; bottom: 14px; left: 16px; color: rgba(255,255,255,.7); font-size: 8px; font-family: var(--pixel-head); }
 
 /* Project Arts */
-.art-pong { background: radial-gradient(circle, rgba(56,120,200,.32), transparent 45%), linear-gradient(135deg,#101d30,#080d16); }
-.pong-line { position: absolute; height: 70%; width: 1px; border-left: 2px dashed rgba(255,255,255,.2); }
-.pong-ball { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 20px var(--blue); animation: pongMove 3s ease-in-out infinite alternate; }
-.pong-paddle { position: absolute; width: 6px; height: 60px; border-radius: 4px; background: var(--blue); box-shadow: 0 0 15px var(--blue); }
+.art-pong { background: radial-gradient(circle, rgba(56,120,200,.3), transparent 45%), linear-gradient(135deg,#101d30,#080d16); }
+.pong-line { position: absolute; height: 70%; width: 2px; border-left: 2px dashed rgba(255,255,255,.3); }
+.pong-ball { position: absolute; width: 10px; height: 10px; background: #fff; box-shadow: 0 0 10px var(--blue); animation: pongMove 3s ease-in-out infinite alternate; }
+.pong-paddle { position: absolute; width: 6px; height: 50px; background: var(--blue); }
 .pong-paddle.left { left: 20%; } .pong-paddle.right { right: 20%; }
-@keyframes pongMove { from { transform: translate(-35px,-35px); } to { transform: translate(35px,35px); } }
+@keyframes pongMove { from { transform: translate(-30px,-30px); } to { transform: translate(30px,30px); } }
 
 .art-flappy { background: radial-gradient(circle at 75% 25%, rgba(110,155,210,.25), transparent 28%), linear-gradient(145deg,#162b43,#0b1321); }
-.flappy-bird { position: absolute; width: 36px; height: 28px; border-radius: 50% 48% 40% 45%; background: #ffcf69; left: 34%; top: 40%; animation: birdFloat 2s ease-in-out infinite; }
-.pipe { position: absolute; width: 30px; height: 100px; background: linear-gradient(90deg, #376b69, #6ab29d, #28564f); border-radius: 4px; right: 22%; }
+.flappy-bird { position: absolute; width: 24px; height: 18px; background: #ffcf69; border: 2px solid #000; left: 34%; top: 40%; animation: birdFloat 2s ease-in-out infinite; }
+.pipe { position: absolute; width: 26px; height: 90px; background: #6ab29d; border: 2px solid #000; right: 22%; }
 .pipe.top { top: -15px; } .pipe.bottom { bottom: -15px; }
-@keyframes birdFloat { 50% { transform: translateY(-10px) rotate(-6deg); } }
+@keyframes birdFloat { 50% { transform: translateY(-8px); } }
 
-.art-trust { background: radial-gradient(circle, rgba(170,48,65,.22), transparent 55%), linear-gradient(145deg,#191019,#090b14); }
-.trust-door { position: absolute; width: 95px; height: 145px; bottom: 0; border: 2px solid rgba(255,119,119,.35); border-bottom: 0; background: #171526; }
-.trust-eye { position: absolute; top: 42%; font-size: 28px; color: #ff9999; text-shadow: 0 0 15px rgba(255,90,110,.5); }
+.art-trust { background: radial-gradient(circle, rgba(170,48,65,.25), transparent 55%), linear-gradient(145deg,#191019,#090b14); }
+.trust-door { position: absolute; width: 80px; height: 130px; bottom: 0; border: 2px solid var(--red); border-bottom: 0; background: #171526; }
+.trust-eye { position: absolute; top: 40%; font-family: var(--pixel-head); font-size: 20px; color: #ff9999; text-shadow: 2px 2px 0 #000; }
 
-.art-hollow { background: radial-gradient(ellipse at 50% 80%, rgba(112,78,160,.26), transparent 45%), linear-gradient(180deg,#141321,#090a11); }
-.moon { position: absolute; width: 50px; height: 50px; background: #d7d7ec; border-radius: 50%; top: 25px; right: 50px; box-shadow: 0 0 40px rgba(204,204,255,.32); }
-.hill { position: absolute; bottom: -70px; width: 360px; height: 140px; background: #151926; border-radius: 50% 50% 0 0; }
-.candle { position: absolute; bottom: 30px; width: 10px; height: 32px; background: #c9c1a6; left: 35%; }
-.candle::before { content: ""; position: absolute; width: 8px; height: 12px; top: -10px; left: 1px; background: var(--yellow); border-radius: 50%; box-shadow: 0 0 15px var(--yellow); }
+.art-hollow { background: radial-gradient(ellipse at 50% 80%, rgba(112,78,160,.3), transparent 45%), linear-gradient(180deg,#141321,#090a11); }
+.moon { position: absolute; width: 36px; height: 36px; background: #d7d7ec; top: 25px; right: 45px; box-shadow: 0 0 20px rgba(204,204,255,.3); }
+.hill { position: absolute; bottom: -50px; width: 320px; height: 110px; background: #151926; border-top: 2px solid rgba(255,255,255,.1); }
+.candle { position: absolute; bottom: 25px; width: 8px; height: 26px; background: #c9c1a6; left: 35%; }
+.candle::before { content: ""; position: absolute; width: 6px; height: 8px; top: -8px; left: 1px; background: var(--yellow); }
 
 /* Project Meta */
-.project-info { padding: 24px; }
+.project-info { padding: 20px; }
 .project-top, .project-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .project-top { margin-bottom: 12px; }
-.project-status { color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 8px; }
-.project-category { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 8px; }
-.project-info h3 { font-family: 'Space Grotesk',sans-serif; font-size: 22px; margin-bottom: 8px; }
-.project-info p { color: var(--muted); font-size: 13px; line-height: 1.8; }
-.project-bottom { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 14px; font-family: 'Minecraftia', monospace; font-size: 8px; }
-.project-tech { color: #b8cce8; display: inline-flex; align-items: center; gap: 5px; }
-.project-link-label { margin-left: auto; color: var(--blue); transition: color .25s, transform .25s; }
-.project-link:hover .project-link-label { color: var(--yellow); transform: translateX(3px); }
-.project-number { color: rgba(101,169,255,.5); font-size: 10px; }
+.project-status { color: var(--blue); font-family: var(--pixel-head); font-size: 8px; }
+.project-category { color: var(--muted); font-size: 9px; }
+.project-info h3 { font-family: var(--pixel-head); font-size: 14px; margin-bottom: 10px; }
+.project-info p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+.project-bottom { border-top: 2px solid var(--border); margin-top: 16px; padding-top: 14px; font-size: 8px; font-family: var(--pixel-head); }
+.project-tech { color: #b8cce8; display: inline-flex; align-items: center; gap: 6px; }
+.project-link-label { margin-left: auto; color: var(--blue); transition: color .2s; }
+.project-link:hover .project-link-label { color: var(--yellow); }
+.project-number { color: rgba(101,169,255,.5); font-size: 9px; }
 
 /* Skills Section */
-.skills-section { background: linear-gradient(180deg, transparent, rgba(13,22,36,.45), transparent); }
+.skills-section { background: linear-gradient(180deg, transparent, rgba(13,22,36,.5), transparent); }
 .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 .skill-card {
-    padding: 24px; border-radius: 13px; background: linear-gradient(145deg, #111a28, #0c111b);
-    border: 1px solid var(--border); transition: transform .22s ease-out, border-color .3s;
+    padding: 20px; background: #111a28; border: 2px solid var(--border);
+    box-shadow: 4px 4px 0 #000; transition: all .2s;
 }
-.skill-card:hover { border-color: var(--border-blue); }
+.skill-card:hover { border-color: var(--blue); transform: translate(-2px, -2px); }
 .skill-icon {
-    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-    border-radius: 10px; color: var(--blue); background: rgba(101,169,255,.1); font-size: 18px; margin-bottom: 16px;
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    color: var(--blue); background: rgba(101,169,255,.1); font-size: 16px; margin-bottom: 14px;
+    border: 2px solid var(--border-blue);
 }
-.skill-card h3 { font-family: 'Space Grotesk',sans-serif; font-size: 17px; margin-bottom: 8px; }
-.skill-card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-bottom: 15px; }
+.skill-card h3 { font-family: var(--pixel-head); font-size: 11px; margin-bottom: 8px; }
+.skill-card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-bottom: 14px; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .skill-tags span {
     display: inline-flex; align-items: center; gap: 5px; color: #c1d5ef;
-    background: rgba(101,169,255,.07); border: 1px solid rgba(101,169,255,.13);
-    padding: 4px 8px; border-radius: 5px; font-family: 'Minecraftia', monospace; font-size: 8px;
+    background: rgba(101,169,255,.07); border: 1px solid rgba(101,169,255,.2);
+    padding: 3px 6px; font-size: 9px;
 }
 
 /* Journey Layout */
-.journey-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; }
+.journey-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 50px; }
 .journey-intro { position: sticky; top: 120px; }
-.timeline { border-left: 1px solid rgba(101,169,255,.35); padding-left: 25px; }
-.timeline-item { position: relative; padding-bottom: 38px; }
+.timeline { border-left: 2px dashed rgba(101,169,255,.35); padding-left: 20px; }
+.timeline-item { position: relative; padding-bottom: 35px; }
 .timeline-item:last-child { padding-bottom: 0; }
 .timeline-item::before {
-    content: ""; position: absolute; width: 10px; height: 10px; left: -31px; top: 7px;
-    background: var(--blue); border: 3px solid #111a28; border-radius: 50%; box-shadow: 0 0 14px var(--blue);
+    content: ""; position: absolute; width: 8px; height: 8px; left: -25px; top: 5px;
+    background: var(--blue); border: 2px solid #000;
 }
-.timeline-item small { color: var(--blue); font-family: 'Minecraftia', monospace; font-size: 8px; }
-.timeline-item h3 { font-family: 'Space Grotesk',sans-serif; font-size: 19px; margin: 6px 0; }
-.timeline-item p { color: var(--muted); font-size: 13px; max-width: 460px; }
+.timeline-item small { color: var(--blue); font-family: var(--pixel-head); font-size: 8px; }
+.timeline-item h3 { font-family: var(--pixel-head); font-size: 12px; margin: 8px 0; }
+.timeline-item p { color: var(--muted); font-size: 12px; max-width: 460px; }
 
 /* Vision & Contact */
 .vision-card {
-    padding: 50px; border: 1px solid var(--border-blue); border-radius: 18px;
-    background: radial-gradient(ellipse at 100% 0%, rgba(48,112,193,.18), transparent 45%), linear-gradient(135deg,#121e30,#0b101a);
+    padding: 40px; border: 2px solid var(--border-blue);
+    background: #0d1522; box-shadow: 6px 6px 0 #000;
 }
-.vision-card h2 { font-family: 'Space Grotesk',sans-serif; font-size: clamp(28px,4vw,42px); letter-spacing: -2px; margin-bottom: 12px; }
+.vision-card h2 { font-family: var(--pixel-head); font-size: clamp(18px, 3vw, 24px); margin-bottom: 14px; line-height: 1.4; }
 .vision-card h2 span, .contact-card .section-title span { color: var(--blue); }
 .vision-card p { color: var(--muted); max-width: 580px; font-size: 13px; }
 
 .contact-card {
-    text-align: center; padding: 75px 20px; border: 1px solid var(--border); border-radius: 18px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(49,115,193,.22), transparent 65%), #0d121c;
+    text-align: center; padding: 60px 20px; border: 2px solid var(--border);
+    background: #0d121c; box-shadow: 6px 6px 0 #000;
 }
 .contact-card .section-label { justify-content: center; }
 .contact-card p { color: var(--muted); max-width: 460px; font-size: 13px; margin: 0 auto 25px; }
 
 /* Footer */
-footer { border-top: 1px solid var(--border); padding: 30px 0; }
+footer { border-top: 2px solid var(--border); padding: 25px 0; }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-.footer-brand { font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 16px; }
-.footer-copy { color: var(--muted); font-family: 'Minecraftia', monospace; font-size: 9px; line-height: 2; text-align: right; }
+.footer-brand { font-family: var(--pixel-head); font-size: 12px; }
+.footer-copy { color: var(--muted); font-size: 10px; line-height: 1.8; text-align: right; }
 .footer-heart { color: var(--red); }
 
 /* Reveal & Responsive */
 .reveal { opacity: 1; transform: none; }
-.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.js .reveal { opacity: 0; transform: translateY(15px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 .js .reveal.visible { opacity: 1; transform: translateY(0); }
 
 @media(max-width:900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 60px; }
-    .hero-visual { height: 380px; }
-    .skills-grid, .journey-layout, .project-grid { grid-template-columns: 1fr; gap: 30px; }
+    .hero { grid-template-columns: 1fr; padding-top: 50px; }
+    .hero-visual { height: 350px; }
+    .skills-grid, .journey-layout, .project-grid { grid-template-columns: 1fr; gap: 25px; }
     .journey-intro { position: static; }
     .info-strip { grid-template-columns: repeat(2,1fr); }
     .cursor-dot, .cursor-ring, .cursor-glow { display: none; }
@@ -334,7 +372,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
 
 <!-- Cursor Elements -->
 <div class="cursor-glow" id="cursorGlow"></div>
-<div class="cursor-ring" id="cursorRing"><div class="cursor-ring-inner"></div></div>
+<div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 
 <nav>
@@ -357,8 +395,8 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
         <h1>I BUILD<br>WORLDS.<br>I CREATE<br><span class="gradient">EXPERIENCES.</span></h1>
         <p class="hero-description">Hey, I'm Mehran. Exploring game development, turning imagination into interactive experiences, and building something unique with every project.</p>
         <div class="buttons">
-            <a href="#projects" class="btn btn-primary">Explore My Work ↗</a>
-            <a href="about.html" class="btn btn-secondary">Discover My Story ↗</a>
+            <a href="#projects" class="btn btn-primary">Explore Work ↗</a>
+            <a href="about.html" class="btn btn-secondary">My Story ↗</a>
         </div>
     </div>
 
@@ -397,11 +435,11 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
         </div>
         <div class="info-item">
             <strong><img class="software-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt="Blender"> Blender</strong>
-            <span>3D EXPLORATION</span>
+            <span>3D ART</span>
         </div>
         <div class="info-item">
             <strong>✎ Storytelling</strong>
-            <span>CREATIVE DIRECTION</span>
+            <span>CREATIVE DIR</span>
         </div>
     </div>
 </div>
@@ -421,7 +459,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                         <div class="pong-paddle left"></div>
                         <div class="pong-paddle right"></div>
                         <div class="pong-ball"></div>
-                        <div class="art-text">PONG.</div>
+                        <div class="art-text">PONG</div>
                         <div class="art-subtitle">CLASSIC ARCADE EXPERIENCE</div>
                     </div>
                     <div class="project-info">
@@ -436,7 +474,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                                 <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 
                                 <img class="software-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt=""> C#
                             </span>
-                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-link-label">VIEW ↗</span>
                             <span class="project-number">01</span>
                         </div>
                     </div>
@@ -450,7 +488,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                         <div class="pipe top"></div>
                         <div class="pipe bottom"></div>
                         <div class="flappy-bird"></div>
-                        <div class="art-text">FLAPPY.</div>
+                        <div class="art-text">FLAPPY</div>
                         <div class="art-subtitle">SIMPLE GAMEPLAY / BIG CHALLENGE</div>
                     </div>
                     <div class="project-info">
@@ -465,7 +503,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                                 <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 
                                 <img class="software-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt=""> C#
                             </span>
-                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-link-label">VIEW ↗</span>
                             <span class="project-number">02</span>
                         </div>
                     </div>
@@ -492,7 +530,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                             <span class="project-tech">
                                 <img class="software-logo mini-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity · 3D
                             </span>
-                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-link-label">VIEW ↗</span>
                             <span class="project-number">03</span>
                         </div>
                     </div>
@@ -512,13 +550,13 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                     <div class="project-info">
                         <div class="project-top">
                             <span class="project-status">◌ GAME CONCEPT</span>
-                            <span class="project-category">HORROR / ATMOSPHERIC</span>
+                            <span class="project-category">HORROR</span>
                         </div>
                         <h3>Hollow Hill</h3>
                         <p>Atmospheric horror concept about keeping six lights burning on an eerie farm stalked by Stitch.</p>
                         <div class="project-bottom">
-                            <span class="project-tech">DESIGN · STORYTELLING</span>
-                            <span class="project-link-label">VIEW PROJECT ↗</span>
+                            <span class="project-tech">DESIGN · STORY</span>
+                            <span class="project-link-label">VIEW ↗</span>
                             <span class="project-number">04</span>
                         </div>
                     </div>
@@ -537,7 +575,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
         <div class="skills-grid">
             <div class="skill-card reveal">
                 <div class="skill-icon"><img class="software-logo unity-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity"></div>
-                <h3>Game Development</h3>
+                <h3>Game Dev</h3>
                 <p>Exploring mechanics, character controllers and game balance.</p>
                 <div class="skill-tags"><span>Unity</span><span>Mechanics</span><span>Prototyping</span></div>
             </div>
@@ -569,7 +607,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
                 <div class="skill-icon">✎</div>
                 <h3>Storytelling</h3>
                 <p>Worldbuilding, character arcs, and rich environmental lore.</p>
-                <div class="skill-tags"><span>Narrative</span><span>Worldbuilding</span></div>
+                <div class="skill-tags"><span>Narrative</span><span>Lore</span></div>
             </div>
         </div>
     </div>
@@ -586,12 +624,12 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
             <div class="timeline">
                 <div class="timeline-item reveal">
                     <small>THE BEGINNING</small>
-                    <h3>Discovering Game Development</h3>
+                    <h3>Discovering Game Dev</h3>
                     <p>Started by exploring how game engines work and learning the fundamentals of interactive design.</p>
                 </div>
                 <div class="timeline-item reveal">
                     <small>LEARNING PHASE</small>
-                    <h3>Building My First Projects</h3>
+                    <h3>Building First Projects</h3>
                     <p>Diving into Unity, C#, and 3D modeling while building small prototypes like arcade recreations.</p>
                 </div>
                 <div class="timeline-item reveal">
@@ -626,7 +664,7 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
             <h2 class="section-title">Have an Idea? Let's <span>Create.</span></h2>
             <p>Want to talk game dev, collaborate, or check out my code?</p>
             <a href="https://github.com/" class="btn btn-primary" target="_blank" rel="noopener">
-                <img class="software-logo github-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt=""> Find Me on GitHub ↗
+                <img class="software-logo github-logo mini-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt=""> Find on GitHub ↗
             </a>
         </div>
     </div>
@@ -643,10 +681,8 @@ footer { border-top: 1px solid var(--border); padding: 30px 0; }
 </footer>
 
 <script>
-// Copyright year
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Scroll reveal
 const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
         if (e.isIntersecting) {
@@ -657,7 +693,7 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-// Custom Cursor & 3D Tilt
+// Custom Pixel Cursor
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -694,22 +730,6 @@ if (canHover && !reduceMotion) {
     document.querySelectorAll("a, button, .project, .skill-card").forEach(el => {
         el.addEventListener("pointerenter", () => { ring.classList.add("hover"); dot.classList.add("hover"); });
         el.addEventListener("pointerleave", () => { ring.classList.remove("hover"); dot.classList.remove("hover"); });
-    });
-
-    window.addEventListener("pointerdown", () => ring.classList.add("pressed"));
-    window.addEventListener("pointerup", () => ring.classList.remove("pressed"));
-
-    // Card Tilt
-    document.querySelectorAll(".project, .skill-card").forEach(card => {
-        card.addEventListener("pointermove", e => {
-            const r = card.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - 0.5;
-            const y = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `perspective(600px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
-        }, { passive: true });
-        card.addEventListener("pointerleave", () => {
-            card.style.transform = "none";
-        });
     });
 }
 </script>
