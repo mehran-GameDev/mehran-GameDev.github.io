@@ -6,22 +6,22 @@
 <title>Mehran | Game Developer & Technical Designer</title>
 <meta name="description" content="Portfolio of Mehran — Independent Game Developer specializing in Unity, C#, Blender, and atmospheric gameplay systems.">
 
-<!-- Premium Studio Fonts -->
+<!-- Modern Studio Typography -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --bg-base: #090c10;
-    --bg-surface: #0f141c;
-    --bg-card: rgba(20, 27, 38, 0.65);
-    --bg-card-hover: rgba(27, 36, 51, 0.85);
-
+    --bg-base: #07090e;
+    --bg-surface: #0d1118;
+    --bg-card: rgba(16, 22, 32, 0.65);
+    
     --primary: #38bdf8;
-    --primary-glow: rgba(56, 189, 248, 0.25);
+    --primary-glow: rgba(56, 189, 248, 0.28);
     --accent: #818cf8;
     --emerald: #34d399;
+    --amber: #fbbf24;
     
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
@@ -57,6 +57,20 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Subtle Cinematic Noise Overlay */
+.film-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -68,14 +82,26 @@ a {
     margin: 0 auto;
 }
 
+/* Scroll Progress Bar */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    z-index: 1000;
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
 .bg-ambient {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: -1;
     background: 
-        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.06), transparent 45%),
-        radial-gradient(circle at 85% 35%, rgba(129, 140, 248, 0.06), transparent 50%),
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.07), transparent 45%),
+        radial-gradient(circle at 85% 35%, rgba(129, 140, 248, 0.07), transparent 50%),
         radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.04), transparent 50%);
 }
 
@@ -84,7 +110,7 @@ header.nav-wrap {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(9, 12, 16, 0.85);
+    background: rgba(7, 9, 14, 0.85);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
 }
@@ -146,10 +172,10 @@ header.nav-wrap {
 
 /* Hero Section */
 .hero {
-    padding: 110px 0 90px;
+    padding: 90px 0 80px;
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 50px;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 45px;
     align-items: center;
 }
 
@@ -158,13 +184,13 @@ header.nav-wrap {
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    background: rgba(52, 211, 153, 0.1);
+    background: rgba(52, 211, 153, 0.08);
     border: 1px solid rgba(52, 211, 153, 0.25);
     border-radius: 100px;
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--emerald);
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .status-indicator {
@@ -173,11 +199,26 @@ header.nav-wrap {
     border-radius: 50%;
     background: var(--emerald);
     box-shadow: 0 0 8px var(--emerald);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero-tagline {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .hero h1 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-size: clamp(2.3rem, 4.2vw, 3.6rem);
     line-height: 1.15;
     letter-spacing: -1.5px;
     margin-bottom: 16px;
@@ -189,20 +230,11 @@ header.nav-wrap {
     -webkit-text-fill-color: transparent;
 }
 
-.hero-tagline {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 14px;
-    letter-spacing: -0.3px;
-}
-
 .hero-sub {
     color: var(--text-secondary);
     font-size: 1.05rem;
-    max-width: 520px;
-    margin-bottom: 34px;
+    max-width: 500px;
+    margin-bottom: 30px;
 }
 
 .btn-group {
@@ -216,10 +248,12 @@ header.nav-wrap {
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
     border-radius: var(--radius-sm);
     cursor: pointer;
+    border: none;
+    transition: all 0.25s var(--ease);
 }
 
 .btn-primary {
@@ -231,6 +265,7 @@ header.nav-wrap {
 .btn-primary:hover {
     background: #7dd3fc;
     transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4);
 }
 
 .btn-secondary {
@@ -241,83 +276,162 @@ header.nav-wrap {
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
 }
 
-/* Showcase Card */
-.hero-card {
-    background: linear-gradient(145deg, rgba(20, 27, 38, 0.9), rgba(12, 16, 23, 0.95));
+/* Hero Bento Grid */
+.bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.bento-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(14px);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.code-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
-}
-
-.window-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-.window-dot.red { background: #ef4444; }
-.window-dot.yellow { background: #f59e0b; }
-.window-dot.green { background: #10b981; }
-
-.tech-stack-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.tech-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.02);
+.bento-canvas-box {
+    grid-column: span 2;
+    padding: 0;
+    height: 180px;
+    position: relative;
+    background: #090e17;
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
+    overflow: hidden;
 }
 
-.tech-item span {
-    font-weight: 600;
-    font-size: 0.9rem;
+#micro-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: crosshair;
 }
 
-.tech-item small {
+.canvas-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-size: 0.72rem;
     color: var(--text-muted);
+    pointer-events: none;
+}
+
+.bento-card h4 {
     font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.bento-card p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.bento-sub {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Spotlight Card Mechanics */
+.spotlight-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(56, 189, 248, 0.45), transparent 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spotlight-card:hover::before {
+    opacity: 1;
 }
 
 /* Sections Global */
 section {
-    padding: 90px 0;
+    padding: 85px 0;
 }
 
 .section-head {
-    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .section-label {
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .section-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
     letter-spacing: -1px;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--primary);
+    font-weight: 600;
 }
 
 /* Projects Grid */
@@ -328,37 +442,30 @@ section {
 }
 
 .project-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s var(--ease);
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--border-hover);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 24px var(--primary-glow);
+    transform: translateY(-4px);
 }
 
 .project-preview {
     height: 180px;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(129, 140, 248, 0.08));
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(129, 140, 248, 0.07));
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid var(--border);
+    position: relative;
 }
 
 .project-preview-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: 1px;
-    color: var(--text-primary);
 }
 
 .project-content {
@@ -371,7 +478,7 @@ section {
 .project-meta {
     display: flex;
     justify-content: space-between;
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 600;
     color: var(--text-muted);
     margin-bottom: 10px;
@@ -379,7 +486,7 @@ section {
 
 .project-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     margin-bottom: 8px;
 }
 
@@ -398,7 +505,7 @@ section {
 }
 
 .tag {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 500;
     padding: 4px 10px;
     background: rgba(255, 255, 255, 0.04);
@@ -415,16 +522,7 @@ section {
 }
 
 .skill-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
     padding: 26px;
-    transition: all 0.25s var(--ease);
-}
-
-.skill-card:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
 }
 
 .skill-icon {
@@ -445,7 +543,7 @@ section {
     line-height: 1.6;
 }
 
-/* Contact CTA */
+/* Contact CTA Box */
 .cta-box {
     text-align: center;
     background: linear-gradient(180deg, var(--bg-surface), var(--bg-base));
@@ -457,16 +555,148 @@ section {
 
 .cta-box h2 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
     letter-spacing: -1px;
     margin-bottom: 12px;
 }
 
 .cta-box p {
     color: var(--text-secondary);
-    max-width: 500px;
+    max-width: 480px;
     margin: 0 auto 28px;
     font-size: 0.95rem;
+}
+
+.contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.copy-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s var(--ease);
+}
+
+.copy-pill:hover {
+    border-color: var(--primary);
+    background: rgba(56, 189, 248, 0.08);
+}
+
+/* Quick Slide-Over Project Drawer */
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease);
+}
+
+.drawer-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(540px, 100%);
+    height: 100%;
+    background: #0d121a;
+    border-left: 1px solid var(--border);
+    z-index: 2001;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.35s var(--ease);
+    box-shadow: -15px 0 40px rgba(0,0,0,0.6);
+}
+
+.drawer.active {
+    transform: translateX(0);
+}
+
+.drawer-close {
+    align-self: flex-end;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+
+.drawer-close:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.drawer-badge {
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.drawer h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.drawer-section {
+    margin: 22px 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.drawer-section h5 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.drawer-section p, .drawer-section ul {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.drawer-section ul {
+    list-style-position: inside;
+}
+
+.drawer-links {
+    margin-top: auto;
+    padding-top: 25px;
+    display: flex;
+    gap: 12px;
 }
 
 /* Footer */
@@ -485,6 +715,7 @@ footer {
     gap: 16px;
 }
 
+/* Responsive */
 @media (max-width: 860px) {
     .hero {
         grid-template-columns: 1fr;
@@ -493,14 +724,49 @@ footer {
     .projects-grid, .skills-grid {
         grid-template-columns: 1fr;
     }
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+    .bento-canvas-box {
+        grid-column: span 1;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<div id="scroll-progress"></div>
+<div class="film-grain"></div>
 <div class="bg-ambient"></div>
 
+<!-- Slide-Over Project Drawer -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="projectDrawer">
+    <button class="drawer-close" id="drawerClose">✕</button>
+    <div class="drawer-badge mono" id="drawerMeta">2D ARCADE • C#</div>
+    <h3 id="drawerTitle">Project Title</h3>
+    
+    <div class="drawer-section">
+        <h5 class="mono">Gameplay Architecture</h5>
+        <p id="drawerDesc">Detailed project mechanics, physics solutions, and state handling systems.</p>
+    </div>
+
+    <div class="drawer-section">
+        <h5 class="mono">Key Technical Highlights</h5>
+        <ul id="drawerSpecs">
+            <li>State machine pattern for loop control.</li>
+            <li>Custom vector reflection equations.</li>
+        </ul>
+    </div>
+
+    <div class="drawer-links">
+        <a href="https://github.com" target="_blank" rel="noopener" class="btn btn-primary">View Source Code ↗</a>
+        <button class="btn btn-secondary" onclick="closeDrawer()">Back</button>
+    </div>
+</aside>
+
+<!-- Navigation -->
 <header class="nav-wrap">
     <div class="container nav-bar">
         <a href="#home" class="brand">
@@ -517,177 +783,180 @@ footer {
 </header>
 
 <main>
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="container hero" id="home">
         <div class="hero-text">
-            <div class="status-badge">
+            <div class="status-badge mono">
                 <span class="status-indicator"></span>
-                Open for Game Jams & Collaboration
+                ACTIVE FOR JAMS & TECHNICAL DESIGN
             </div>
             
-            <!-- TAGLINE -->
-            <p class="hero-tagline">Building Worlds • Crafting Mechanics • Designing Experiences</p>
-            
+            <p class="hero-tagline mono">SYSTEMS • MECHANICS • ATMOSPHERE</p>
             <h1>Turning wild concepts into <span class="text-gradient">playable reality.</span></h1>
             
             <p class="hero-sub">
-                Hey, I'm Mehran. An indie game developer combining responsive C# gameplay logic, 3D prop art in Blender, and atmospheric game design in Unity.
+                Independent game developer building modular C# gameplay logic, 3D prop art in Blender, and atmospheric game design in Unity.
             </p>
             
-            <!-- BUTTONS: ABOUT & PROJECTS -->
             <div class="btn-group">
                 <a href="about.html" class="btn btn-primary">About Me ➔</a>
                 <a href="#projects" class="btn btn-secondary">Projects ↗</a>
             </div>
         </div>
 
-        <div class="hero-card">
-            <div class="code-header">
-                <div class="window-dot red"></div>
-                <div class="window-dot yellow"></div>
-                <div class="window-dot green"></div>
+        <!-- BENTO GRID SHOWCASE -->
+        <div class="bento-grid">
+            <div class="bento-canvas-box">
+                <canvas id="micro-canvas"></canvas>
+                <div class="canvas-hint mono">[ Move cursor: Physics particle engine ]</div>
             </div>
-            <div class="tech-stack-list">
-                <div class="tech-item">
-                    <span>Unity Engine</span>
-                    <small>Core Prototyping & Physics</small>
-                </div>
-                <div class="tech-item">
-                    <span>C# Architecture</span>
-                    <small>OOP, Events & Controllers</small>
-                </div>
-                <div class="tech-item">
-                    <span>Blender 3D</span>
-                    <small>Low-Poly Assets & Lighting</small>
-                </div>
-                <div class="tech-item">
-                    <span>Gameplay Design</span>
-                    <small>Mechanics, Game Jams & Pacing</small>
-                </div>
+            <div class="bento-card">
+                <h4 class="mono">Engine & Pipeline</h4>
+                <p>Unity • C# • Blender</p>
+                <div class="bento-sub mono">Modular Prefabs & Low-Poly</div>
+            </div>
+            <div class="bento-card">
+                <h4 class="mono">Design Ethos</h4>
+                <p>Tactile Gameplay</p>
+                <div class="bento-sub mono">Atmosphere-first mechanics</div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- PROJECTS SECTION WITH FILTER -->
     <section class="container" id="projects">
         <div class="section-head">
-            <div class="section-label">Selected Works</div>
-            <h2 class="section-title">Playable Experiments & Concepts</h2>
+            <div>
+                <div class="section-label mono">01 / SELECTED WORK</div>
+                <h2 class="section-title">Playable Experiments & Concepts</h2>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="2d">2D Mechanics</button>
+                <button class="filter-btn" data-filter="3d">3D Atmospheric</button>
+                <button class="filter-btn" data-filter="concept">Concepts</button>
+            </div>
         </div>
 
         <div class="projects-grid">
-            <article class="project-card">
+            <!-- Project 1 -->
+            <article class="spotlight-card project-card" data-category="2d" onclick="openDrawer('pong')">
                 <div class="project-preview">
                     <span class="project-preview-title">PONG ARCADE</span>
                 </div>
                 <div class="project-content">
-                    <div class="project-meta">
+                    <div class="project-meta mono">
                         <span>2D ARCADE</span>
                         <span>COMPLETED</span>
                     </div>
                     <h3 class="project-title">Pong Arcade Classic</h3>
                     <p class="project-desc">Clean recreation featuring deterministic physics, angle-based bounce mathematics, adaptive bot AI, and modular UI scoring.</p>
                     <div class="project-tags">
-                        <span class="tag">Unity 2D</span>
-                        <span class="tag">C# Logic</span>
-                        <span class="tag">Physics</span>
+                        <span class="tag mono">Unity 2D</span>
+                        <span class="tag mono">C# Logic</span>
+                        <span class="tag mono">Physics</span>
                     </div>
                 </div>
             </article>
 
-            <article class="project-card">
+            <!-- Project 2 -->
+            <article class="spotlight-card project-card" data-category="2d" onclick="openDrawer('flappy')">
                 <div class="project-preview">
                     <span class="project-preview-title">FLAPPY RUNNER</span>
                 </div>
                 <div class="project-content">
-                    <div class="project-meta">
-                        <span>2D ENDLESS</span>
+                    <div class="project-meta mono">
+                        <span>2D RUNNER</span>
                         <span>COMPLETED</span>
                     </div>
                     <h3 class="project-title">Flappy Bird Runner</h3>
                     <p class="project-desc">Recreation of touch mechanics, impulse jump curves, procedural infinite pipe pooling, and persistent high-score serialization.</p>
                     <div class="project-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">Object Pooling</span>
-                        <span class="tag">C#</span>
+                        <span class="tag mono">Unity</span>
+                        <span class="tag mono">Object Pooling</span>
+                        <span class="tag mono">C#</span>
                     </div>
                 </div>
             </article>
 
-            <article class="project-card">
+            <!-- Project 3 -->
+            <article class="spotlight-card project-card" data-category="3d" onclick="openDrawer('trust')">
                 <div class="project-preview">
                     <span class="project-preview-title">TRUST NO ONE</span>
                 </div>
                 <div class="project-content">
-                    <div class="project-meta">
+                    <div class="project-meta mono">
                         <span>3D PUZZLE</span>
                         <span>IN PROGRESS</span>
                     </div>
                     <h3 class="project-title">Trust No One</h3>
                     <p class="project-desc">Brackeys Game Jam entry with an unreliable narrator, tense environmental puzzle solving, and dynamic light occlusion.</p>
                     <div class="project-tags">
-                        <span class="tag">Unity 3D</span>
-                        <span class="tag">Psychological</span>
-                        <span class="tag">Lighting</span>
+                        <span class="tag mono">Unity 3D</span>
+                        <span class="tag mono">Psychological</span>
+                        <span class="tag mono">Lighting</span>
                     </div>
                 </div>
             </article>
 
-            <article class="project-card">
+            <!-- Project 4 -->
+            <article class="spotlight-card project-card" data-category="concept" onclick="openDrawer('hollow')">
                 <div class="project-preview">
                     <span class="project-preview-title">HOLLOW HILL</span>
                 </div>
                 <div class="project-content">
-                    <div class="project-meta">
+                    <div class="project-meta mono">
                         <span>SURVIVAL</span>
                         <span>CONCEPT</span>
                     </div>
                     <h3 class="project-title">Hollow Hill</h3>
                     <p class="project-desc">Atmospheric horror concept focused on keeping ancestral lanterns illuminated while managing dwindling stamina and light resources.</p>
                     <div class="project-tags">
-                        <span class="tag">System Design</span>
-                        <span class="tag">Atmosphere</span>
-                        <span class="tag">Lore</span>
+                        <span class="tag mono">System Design</span>
+                        <span class="tag mono">Atmosphere</span>
+                        <span class="tag mono">Lore</span>
                     </div>
                 </div>
             </article>
         </div>
     </section>
 
-    <!-- DISCIPLINES -->
+    <!-- DISCIPLINES SECTION -->
     <section class="container" id="skills">
         <div class="section-head">
-            <div class="section-label">Disciplines</div>
-            <h2 class="section-title">Technical Capabilities</h2>
+            <div>
+                <div class="section-label mono">02 / TOOLKIT</div>
+                <h2 class="section-title">Technical Capabilities</h2>
+            </div>
         </div>
 
         <div class="skills-grid">
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">⚙️</div>
                 <h3>Engine Core</h3>
                 <p>Robust prefab management, custom player controllers, physics layers, and 2D/3D scenes in Unity.</p>
             </div>
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">💻</div>
                 <h3>C# Programming</h3>
                 <p>Clean code architecture using OOP, state machines, ScriptableObjects, and event-driven delegation.</p>
             </div>
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">🎨</div>
                 <h3>3D Asset Pipeline</h3>
                 <p>Modeling low-poly environment assets, modular level props, and basic materials directly in Blender.</p>
             </div>
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">🕹️</div>
                 <h3>Level & Systems Design</h3>
                 <p>Pacing game mechanics, obstacle balancing, difficulty curves, and feedback loops for engagement.</p>
             </div>
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">✨</div>
                 <h3>Atmospheric Audio & VFX</h3>
                 <p>Post-processing stacks, custom lighting, camera shakes, and spatial sound design for immersion.</p>
             </div>
-            <div class="skill-card">
+            <div class="spotlight-card skill-card">
                 <div class="skill-icon">📜</div>
                 <h3>Environmental Lore</h3>
                 <p>Subtle visual storytelling, cryptic clues, dialogue branches, and narrative pacing.</p>
@@ -699,10 +968,15 @@ footer {
     <section class="container" id="contact">
         <div class="cta-box">
             <h2>Let's build something exceptional.</h2>
-            <p>Interested in collaborating on a game jam, reviewing technical design, or inspecting repository code?</p>
-            <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-primary">
-                Inspect GitHub Repositories ↗
-            </a>
+            <p>Looking for a game jam collaborator, technical designer, or want to review my C# repositories?</p>
+            <div class="contact-actions">
+                <button class="copy-pill mono" id="copyEmailBtn" onclick="copyContact()">
+                    <span>📋</span> <span id="copyText">hello@mehran.dev</span>
+                </button>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-primary">
+                    GitHub Repositories ↗
+                </a>
+            </div>
         </div>
     </section>
 </main>
@@ -710,12 +984,222 @@ footer {
 <footer>
     <div class="container footer-inner">
         <div>© <span id="year"></span> Mehran. All rights reserved.</div>
-        <div>Built for performance & accessibility.</div>
+        <div class="mono">C# Logic • Unity Engine • Blender 3D</div>
     </div>
 </footer>
 
 <script>
+// Year Update
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Scroll Progress Tracker
+window.addEventListener('scroll', () => {
+    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (window.scrollY / totalScroll) * 100;
+    document.getElementById('scroll-progress').style.width = progress + '%';
+});
+
+// Spotlight Border Tracker
+document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+});
+
+// Category Filter Tabs
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        projectCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Interactive Hero Micro-Canvas (Physics Particle Toy)
+const canvas = document.getElementById('micro-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: -1000, y: -1000, radius: 80 };
+
+function resizeCanvas() {
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+    initParticles();
+}
+
+class Particle {
+    constructor(x, y) {
+        this.originX = x;
+        this.originY = y;
+        this.x = x;
+        this.y = y;
+        this.size = 2;
+        this.vx = 0;
+        this.vy = 0;
+    }
+    update() {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < mouse.radius) {
+            const angle = Math.atan2(dy, dx);
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.vx -= Math.cos(angle) * force * 4;
+            this.vy -= Math.sin(angle) * force * 4;
+        }
+
+        this.vx += (this.originX - this.x) * 0.08;
+        this.vy += (this.originY - this.y) * 0.08;
+        this.vx *= 0.85;
+        this.vy *= 0.85;
+
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+    draw() {
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
+}
+
+function initParticles() {
+    particles = [];
+    const spacing = 18;
+    for (let x = 20; x < canvas.width - 20; x += spacing) {
+        for (let y = 20; y < canvas.height - 20; y += spacing) {
+            particles.push(new Particle(x, y));
+        }
+    }
+}
+
+canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+});
+
+canvas.addEventListener('mouseleave', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+});
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function animateCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+    }
+    requestAnimationFrame(animateCanvas);
+}
+animateCanvas();
+
+// Project Slide-Over Drawer Data
+const projectData = {
+    pong: {
+        title: "Pong Arcade Classic",
+        meta: "2D ARCADE • C# • COMPLETED",
+        desc: "Deterministic paddle and ball simulation recreating the feel of authentic retro cabinet hardware. Built to explore coordinate collision handling and responsive game balance.",
+        specs: [
+            "Vector reflection algorithms with dynamic deflection angles.",
+            "Independent AI agent tracking with latency modeling.",
+            "Decoupled event-driven score and audio controller."
+        ]
+    },
+    flappy: {
+        title: "Flappy Bird Runner",
+        meta: "2D RUNNER • C# • COMPLETED",
+        desc: "Precision timing challenge engineered with strict frame-rate independent physics curves and optimized object lifecycle patterns.",
+        specs: [
+            "Memory-conscious queue object pooling for infinite obstacles.",
+            "Impulse velocity curves calibrated for satisfying jump arcs.",
+            "JSON state serialization for cross-session high scores."
+        ]
+    },
+    trust: {
+        title: "Trust No One",
+        meta: "3D PUZZLE • UNITY 3D • IN PROGRESS",
+        desc: "Experimental psychological horror prototype designed for game jam conditions. Explores spatial manipulation and unreliable narrative queues.",
+        specs: [
+            "Dynamic occlusion and volumetric flashlight casting.",
+            "Context-aware audio dialogue sequencer.",
+            "Modular physics-driven door and lock interaction rigs."
+        ]
+    },
+    hollow: {
+        title: "Hollow Hill",
+        meta: "SURVIVAL • DESIGN CONCEPT",
+        desc: "Survival horror framework exploring light starvation mechanics. Players navigate a dying forest maintaining ancestral lanterns against the encroaching fog.",
+        specs: [
+            "Dual stamina and light resource depletion balancing.",
+            "Nonlinear landmark-based level progression.",
+            "Cryptic environmental lore notes and visual milestones."
+        ]
+    }
+};
+
+const drawer = document.getElementById('projectDrawer');
+const backdrop = document.getElementById('drawerBackdrop');
+
+function openDrawer(key) {
+    const item = projectData[key];
+    if (!item) return;
+
+    document.getElementById('drawerTitle').textContent = item.title;
+    document.getElementById('drawerMeta').textContent = item.meta;
+    document.getElementById('drawerDesc').textContent = item.desc;
+    
+    const specsList = document.getElementById('drawerSpecs');
+    specsList.innerHTML = '';
+    item.specs.forEach(spec => {
+        const li = document.createElement('li');
+        li.textContent = spec;
+        specsList.appendChild(li);
+    });
+
+    drawer.classList.add('active');
+    backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+    drawer.classList.remove('active');
+    backdrop.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+backdrop.addEventListener('click', closeDrawer);
+
+// 1-Click Copy Email Pill
+function copyContact() {
+    const email = "hello@mehran.dev";
+    navigator.clipboard.writeText(email).then(() => {
+        const copyText = document.getElementById('copyText');
+        copyText.textContent = "Copied to Clipboard! ✓";
+        copyText.style.color = "var(--primary)";
+        setTimeout(() => {
+            copyText.textContent = email;
+            copyText.style.color = "inherit";
+        }, 2200);
+    });
+}
 </script>
 </body>
 </html>
