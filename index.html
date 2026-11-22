@@ -6,7 +6,7 @@
 <title>Mehran | Game Developer & Technical Designer</title>
 <meta name="description" content="Portfolio of Mehran — Independent Game Developer specializing in Unity, C#, Blender, and atmospheric gameplay systems.">
 
-<!-- Modern Studio Typography -->
+<!-- Premium Studio & Monospace Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -57,16 +57,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle Cinematic Noise Overlay */
-.film-grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 99;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
 .mono {
     font-family: 'JetBrains Mono', monospace;
 }
@@ -82,7 +72,17 @@ a {
     margin: 0 auto;
 }
 
-/* Scroll Progress Bar */
+/* Subtle Film Grain */
+.film-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Top Scroll Progress */
 #scroll-progress {
     position: fixed;
     top: 0;
@@ -105,7 +105,7 @@ a {
         radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.04), transparent 50%);
 }
 
-/* Header / Navigation */
+/* Navigation */
 header.nav-wrap {
     position: sticky;
     top: 0;
@@ -148,12 +148,25 @@ header.nav-wrap {
     font-weight: 500;
 }
 
-.nav-menu a {
+.nav-link {
     color: var(--text-secondary);
+    position: relative;
+    padding-bottom: 4px;
 }
 
-.nav-menu a:hover {
+.nav-link:hover, .nav-link.active {
     color: var(--text-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    box-shadow: 0 0 8px var(--primary);
 }
 
 .nav-btn {
@@ -172,7 +185,7 @@ header.nav-wrap {
 
 /* Hero Section */
 .hero {
-    padding: 90px 0 80px;
+    padding: 100px 0 80px;
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 45px;
@@ -187,10 +200,10 @@ header.nav-wrap {
     background: rgba(52, 211, 153, 0.08);
     border: 1px solid rgba(52, 211, 153, 0.25);
     border-radius: 100px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--emerald);
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .status-indicator {
@@ -207,19 +220,10 @@ header.nav-wrap {
     50% { opacity: 0.4; transform: scale(0.8); }
 }
 
-.hero-tagline {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
 .hero h1 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.3rem, 4.2vw, 3.6rem);
-    line-height: 1.15;
+    font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+    line-height: 1.12;
     letter-spacing: -1.5px;
     margin-bottom: 16px;
 }
@@ -233,8 +237,8 @@ header.nav-wrap {
 .hero-sub {
     color: var(--text-secondary);
     font-size: 1.05rem;
-    max-width: 500px;
-    margin-bottom: 30px;
+    max-width: 520px;
+    margin-bottom: 32px;
 }
 
 .btn-group {
@@ -280,7 +284,7 @@ header.nav-wrap {
     transform: translateY(-2px);
 }
 
-/* Hero Bento Grid */
+/* Bento Showcase Grid */
 .bento-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -325,7 +329,7 @@ header.nav-wrap {
 }
 
 .bento-card h4 {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: 6px;
@@ -344,7 +348,7 @@ header.nav-wrap {
     margin-top: 4px;
 }
 
-/* Spotlight Card Mechanics */
+/* Spotlight Card Dynamic Glow */
 .spotlight-card {
     position: relative;
     background: var(--bg-card);
@@ -373,7 +377,7 @@ header.nav-wrap {
     opacity: 1;
 }
 
-/* Sections Global */
+/* Global Sections */
 section {
     padding: 85px 0;
 }
@@ -543,7 +547,7 @@ section {
     line-height: 1.6;
 }
 
-/* Contact CTA Box */
+/* Contact CTA */
 .cta-box {
     text-align: center;
     background: linear-gradient(180deg, var(--bg-surface), var(--bg-base));
@@ -593,7 +597,7 @@ section {
     background: rgba(56, 189, 248, 0.08);
 }
 
-/* Quick Slide-Over Project Drawer */
+/* Slide-Over Project Drawer */
 .drawer-backdrop {
     position: fixed;
     inset: 0;
@@ -699,10 +703,124 @@ section {
     gap: 12px;
 }
 
+/* UX: Live Performance & Telemetry HUD (Bottom Right) */
+.hud-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(13, 17, 24, 0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.hud-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+}
+
+.hud-val {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.console-btn-trigger {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+}
+
+.console-btn-trigger:hover {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* UX: Dev Console Terminal Overlay */
+.terminal-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 240px;
+    background: rgba(7, 9, 14, 0.96);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    z-index: 3000;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s var(--ease);
+}
+
+.terminal-drawer.active {
+    transform: translateY(0);
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.terminal-output .out-success { color: var(--emerald); }
+.terminal-output .out-primary { color: var(--primary); }
+.terminal-output .out-cmd { color: var(--amber); }
+
+.terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 8px;
+}
+
+.terminal-prompt {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+}
+
 /* Footer */
 footer {
     border-top: 1px solid var(--border);
-    padding: 34px 0;
+    padding: 34px 0 70px;
     font-size: 0.85rem;
     color: var(--text-muted);
 }
@@ -729,6 +847,9 @@ footer {
     }
     .bento-canvas-box {
         grid-column: span 1;
+    }
+    .hud-widget {
+        display: none;
     }
 }
 </style>
@@ -766,6 +887,34 @@ footer {
     </div>
 </aside>
 
+<!-- UX Feature: Dev Console Terminal Drawer -->
+<div class="terminal-drawer mono" id="terminalDrawer">
+    <div class="terminal-header">
+        <span>MEHRAN DEV CONSOLE v1.0.4 (Press `~` or click Close)</span>
+        <button class="console-btn-trigger" onclick="toggleConsole()">Close [X]</button>
+    </div>
+    <div class="terminal-output" id="terminalOutput">
+        <div>Type <span class="out-primary">help</span> to view all commands. System ready.</div>
+    </div>
+    <div class="terminal-input-row">
+        <span class="terminal-prompt">&gt;</span>
+        <input type="text" class="terminal-input" id="terminalInput" placeholder="try: skills, projects, contact, clear..." autocomplete="off">
+    </div>
+</div>
+
+<!-- UX Feature: Telemetry HUD -->
+<div class="hud-widget mono">
+    <div class="hud-item">
+        <span>FPS</span>
+        <span class="hud-val" id="fpsCounter">60</span>
+    </div>
+    <div class="hud-item">
+        <span>LOC</span>
+        <span class="hud-val" id="timeCounter">--:-- IST</span>
+    </div>
+    <button class="console-btn-trigger" onclick="toggleConsole()">~ Console</button>
+</div>
+
 <!-- Navigation -->
 <header class="nav-wrap">
     <div class="container nav-bar">
@@ -774,9 +923,9 @@ footer {
             MEHRAN
         </a>
         <nav class="nav-menu">
-            <a href="about.html">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Disciplines</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#skills" class="nav-link">Disciplines</a>
             <a href="#contact" class="nav-btn">Connect ↗</a>
         </nav>
     </div>
@@ -791,11 +940,11 @@ footer {
                 ACTIVE FOR JAMS & TECHNICAL DESIGN
             </div>
             
-            <p class="hero-tagline mono">SYSTEMS • MECHANICS • ATMOSPHERE</p>
-            <h1>Turning wild concepts into <span class="text-gradient">playable reality.</span></h1>
+            <!-- REQUESTED CLEAN INTRO -->
+            <h1>Hi, I'm <span class="text-gradient">Mehran.</span></h1>
             
             <p class="hero-sub">
-                Independent game developer building modular C# gameplay logic, 3D prop art in Blender, and atmospheric game design in Unity.
+                Independent game developer building modular C# gameplay systems, custom player physics, 3D prop assets in Blender, and atmospheric experiences in Unity.
             </p>
             
             <div class="btn-group">
@@ -804,7 +953,7 @@ footer {
             </div>
         </div>
 
-        <!-- BENTO GRID SHOWCASE -->
+        <!-- BENTO SHOWCASE -->
         <div class="bento-grid">
             <div class="bento-canvas-box">
                 <canvas id="micro-canvas"></canvas>
@@ -992,14 +1141,14 @@ footer {
 // Year Update
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Scroll Progress Tracker
+// Scroll Progress Bar Tracker
 window.addEventListener('scroll', () => {
     const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (window.scrollY / totalScroll) * 100;
     document.getElementById('scroll-progress').style.width = progress + '%';
 });
 
-// Spotlight Border Tracker
+// Spotlight Border Dynamic Coordinate Tracker
 document.querySelectorAll('.spotlight-card').forEach(card => {
     card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
@@ -1028,7 +1177,7 @@ filterBtns.forEach(btn => {
     });
 });
 
-// Interactive Hero Micro-Canvas (Physics Particle Toy)
+// Interactive Hero Micro-Canvas Particle Engine
 const canvas = document.getElementById('micro-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -1187,6 +1336,14 @@ function closeDrawer() {
 document.getElementById('drawerClose').addEventListener('click', closeDrawer);
 backdrop.addEventListener('click', closeDrawer);
 
+// Close drawer via Escape key
+window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeDrawer();
+        if (terminalDrawer.classList.contains('active')) toggleConsole();
+    }
+});
+
 // 1-Click Copy Email Pill
 function copyContact() {
     const email = "hello@mehran.dev";
@@ -1199,6 +1356,93 @@ function copyContact() {
             copyText.style.color = "inherit";
         }, 2200);
     });
+}
+
+// Live FPS & Time HUD Counter
+let lastFrameTime = performance.now();
+let frameCount = 0;
+const fpsCounter = document.getElementById('fpsCounter');
+
+function updateFps(now) {
+    frameCount++;
+    if (now - lastFrameTime >= 1000) {
+        fpsCounter.textContent = frameCount;
+        frameCount = 0;
+        lastFrameTime = now;
+    }
+    requestAnimationFrame(updateFps);
+}
+requestAnimationFrame(updateFps);
+
+function updateTime() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
+    document.getElementById('timeCounter').textContent = `${timeStr} IST`;
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+// Dev Console Terminal Logic
+const terminalDrawer = document.getElementById('terminalDrawer');
+const terminalInput = document.getElementById('terminalInput');
+const terminalOutput = document.getElementById('terminalOutput');
+
+function toggleConsole() {
+    terminalDrawer.classList.toggle('active');
+    if (terminalDrawer.classList.contains('active')) {
+        terminalInput.focus();
+    }
+}
+
+window.addEventListener('keydown', e => {
+    if (e.key === '`' || e.key === '~') {
+        e.preventDefault();
+        toggleConsole();
+    }
+});
+
+terminalInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        const cmd = terminalInput.value.trim().toLowerCase();
+        terminalInput.value = '';
+        executeCommand(cmd);
+    }
+});
+
+function executeCommand(cmd) {
+    const line = document.createElement('div');
+    line.innerHTML = `<span class="out-cmd">&gt; ${cmd}</span>`;
+    terminalOutput.appendChild(line);
+
+    const res = document.createElement('div');
+    switch (cmd) {
+        case 'help':
+            res.innerHTML = `Commands available: <span class="out-primary">projects, skills, about, contact, clear, exit</span>`;
+            break;
+        case 'projects':
+            res.innerHTML = `Loaded: Pong Arcade, Flappy Runner, Trust No One, Hollow Hill.`;
+            break;
+        case 'skills':
+            res.innerHTML = `Core: Unity, C# (OOP/Events/State Machines), Blender Low-Poly, System Balancing.`;
+            break;
+        case 'about':
+            window.location.href = "about.html";
+            break;
+        case 'contact':
+            copyContact();
+            res.innerHTML = `<span class="out-success">Email copied to clipboard (hello@mehran.dev)</span>`;
+            break;
+        case 'clear':
+            terminalOutput.innerHTML = '';
+            return;
+        case 'exit':
+            toggleConsole();
+            return;
+        default:
+            res.innerHTML = `Unknown command. Type <span class="out-primary">help</span> for a list.`;
+    }
+    terminalOutput.appendChild(res);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
 }
 </script>
 </body>
