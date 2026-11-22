@@ -68,7 +68,6 @@ a {
     margin: 0 auto;
 }
 
-/* Subdued Background Glow */
 .bg-ambient {
     position: fixed;
     inset: 0;
@@ -147,7 +146,7 @@ header.nav-wrap {
 
 /* Hero Section */
 .hero {
-    padding: 100px 0 80px;
+    padding: 110px 0 90px;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 50px;
@@ -181,13 +180,22 @@ header.nav-wrap {
     font-size: clamp(2.4rem, 4.5vw, 3.8rem);
     line-height: 1.15;
     letter-spacing: -1.5px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .text-gradient {
     background: linear-gradient(135deg, #f8fafc 30%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.hero-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
 }
 
 .hero-sub {
@@ -237,7 +245,7 @@ header.nav-wrap {
     transform: translateY(-2px);
 }
 
-/* Hero Showcase Card */
+/* Showcase Card */
 .hero-card {
     background: linear-gradient(145deg, rgba(20, 27, 38, 0.9), rgba(12, 16, 23, 0.95));
     border: 1px solid var(--border);
@@ -343,7 +351,6 @@ section {
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid var(--border);
-    position: relative;
 }
 
 .project-preview-title {
@@ -438,7 +445,7 @@ section {
     line-height: 1.6;
 }
 
-/* Contact / Call to Action */
+/* Contact CTA */
 .cta-box {
     text-align: center;
     background: linear-gradient(180deg, var(--bg-surface), var(--bg-base));
@@ -478,7 +485,6 @@ footer {
     gap: 16px;
 }
 
-/* Responsive */
 @media (max-width: 860px) {
     .hero {
         grid-template-columns: 1fr;
@@ -502,7 +508,8 @@ footer {
             MEHRAN
         </a>
         <nav class="nav-menu">
-            <a href="#projects">Work</a>
+            <a href="about.html">About</a>
+            <a href="#projects">Projects</a>
             <a href="#skills">Disciplines</a>
             <a href="#contact" class="nav-btn">Connect ↗</a>
         </nav>
@@ -517,13 +524,20 @@ footer {
                 <span class="status-indicator"></span>
                 Open for Game Jams & Collaboration
             </div>
-            <h1>Building worlds.<br><span class="text-gradient">Crafting mechanics.</span></h1>
+            
+            <!-- TAGLINE -->
+            <p class="hero-tagline">Building Worlds • Crafting Mechanics • Designing Experiences</p>
+            
+            <h1>Turning wild concepts into <span class="text-gradient">playable reality.</span></h1>
+            
             <p class="hero-sub">
                 Hey, I'm Mehran. An indie game developer combining responsive C# gameplay logic, 3D prop art in Blender, and atmospheric game design in Unity.
             </p>
+            
+            <!-- BUTTONS: ABOUT & PROJECTS -->
             <div class="btn-group">
-                <a href="#projects" class="btn btn-primary">View Projects ➔</a>
-                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                <a href="about.html" class="btn btn-primary">About Me ➔</a>
+                <a href="#projects" class="btn btn-secondary">Projects ↗</a>
             </div>
         </div>
 
@@ -562,7 +576,6 @@ footer {
         </div>
 
         <div class="projects-grid">
-            <!-- Project 1 -->
             <article class="project-card">
                 <div class="project-preview">
                     <span class="project-preview-title">PONG ARCADE</span>
@@ -582,7 +595,6 @@ footer {
                 </div>
             </article>
 
-            <!-- Project 2 -->
             <article class="project-card">
                 <div class="project-preview">
                     <span class="project-preview-title">FLAPPY RUNNER</span>
@@ -602,7 +614,6 @@ footer {
                 </div>
             </article>
 
-            <!-- Project 3 -->
             <article class="project-card">
                 <div class="project-preview">
                     <span class="project-preview-title">TRUST NO ONE</span>
@@ -622,7 +633,6 @@ footer {
                 </div>
             </article>
 
-            <!-- Project 4 -->
             <article class="project-card">
                 <div class="project-preview">
                     <span class="project-preview-title">HOLLOW HILL</span>
