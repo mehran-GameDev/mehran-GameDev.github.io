@@ -3,1447 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mehran | Game Developer & Technical Designer</title>
-<meta name="description" content="Portfolio of Mehran — Independent Game Developer specializing in Unity, C#, Blender, and atmospheric gameplay systems.">
-
-<!-- Premium Studio & Monospace Fonts -->
+<title>Mehran – Game Developer & Technical Designer</title>
+<meta name="description" content="Mehran is an independent game developer working in Unity, C# and Blender. Gameplay systems, player physics and atmospheric design.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-    --bg-base: #07090e;
-    --bg-surface: #0d1118;
-    --bg-card: rgba(16, 22, 32, 0.65);
-    
-    --primary: #38bdf8;
-    --primary-glow: rgba(56, 189, 248, 0.28);
-    --accent: #818cf8;
-    --emerald: #34d399;
-    --amber: #fbbf24;
-    
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(56, 189, 248, 0.4);
-
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
-}
-
-body {
-    background: var(--bg-base);
-    color: var(--text-primary);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-.mono {
-    font-family: 'JetBrains Mono', monospace;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.2s var(--ease);
-}
-
-.container {
-    width: min(1140px, 92%);
-    margin: 0 auto;
-}
-
-/* Subtle Film Grain */
-.film-grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 99;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Top Scroll Progress */
-#scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    z-index: 1000;
-    box-shadow: 0 0 10px var(--primary-glow);
-}
-
-.bg-ambient {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-    background: 
-        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.07), transparent 45%),
-        radial-gradient(circle at 85% 35%, rgba(129, 140, 248, 0.07), transparent 50%),
-        radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.04), transparent 50%);
-}
-
-/* Navigation */
-header.nav-wrap {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(7, 9, 14, 0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-}
-
-.nav-bar {
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.brand {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.brand-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--primary);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--primary);
-}
-
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.nav-link {
-    color: var(--text-secondary);
-    position: relative;
-    padding-bottom: 4px;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: var(--text-primary);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--primary);
-    box-shadow: 0 0 8px var(--primary);
-}
-
-.nav-btn {
-    padding: 8px 18px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary) !important;
-}
-
-.nav-btn:hover {
-    background: rgba(56, 189, 248, 0.1);
-    border-color: var(--primary);
-    color: var(--primary) !important;
-}
-
-/* Hero Section */
-.hero {
-    padding: 100px 0 80px;
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 45px;
-    align-items: center;
-}
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    background: rgba(52, 211, 153, 0.08);
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    border-radius: 100px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--emerald);
-    margin-bottom: 20px;
-}
-
-.status-indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--emerald);
-    box-shadow: 0 0 8px var(--emerald);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-}
-
-.hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.4rem, 4.4vw, 3.8rem);
-    line-height: 1.12;
-    letter-spacing: -1.5px;
-    margin-bottom: 16px;
-}
-
-.text-gradient {
-    background: linear-gradient(135deg, #f8fafc 30%, var(--primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-sub {
-    color: var(--text-secondary);
-    font-size: 1.05rem;
-    max-width: 520px;
-    margin-bottom: 32px;
-}
-
-.btn-group {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    border: none;
-    transition: all 0.25s var(--ease);
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: #040914;
-    box-shadow: 0 4px 20px var(--primary-glow);
-}
-
-.btn-primary:hover {
-    background: #7dd3fc;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4);
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-}
-
-/* Bento Showcase Grid */
-.bento-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.bento-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(14px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-}
-
-.bento-canvas-box {
-    grid-column: span 2;
-    padding: 0;
-    height: 180px;
-    position: relative;
-    background: #090e17;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-#micro-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: crosshair;
-}
-
-.canvas-hint {
-    position: absolute;
-    bottom: 10px;
-    right: 14px;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    pointer-events: none;
-}
-
-.bento-card h4 {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-.bento-card p {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.bento-sub {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-top: 4px;
-}
-
-/* Spotlight Card Dynamic Glow */
-.spotlight-card {
-    position: relative;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-
-.spotlight-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(56, 189, 248, 0.45), transparent 40%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.spotlight-card:hover::before {
-    opacity: 1;
-}
-
-/* Global Sections */
-section {
-    padding: 85px 0;
-}
-
-.section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 35px;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.section-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 6px;
-}
-
-.section-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.3rem);
-    letter-spacing: -1px;
-}
-
-/* Filter Tabs */
-.filter-tabs {
-    display: flex;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 4px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-}
-
-.filter-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s var(--ease);
-}
-
-.filter-btn:hover {
-    color: var(--text-primary);
-}
-
-.filter-btn.active {
-    background: rgba(56, 189, 248, 0.12);
-    color: var(--primary);
-    font-weight: 600;
-}
-
-/* Projects Grid */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 26px;
-}
-
-.project-card {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-.project-card:hover {
-    transform: translateY(-4px);
-}
-
-.project-preview {
-    height: 180px;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(129, 140, 248, 0.07));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-}
-
-.project-preview-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.project-content {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.project-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-}
-
-.project-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-}
-
-.project-desc {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.tag {
-    font-size: 0.72rem;
-    font-weight: 500;
-    padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text-secondary);
-}
-
-/* Skills Grid */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.skill-card {
-    padding: 26px;
-}
-
-.skill-icon {
-    font-size: 1.3rem;
-    margin-bottom: 14px;
-    display: inline-block;
-}
-
-.skill-card h3 {
-    font-size: 1.05rem;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.skill-card p {
-    color: var(--text-secondary);
-    font-size: 0.88rem;
-    line-height: 1.6;
-}
-
-/* Contact CTA */
-.cta-box {
-    text-align: center;
-    background: linear-gradient(180deg, var(--bg-surface), var(--bg-base));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 60px 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.cta-box h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.3rem);
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-}
-
-.cta-box p {
-    color: var(--text-secondary);
-    max-width: 480px;
-    margin: 0 auto 28px;
-    font-size: 0.95rem;
-}
-
-.contact-actions {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.copy-pill {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    padding: 12px 22px;
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s var(--ease);
-}
-
-.copy-pill:hover {
-    border-color: var(--primary);
-    background: rgba(56, 189, 248, 0.08);
-}
-
-/* Slide-Over Project Drawer */
-.drawer-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(6px);
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s var(--ease);
-}
-
-.drawer-backdrop.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(540px, 100%);
-    height: 100%;
-    background: #0d121a;
-    border-left: 1px solid var(--border);
-    z-index: 2001;
-    padding: 35px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.35s var(--ease);
-    box-shadow: -15px 0 40px rgba(0,0,0,0.6);
-}
-
-.drawer.active {
-    transform: translateX(0);
-}
-
-.drawer-close {
-    align-self: flex-end;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    transition: all 0.2s;
-}
-
-.drawer-close:hover {
-    color: var(--text-primary);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.drawer-badge {
-    color: var(--primary);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.drawer h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.8rem;
-    margin-bottom: 14px;
-    line-height: 1.2;
-}
-
-.drawer-section {
-    margin: 22px 0;
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
-}
-
-.drawer-section h5 {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.drawer-section p, .drawer-section ul {
-    color: var(--text-secondary);
-    font-size: 0.92rem;
-    line-height: 1.7;
-}
-
-.drawer-section ul {
-    list-style-position: inside;
-}
-
-.drawer-links {
-    margin-top: auto;
-    padding-top: 25px;
-    display: flex;
-    gap: 12px;
-}
-
-/* UX: Live Performance & Telemetry HUD (Bottom Right) */
-.hud-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 100;
-    background: rgba(13, 17, 24, 0.9);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-sm);
-    padding: 8px 14px;
-    font-size: 0.72rem;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-
-.hud-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--text-muted);
-}
-
-.hud-val {
-    color: var(--primary);
-    font-weight: 600;
-}
-
-.console-btn-trigger {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    padding: 3px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.7rem;
-    transition: all 0.2s;
-}
-
-.console-btn-trigger:hover {
-    background: rgba(56, 189, 248, 0.2);
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-/* UX: Dev Console Terminal Overlay */
-.terminal-drawer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 240px;
-    background: rgba(7, 9, 14, 0.96);
-    border-top: 1px solid var(--border);
-    backdrop-filter: blur(20px);
-    z-index: 3000;
-    padding: 16px 24px;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(100%);
-    transition: transform 0.3s var(--ease);
-}
-
-.terminal-drawer.active {
-    transform: translateY(0);
-}
-
-.terminal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 10px;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-.terminal-output {
-    flex: 1;
-    overflow-y: auto;
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-}
-
-.terminal-output .out-success { color: var(--emerald); }
-.terminal-output .out-primary { color: var(--primary); }
-.terminal-output .out-cmd { color: var(--amber); }
-
-.terminal-input-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-top: 8px;
-}
-
-.terminal-prompt {
-    color: var(--primary);
-    font-weight: bold;
-}
-
-.terminal-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    outline: none;
-}
-
-/* Footer */
-footer {
-    border-top: 1px solid var(--border);
-    padding: 34px 0 70px;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-/* Responsive */
-@media (max-width: 860px) {
-    .hero {
-        grid-template-columns: 1fr;
-        padding-top: 50px;
-    }
-    .projects-grid, .skills-grid {
-        grid-template-columns: 1fr;
-    }
-    .bento-grid {
-        grid-template-columns: 1fr;
-    }
-    .bento-canvas-box {
-        grid-column: span 1;
-    }
-    .hud-widget {
-        display: none;
-    }
-}
+:root{
+  --bg:#0e1217; --surface:#141a22; --line:#232c38;
+  --text:#e9edf2; --muted:#9aa7b6; --faint:#6f7c8c;
+  --accent:#6ab0ff; --ok:#4cc38a; --warn:#e3b341;
+  --max:1040px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--text);font:16px/1.7 'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{width:min(var(--max),90%);margin:0 auto}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15;letter-spacing:-.02em}
+
+/* Nav */
+header{position:sticky;top:0;z-index:10;background:rgba(14,18,23,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between}
+.brand{font:700 1.1rem 'Space Grotesk',sans-serif}
+.nav nav{display:flex;gap:28px;align-items:center;font-size:.92rem;color:var(--muted)}
+.nav nav a:hover{color:var(--text)}
+.nav .cta{color:var(--text);border:1px solid var(--line);padding:7px 16px;border-radius:8px}
+.nav .cta:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Hero */
+.hero{padding:96px 0 72px;max-width:760px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);margin-bottom:22px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);margin-bottom:20px}
+.hero p{color:var(--muted);font-size:1.1rem;max-width:620px;margin-bottom:32px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border-radius:8px;font-weight:600;font-size:.95rem;border:1px solid var(--line);background:none;color:var(--text);cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#06101c}
+.btn.primary:hover{background:#8cc2ff}
+.facts{display:flex;gap:40px;flex-wrap:wrap;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.facts div{font-size:.9rem;color:var(--muted)}
+.facts strong{display:block;color:var(--text);font-weight:600;font-size:1rem}
+
+/* Sections */
+section{padding:72px 0;border-top:1px solid var(--line)}
+.head{margin-bottom:36px;max-width:620px}
+.head h2{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px}
+.head p{color:var(--muted)}
+
+/* Projects */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 14px;border-radius:99px;font:500 .85rem inherit;font-family:inherit;cursor:pointer}
+.filters button:hover{color:var(--text)}
+.filters button.on{color:var(--text);border-color:var(--accent);background:rgba(106,176,255,.1)}
+.project{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:16px}
+.project summary{list-style:none;cursor:pointer;padding:24px;display:grid;grid-template-columns:1fr auto;gap:6px 20px}
+.project summary::-webkit-details-marker{display:none}
+.project h3{font-size:1.3rem}
+.state{font-size:.82rem;font-weight:600;align-self:center}
+.state.done{color:var(--ok)} .state.wip{color:var(--warn)} .state.idea{color:var(--faint)}
+.project .sum{grid-column:1/-1;color:var(--muted);font-size:.95rem}
+.project .more{grid-column:1/-1;font-size:.85rem;color:var(--accent)}
+.project[open] .more::before{content:"Hide details"}
+.project:not([open]) .more::before{content:"View details"}
+.body{padding:0 24px 24px;display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;border-top:1px solid var(--line);padding-top:22px}
+.body h4{font-size:.85rem;color:var(--faint);font-weight:600;margin-bottom:8px}
+.body ul{padding-left:18px;color:var(--muted);font-size:.93rem}
+.body li{margin-bottom:6px}
+.body p{color:var(--muted);font-size:.93rem}
+.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.tags span{font-size:.8rem;padding:3px 10px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
+.skill{padding:20px 0;border-bottom:1px solid var(--line)}
+.skill h3{font-size:1.05rem;margin-bottom:6px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0;font-weight:600}
+.skill p{color:var(--muted);font-size:.93rem}
+
+/* Contact */
+.contact{max-width:620px}
+.contact h2{font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:12px}
+.contact p{color:var(--muted);margin-bottom:28px}
+.copied{font-size:.85rem;color:var(--ok);margin-top:12px;min-height:1.4em}
+
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--faint);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media(max-width:760px){
+  .nav nav a:not(.cta){display:none}
+  .hero{padding:56px 0 48px}
+  .body,.skills{grid-template-columns:1fr}
+  .project summary{grid-template-columns:1fr}
+  .state{order:-1}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
-
 <body>
 
-<div id="scroll-progress"></div>
-<div class="film-grain"></div>
-<div class="bg-ambient"></div>
-
-<!-- Slide-Over Project Drawer -->
-<div class="drawer-backdrop" id="drawerBackdrop"></div>
-<aside class="drawer" id="projectDrawer">
-    <button class="drawer-close" id="drawerClose">✕</button>
-    <div class="drawer-badge mono" id="drawerMeta">2D ARCADE • C#</div>
-    <h3 id="drawerTitle">Project Title</h3>
-    
-    <div class="drawer-section">
-        <h5 class="mono">Gameplay Architecture</h5>
-        <p id="drawerDesc">Detailed project mechanics, physics solutions, and state handling systems.</p>
-    </div>
-
-    <div class="drawer-section">
-        <h5 class="mono">Key Technical Highlights</h5>
-        <ul id="drawerSpecs">
-            <li>State machine pattern for loop control.</li>
-            <li>Custom vector reflection equations.</li>
-        </ul>
-    </div>
-
-    <div class="drawer-links">
-        <a href="https://github.com" target="_blank" rel="noopener" class="btn btn-primary">View Source Code ↗</a>
-        <button class="btn btn-secondary" onclick="closeDrawer()">Back</button>
-    </div>
-</aside>
-
-<!-- UX Feature: Dev Console Terminal Drawer -->
-<div class="terminal-drawer mono" id="terminalDrawer">
-    <div class="terminal-header">
-        <span>MEHRAN DEV CONSOLE v1.0.4 (Press `~` or click Close)</span>
-        <button class="console-btn-trigger" onclick="toggleConsole()">Close [X]</button>
-    </div>
-    <div class="terminal-output" id="terminalOutput">
-        <div>Type <span class="out-primary">help</span> to view all commands. System ready.</div>
-    </div>
-    <div class="terminal-input-row">
-        <span class="terminal-prompt">&gt;</span>
-        <input type="text" class="terminal-input" id="terminalInput" placeholder="try: skills, projects, contact, clear..." autocomplete="off">
-    </div>
-</div>
-
-<!-- UX Feature: Telemetry HUD -->
-<div class="hud-widget mono">
-    <div class="hud-item">
-        <span>FPS</span>
-        <span class="hud-val" id="fpsCounter">60</span>
-    </div>
-    <div class="hud-item">
-        <span>LOC</span>
-        <span class="hud-val" id="timeCounter">--:-- IST</span>
-    </div>
-    <button class="console-btn-trigger" onclick="toggleConsole()">~ Console</button>
-</div>
-
-<!-- Navigation -->
-<header class="nav-wrap">
-    <div class="container nav-bar">
-        <a href="#home" class="brand">
-            <span class="brand-dot"></span>
-            MEHRAN
-        </a>
-        <nav class="nav-menu">
-            <a href="about.html" class="nav-link">About</a>
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#skills" class="nav-link">Disciplines</a>
-            <a href="#contact" class="nav-btn">Connect ↗</a>
-        </nav>
-    </div>
+<header>
+  <div class="wrap nav">
+    <a href="#home" class="brand">Mehran</a>
+    <nav aria-label="Main">
+      <a href="about.html">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact" class="cta">Contact</a>
+    </nav>
+  </div>
 </header>
 
 <main>
-    <!-- HERO SECTION -->
-    <section class="container hero" id="home">
-        <div class="hero-text">
-            <div class="status-badge mono">
-                <span class="status-indicator"></span>
-                ACTIVE FOR JAMS & TECHNICAL DESIGN
-            </div>
-            
-            <!-- REQUESTED CLEAN INTRO -->
-            <h1>Hi, I'm <span class="text-gradient">Mehran.</span></h1>
-            
-            <p class="hero-sub">
-                Independent game developer building modular C# gameplay systems, custom player physics, 3D prop assets in Blender, and atmospheric experiences in Unity.
-            </p>
-            
-            <div class="btn-group">
-                <a href="about.html" class="btn btn-primary">About Me ➔</a>
-                <a href="#projects" class="btn btn-secondary">Projects ↗</a>
-            </div>
+  <div class="wrap hero" id="home">
+    <div class="status"><span class="dot"></span> Open to game jams and technical design work</div>
+    <h1>I build gameplay systems and atmospheric games in Unity.</h1>
+    <p>I’m Mehran, an independent game developer. I write modular C# gameplay code, custom player physics and 3D props in Blender, with a focus on mechanics that feel good to play.</p>
+    <div class="btns">
+      <a href="#projects" class="btn primary">See my projects</a>
+      <a href="about.html" class="btn">About me</a>
+    </div>
+    <div class="facts">
+      <div><strong>Unity · C#</strong>Gameplay and tools</div>
+      <div><strong>Blender</strong>Low-poly environment assets</div>
+      <div><strong>4 projects</strong>2 shipped, 1 in progress, 1 concept</div>
+    </div>
+  </div>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="head">
+        <h2>Selected projects</h2>
+        <p>Each project lists what I built, the problems I solved and the tools I used.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button class="on" data-f="all">All</button>
+        <button data-f="2d">2D mechanics</button>
+        <button data-f="3d">3D atmospheric</button>
+        <button data-f="concept">Concepts</button>
+      </div>
+
+      <details class="project" data-c="2d">
+        <summary>
+          <h3>Pong Arcade Classic</h3><span class="state done">Completed</span>
+          <p class="sum">A recreation of Pong with angle-based ball deflection, a bot opponent and a decoupled scoring system.</p>
+          <span class="more"></span>
+        </summary>
+        <div class="body">
+          <div><h4>What I built</h4><ul>
+            <li>Vector reflection with deflection angles that depend on where the ball hits the paddle.</li>
+            <li>A bot opponent that tracks the ball with simulated reaction delay.</li>
+            <li>An event-driven score and audio controller, separate from game logic.</li></ul></div>
+          <div><h4>Goal</h4><p>Learn collision handling and tune game feel by recreating a classic with clean, reusable code.</p></div>
+          <div class="tags"><span>Unity 2D</span><span>C#</span><span>Physics</span><span>AI</span></div>
         </div>
+      </details>
 
-        <!-- BENTO SHOWCASE -->
-        <div class="bento-grid">
-            <div class="bento-canvas-box">
-                <canvas id="micro-canvas"></canvas>
-                <div class="canvas-hint mono">[ Move cursor: Physics particle engine ]</div>
-            </div>
-            <div class="bento-card">
-                <h4 class="mono">Engine & Pipeline</h4>
-                <p>Unity • C# • Blender</p>
-                <div class="bento-sub mono">Modular Prefabs & Low-Poly</div>
-            </div>
-            <div class="bento-card">
-                <h4 class="mono">Design Ethos</h4>
-                <p>Tactile Gameplay</p>
-                <div class="bento-sub mono">Atmosphere-first mechanics</div>
-            </div>
+      <details class="project" data-c="2d">
+        <summary>
+          <h3>Flappy Bird Runner</h3><span class="state done">Completed</span>
+          <p class="sum">A one-touch runner with tuned jump physics, endless obstacles through object pooling and saved high scores.</p>
+          <span class="more"></span>
+        </summary>
+        <div class="body">
+          <div><h4>What I built</h4><ul>
+            <li>Object pooling so obstacles are reused instead of created and destroyed.</li>
+            <li>Impulse-based jump curves tuned for a consistent feel.</li>
+            <li>JSON serialization to keep high scores between sessions.</li></ul></div>
+          <div><h4>Goal</h4><p>Practice memory-conscious design and frame-rate independent movement.</p></div>
+          <div class="tags"><span>Unity</span><span>C#</span><span>Object pooling</span><span>Save data</span></div>
         </div>
-    </section>
+      </details>
 
-    <!-- PROJECTS SECTION WITH FILTER -->
-    <section class="container" id="projects">
-        <div class="section-head">
-            <div>
-                <div class="section-label mono">01 / SELECTED WORK</div>
-                <h2 class="section-title">Playable Experiments & Concepts</h2>
-            </div>
-            <div class="filter-tabs">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="2d">2D Mechanics</button>
-                <button class="filter-btn" data-filter="3d">3D Atmospheric</button>
-                <button class="filter-btn" data-filter="concept">Concepts</button>
-            </div>
+      <details class="project" data-c="3d">
+        <summary>
+          <h3>Trust No One</h3><span class="state wip">In progress</span>
+          <p class="sum">A psychological puzzle game made for the Brackeys Game Jam, with an unreliable narrator and light-based tension.</p>
+          <span class="more"></span>
+        </summary>
+        <div class="body">
+          <div><h4>What I’m building</h4><ul>
+            <li>Flashlight lighting and occlusion that drive puzzle and mood.</li>
+            <li>A dialogue sequencer that reacts to what the player is doing.</li>
+            <li>Physics-based door and lock interactions.</li></ul></div>
+          <div><h4>Goal</h4><p>Build a complete atmospheric prototype within game jam limits and polish it afterwards.</p></div>
+          <div class="tags"><span>Unity 3D</span><span>Lighting</span><span>Audio</span><span>Game jam</span></div>
         </div>
+      </details>
 
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <article class="spotlight-card project-card" data-category="2d" onclick="openDrawer('pong')">
-                <div class="project-preview">
-                    <span class="project-preview-title">PONG ARCADE</span>
-                </div>
-                <div class="project-content">
-                    <div class="project-meta mono">
-                        <span>2D ARCADE</span>
-                        <span>COMPLETED</span>
-                    </div>
-                    <h3 class="project-title">Pong Arcade Classic</h3>
-                    <p class="project-desc">Clean recreation featuring deterministic physics, angle-based bounce mathematics, adaptive bot AI, and modular UI scoring.</p>
-                    <div class="project-tags">
-                        <span class="tag mono">Unity 2D</span>
-                        <span class="tag mono">C# Logic</span>
-                        <span class="tag mono">Physics</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Project 2 -->
-            <article class="spotlight-card project-card" data-category="2d" onclick="openDrawer('flappy')">
-                <div class="project-preview">
-                    <span class="project-preview-title">FLAPPY RUNNER</span>
-                </div>
-                <div class="project-content">
-                    <div class="project-meta mono">
-                        <span>2D RUNNER</span>
-                        <span>COMPLETED</span>
-                    </div>
-                    <h3 class="project-title">Flappy Bird Runner</h3>
-                    <p class="project-desc">Recreation of touch mechanics, impulse jump curves, procedural infinite pipe pooling, and persistent high-score serialization.</p>
-                    <div class="project-tags">
-                        <span class="tag mono">Unity</span>
-                        <span class="tag mono">Object Pooling</span>
-                        <span class="tag mono">C#</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Project 3 -->
-            <article class="spotlight-card project-card" data-category="3d" onclick="openDrawer('trust')">
-                <div class="project-preview">
-                    <span class="project-preview-title">TRUST NO ONE</span>
-                </div>
-                <div class="project-content">
-                    <div class="project-meta mono">
-                        <span>3D PUZZLE</span>
-                        <span>IN PROGRESS</span>
-                    </div>
-                    <h3 class="project-title">Trust No One</h3>
-                    <p class="project-desc">Brackeys Game Jam entry with an unreliable narrator, tense environmental puzzle solving, and dynamic light occlusion.</p>
-                    <div class="project-tags">
-                        <span class="tag mono">Unity 3D</span>
-                        <span class="tag mono">Psychological</span>
-                        <span class="tag mono">Lighting</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Project 4 -->
-            <article class="spotlight-card project-card" data-category="concept" onclick="openDrawer('hollow')">
-                <div class="project-preview">
-                    <span class="project-preview-title">HOLLOW HILL</span>
-                </div>
-                <div class="project-content">
-                    <div class="project-meta mono">
-                        <span>SURVIVAL</span>
-                        <span>CONCEPT</span>
-                    </div>
-                    <h3 class="project-title">Hollow Hill</h3>
-                    <p class="project-desc">Atmospheric horror concept focused on keeping ancestral lanterns illuminated while managing dwindling stamina and light resources.</p>
-                    <div class="project-tags">
-                        <span class="tag mono">System Design</span>
-                        <span class="tag mono">Atmosphere</span>
-                        <span class="tag mono">Lore</span>
-                    </div>
-                </div>
-            </article>
+      <details class="project" data-c="concept">
+        <summary>
+          <h3>Hollow Hill</h3><span class="state idea">Concept</span>
+          <p class="sum">A survival horror design about keeping ancestral lanterns lit while stamina and light run low.</p>
+          <span class="more"></span>
+        </summary>
+        <div class="body">
+          <div><h4>Design focus</h4><ul>
+            <li>Two draining resources, stamina and light, that pull the player in opposite directions.</li>
+            <li>Non-linear progress guided by landmarks.</li>
+            <li>Lore told through notes and environment clues.</li></ul></div>
+          <div><h4>Goal</h4><p>Work out a resource-pressure system on paper before prototyping it.</p></div>
+          <div class="tags"><span>System design</span><span>Atmosphere</span><span>Narrative</span></div>
         </div>
-    </section>
+      </details>
+    </div>
+  </section>
 
-    <!-- DISCIPLINES SECTION -->
-    <section class="container" id="skills">
-        <div class="section-head">
-            <div>
-                <div class="section-label mono">02 / TOOLKIT</div>
-                <h2 class="section-title">Technical Capabilities</h2>
-            </div>
-        </div>
+  <section id="skills">
+    <div class="wrap">
+      <div class="head"><h2>Skills</h2><p>What I can do on a team or a jam project.</p></div>
+      <div class="skills">
+        <div class="skill"><h3>Unity</h3><p>Prefab workflows, custom player controllers, physics layers and 2D/3D scenes.</p></div>
+        <div class="skill"><h3>C# programming</h3><p>OOP, state machines, ScriptableObjects and event-driven design.</p></div>
+        <div class="skill"><h3>3D assets</h3><p>Low-poly environments, modular props and basic materials in Blender.</p></div>
+        <div class="skill"><h3>Level and systems design</h3><p>Pacing, obstacle balancing, difficulty curves and player feedback.</p></div>
+        <div class="skill"><h3>Lighting, audio and VFX</h3><p>Post-processing, lighting setups, camera shake and spatial sound.</p></div>
+        <div class="skill"><h3>Environmental storytelling</h3><p>Visual clues, branching dialogue and narrative pacing.</p></div>
+      </div>
+    </div>
+  </section>
 
-        <div class="skills-grid">
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">⚙️</div>
-                <h3>Engine Core</h3>
-                <p>Robust prefab management, custom player controllers, physics layers, and 2D/3D scenes in Unity.</p>
-            </div>
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">💻</div>
-                <h3>C# Programming</h3>
-                <p>Clean code architecture using OOP, state machines, ScriptableObjects, and event-driven delegation.</p>
-            </div>
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">🎨</div>
-                <h3>3D Asset Pipeline</h3>
-                <p>Modeling low-poly environment assets, modular level props, and basic materials directly in Blender.</p>
-            </div>
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">🕹️</div>
-                <h3>Level & Systems Design</h3>
-                <p>Pacing game mechanics, obstacle balancing, difficulty curves, and feedback loops for engagement.</p>
-            </div>
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">✨</div>
-                <h3>Atmospheric Audio & VFX</h3>
-                <p>Post-processing stacks, custom lighting, camera shakes, and spatial sound design for immersion.</p>
-            </div>
-            <div class="spotlight-card skill-card">
-                <div class="skill-icon">📜</div>
-                <h3>Environmental Lore</h3>
-                <p>Subtle visual storytelling, cryptic clues, dialogue branches, and narrative pacing.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT CTA -->
-    <section class="container" id="contact">
-        <div class="cta-box">
-            <h2>Let's build something exceptional.</h2>
-            <p>Looking for a game jam collaborator, technical designer, or want to review my C# repositories?</p>
-            <div class="contact-actions">
-                <button class="copy-pill mono" id="copyEmailBtn" onclick="copyContact()">
-                    <span>📋</span> <span id="copyText">hello@mehran.dev</span>
-                </button>
-                <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-primary">
-                    GitHub Repositories ↗
-                </a>
-            </div>
-        </div>
-    </section>
+  <section id="contact">
+    <div class="wrap contact">
+      <h2>Let’s work together</h2>
+      <p>I’m looking for game jam teammates and technical design opportunities. Send me a message or have a look at my code.</p>
+      <div class="btns">
+        <a class="btn primary" href="mailto:hello@mehran.dev">Email me</a>
+        <button class="btn" id="copy" type="button">Copy email address</button>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="copied" id="copied" aria-live="polite"></div>
+    </div>
+  </section>
 </main>
 
 <footer>
-    <div class="container footer-inner">
-        <div>© <span id="year"></span> Mehran. All rights reserved.</div>
-        <div class="mono">C# Logic • Unity Engine • Blender 3D</div>
-    </div>
+  <div class="wrap">
+    <span>© <span id="year"></span> Mehran</span>
+    <span>Unity · C# · Blender</span>
+  </div>
 </footer>
 
 <script>
-// Year Update
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// Scroll Progress Bar Tracker
-window.addEventListener('scroll', () => {
-    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalScroll) * 100;
-    document.getElementById('scroll-progress').style.width = progress + '%';
+const btns = document.querySelectorAll('.filters button');
+const items = document.querySelectorAll('.project');
+btns.forEach(b => b.addEventListener('click', () => {
+  btns.forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  items.forEach(p => { p.style.display = (b.dataset.f === 'all' || p.dataset.c === b.dataset.f) ? '' : 'none'; });
+}));
+
+document.getElementById('copy').addEventListener('click', () => {
+  const msg = document.getElementById('copied');
+  const done = ok => { msg.textContent = ok ? 'Email address copied.' : 'Copy failed. Email: hello@mehran.dev'; setTimeout(() => msg.textContent = '', 2500); };
+  if (navigator.clipboard) navigator.clipboard.writeText('hello@mehran.dev').then(() => done(true), () => done(false));
+  else done(false);
 });
-
-// Spotlight Border Dynamic Coordinate Tracker
-document.querySelectorAll('.spotlight-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-});
-
-// Category Filter Tabs
-const filterBtns = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-
-        projectCards.forEach(card => {
-            if (filter === 'all' || card.dataset.category === filter) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-});
-
-// Interactive Hero Micro-Canvas Particle Engine
-const canvas = document.getElementById('micro-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: -1000, y: -1000, radius: 80 };
-
-function resizeCanvas() {
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
-    initParticles();
-}
-
-class Particle {
-    constructor(x, y) {
-        this.originX = x;
-        this.originY = y;
-        this.x = x;
-        this.y = y;
-        this.size = 2;
-        this.vx = 0;
-        this.vy = 0;
-    }
-    update() {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < mouse.radius) {
-            const angle = Math.atan2(dy, dx);
-            const force = (mouse.radius - dist) / mouse.radius;
-            this.vx -= Math.cos(angle) * force * 4;
-            this.vy -= Math.sin(angle) * force * 4;
-        }
-
-        this.vx += (this.originX - this.x) * 0.08;
-        this.vy += (this.originY - this.y) * 0.08;
-        this.vx *= 0.85;
-        this.vy *= 0.85;
-
-        this.x += this.vx;
-        this.y += this.vy;
-    }
-    draw() {
-        ctx.fillStyle = '#38bdf8';
-        ctx.fillRect(this.x, this.y, this.size, this.size);
-    }
-}
-
-function initParticles() {
-    particles = [];
-    const spacing = 18;
-    for (let x = 20; x < canvas.width - 20; x += spacing) {
-        for (let y = 20; y < canvas.height - 20; y += spacing) {
-            particles.push(new Particle(x, y));
-        }
-    }
-}
-
-canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-});
-
-canvas.addEventListener('mouseleave', () => {
-    mouse.x = -1000;
-    mouse.y = -1000;
-});
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function animateCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-    }
-    requestAnimationFrame(animateCanvas);
-}
-animateCanvas();
-
-// Project Slide-Over Drawer Data
-const projectData = {
-    pong: {
-        title: "Pong Arcade Classic",
-        meta: "2D ARCADE • C# • COMPLETED",
-        desc: "Deterministic paddle and ball simulation recreating the feel of authentic retro cabinet hardware. Built to explore coordinate collision handling and responsive game balance.",
-        specs: [
-            "Vector reflection algorithms with dynamic deflection angles.",
-            "Independent AI agent tracking with latency modeling.",
-            "Decoupled event-driven score and audio controller."
-        ]
-    },
-    flappy: {
-        title: "Flappy Bird Runner",
-        meta: "2D RUNNER • C# • COMPLETED",
-        desc: "Precision timing challenge engineered with strict frame-rate independent physics curves and optimized object lifecycle patterns.",
-        specs: [
-            "Memory-conscious queue object pooling for infinite obstacles.",
-            "Impulse velocity curves calibrated for satisfying jump arcs.",
-            "JSON state serialization for cross-session high scores."
-        ]
-    },
-    trust: {
-        title: "Trust No One",
-        meta: "3D PUZZLE • UNITY 3D • IN PROGRESS",
-        desc: "Experimental psychological horror prototype designed for game jam conditions. Explores spatial manipulation and unreliable narrative queues.",
-        specs: [
-            "Dynamic occlusion and volumetric flashlight casting.",
-            "Context-aware audio dialogue sequencer.",
-            "Modular physics-driven door and lock interaction rigs."
-        ]
-    },
-    hollow: {
-        title: "Hollow Hill",
-        meta: "SURVIVAL • DESIGN CONCEPT",
-        desc: "Survival horror framework exploring light starvation mechanics. Players navigate a dying forest maintaining ancestral lanterns against the encroaching fog.",
-        specs: [
-            "Dual stamina and light resource depletion balancing.",
-            "Nonlinear landmark-based level progression.",
-            "Cryptic environmental lore notes and visual milestones."
-        ]
-    }
-};
-
-const drawer = document.getElementById('projectDrawer');
-const backdrop = document.getElementById('drawerBackdrop');
-
-function openDrawer(key) {
-    const item = projectData[key];
-    if (!item) return;
-
-    document.getElementById('drawerTitle').textContent = item.title;
-    document.getElementById('drawerMeta').textContent = item.meta;
-    document.getElementById('drawerDesc').textContent = item.desc;
-    
-    const specsList = document.getElementById('drawerSpecs');
-    specsList.innerHTML = '';
-    item.specs.forEach(spec => {
-        const li = document.createElement('li');
-        li.textContent = spec;
-        specsList.appendChild(li);
-    });
-
-    drawer.classList.add('active');
-    backdrop.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeDrawer() {
-    drawer.classList.remove('active');
-    backdrop.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-document.getElementById('drawerClose').addEventListener('click', closeDrawer);
-backdrop.addEventListener('click', closeDrawer);
-
-// Close drawer via Escape key
-window.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-        closeDrawer();
-        if (terminalDrawer.classList.contains('active')) toggleConsole();
-    }
-});
-
-// 1-Click Copy Email Pill
-function copyContact() {
-    const email = "hello@mehran.dev";
-    navigator.clipboard.writeText(email).then(() => {
-        const copyText = document.getElementById('copyText');
-        copyText.textContent = "Copied to Clipboard! ✓";
-        copyText.style.color = "var(--primary)";
-        setTimeout(() => {
-            copyText.textContent = email;
-            copyText.style.color = "inherit";
-        }, 2200);
-    });
-}
-
-// Live FPS & Time HUD Counter
-let lastFrameTime = performance.now();
-let frameCount = 0;
-const fpsCounter = document.getElementById('fpsCounter');
-
-function updateFps(now) {
-    frameCount++;
-    if (now - lastFrameTime >= 1000) {
-        fpsCounter.textContent = frameCount;
-        frameCount = 0;
-        lastFrameTime = now;
-    }
-    requestAnimationFrame(updateFps);
-}
-requestAnimationFrame(updateFps);
-
-function updateTime() {
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
-    document.getElementById('timeCounter').textContent = `${timeStr} IST`;
-}
-setInterval(updateTime, 1000);
-updateTime();
-
-// Dev Console Terminal Logic
-const terminalDrawer = document.getElementById('terminalDrawer');
-const terminalInput = document.getElementById('terminalInput');
-const terminalOutput = document.getElementById('terminalOutput');
-
-function toggleConsole() {
-    terminalDrawer.classList.toggle('active');
-    if (terminalDrawer.classList.contains('active')) {
-        terminalInput.focus();
-    }
-}
-
-window.addEventListener('keydown', e => {
-    if (e.key === '`' || e.key === '~') {
-        e.preventDefault();
-        toggleConsole();
-    }
-});
-
-terminalInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        const cmd = terminalInput.value.trim().toLowerCase();
-        terminalInput.value = '';
-        executeCommand(cmd);
-    }
-});
-
-function executeCommand(cmd) {
-    const line = document.createElement('div');
-    line.innerHTML = `<span class="out-cmd">&gt; ${cmd}</span>`;
-    terminalOutput.appendChild(line);
-
-    const res = document.createElement('div');
-    switch (cmd) {
-        case 'help':
-            res.innerHTML = `Commands available: <span class="out-primary">projects, skills, about, contact, clear, exit</span>`;
-            break;
-        case 'projects':
-            res.innerHTML = `Loaded: Pong Arcade, Flappy Runner, Trust No One, Hollow Hill.`;
-            break;
-        case 'skills':
-            res.innerHTML = `Core: Unity, C# (OOP/Events/State Machines), Blender Low-Poly, System Balancing.`;
-            break;
-        case 'about':
-            window.location.href = "about.html";
-            break;
-        case 'contact':
-            copyContact();
-            res.innerHTML = `<span class="out-success">Email copied to clipboard (hello@mehran.dev)</span>`;
-            break;
-        case 'clear':
-            terminalOutput.innerHTML = '';
-            return;
-        case 'exit':
-            toggleConsole();
-            return;
-        default:
-            res.innerHTML = `Unknown command. Type <span class="out-primary">help</span> for a list.`;
-    }
-    terminalOutput.appendChild(res);
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-}
 </script>
 </body>
 </html>
